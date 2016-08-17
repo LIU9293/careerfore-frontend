@@ -44,7 +44,7 @@ class DiscoverList extends Component{
     if(this.state.data.length == 0){
       return(
         <div>
-          <h1>loading...</h1>
+          <h1>加载加载</h1>
         </div>
       )
     } else {
