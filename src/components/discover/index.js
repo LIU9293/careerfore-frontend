@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { getDiscoverList } from '../../vendor/connection';
+import DiscoverTag from './discoverTag';
+import DiscoverCarousel from './discoverCarousel';
+import DiscoverList from './discoverList';
 
 class Discover extends Component{
 
@@ -7,13 +9,13 @@ class Discover extends Component{
     super(props);
   }
 
-  componentDidMount(){
-
-  }
-
   render(){
     return(
-      <div />
+      <div>
+        <DiscoverTag />
+        <DiscoverCarousel />
+        <DiscoverList />
+      </div>
     )
   }
 }
