@@ -480,8 +480,6 @@ export const getUserInfo = (userid, callback) => {
   getData('ZQ.APP.Mime.UserBaseInfo', queryObj, (err, data) => {
     if(err){callback(err)} else {
       if (data.ResultCode === 1){
-        console.log('用户基本信息获取成功，返回的数据是：');
-        console.log(data);
         callback(null, data);
       } else {
         callback(data.ResultMessage);

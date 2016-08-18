@@ -11,6 +11,7 @@ import NewArticle from '../components/discover/newArticle';
 import DiscoverDetail from '../components/discover/discoverDetail';
 import Login from '../components/profile/login';
 import Register from '../components/profile/register';
+import MyHome from '../components/profile/home';
 
 const Routes = ({ history }) =>
   <Router history={history}>
@@ -22,6 +23,7 @@ const Routes = ({ history }) =>
       <Route path="/discover/:discoverID" component={DiscoverDetail} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
+      <Route path="/my/:UserID" component={MyHome} />
     </Route>
     <Route path="*" component={NotFound} />
   </Router>;

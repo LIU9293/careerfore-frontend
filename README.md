@@ -1,10 +1,14 @@
-# antd-demo
+# frontend for careerfore website
+***
 
-## Environment
+this is under developing ...
 
-```
-node >= 4
-```
+## thing used
+
+* react-js
+* react-router
+* ant design
+* redux
 
 ## Code Style
 
