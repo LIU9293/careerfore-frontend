@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { getPlaygroundPost } from '../../vendor/connection';
-
+import { Row, Col } from 'antd';
+import { BaiduMap } from 'react-baidu-map';
+import styles from './activity.css';
 class ActivityPost extends Component{
 
   constructor(props){
@@ -15,27 +17,59 @@ class ActivityPost extends Component{
       if(err){
         console.log(err);
       } else {
+        console.log(data);
         let image = data.Activity.ActivityPictureUrl;
         let content = data.Activity.ActivityContent;
         let title = data.Activity.ActivityTitle;
+        let Address=data.Activity.ActivityAddress;
+        let StartDate=data.Activity.ActivityStartDate;
+        let EndDate=data.Activity.ActivityEndDate;
+        let CheckPeopleNum=data.Activity.CheckPeopleNum;
+        let PeopleNum=data.Activity.PeopleNum;
+        let Fee=data.Activity.Fee;
+        let Latitude=data.Activity.ActivityLatitude;
+        let Longitude=data.Activity.ActivityLongitude;
         this.setState({
           activityData:{
             image: image,
             content: content,
             title: title,
+            Address:Address,
+            StartDate:StartDate,
+            EndDate:EndDate,
+            CheckPeopleNum:CheckPeopleNum,
+            PeopleNum:PeopleNum,
+            Fee:Fee,
+            Latitude:Latitude,
+            Longitude:Longitude,
           }
         })
       };
     })
+    console.log(this.state.activityData);
   }
 
   render(){
     return(
-      <div>
-        <img src={this.state.activityData.image || ''}/>
-        <h1>{this.state.activityData.title || ''}</h1>
-        <p>{this.state.activityData.content || ''}</p>
+      <Row>
+      <Col xs={2} sm={4} md={6} lg={4} />
+      <Col xs={20} sm={16} md={12} lg={16}>
+      <div className="Img">
+      <img src={this.state.activityData.image || ''}/>
       </div>
+      <h1>{this.state.activityData.title || ''}</h1>
+      <p>{this.state.activityData.content || ''}</p>
+      <p>{this.state.activityData.StartDate || ''} - {this.state.activityData.EndDate || ''}</p>
+      <p>&loz;{this.state.activityData.PeopleNum || '0'}人(限{this.state.activityData.CheckPeopleNum || ''}人报名)</p>
+      <div className="MapAdress" >
+      <div id="container"></div>
+        <div id="info">
+        <p></p>
+        </div>
+      </div>
+      </Col>
+      <Col xs={2} sm={4} md={6} lg={4} />
+      </Row>
     )
   }
 }

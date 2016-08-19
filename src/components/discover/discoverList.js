@@ -14,7 +14,7 @@ class DiscoverList extends Component{
   }
 
   componentDidMount(){
-    getDiscoverList('', 1, 5, (err,data)=>{
+    getDiscoverList('', 1, this.props.NumPerPage, (err,data)=>{
       if(err){
         console.log(err);
       } else {
@@ -27,7 +27,7 @@ class DiscoverList extends Component{
   }
 
   loadMore(){
-    getDiscoverList('', this.state.index, 5, (err,data)=>{
+    getDiscoverList('', this.state.index, this.props.NumPerPage, (err,data)=>{
       if(err){
         console.log(err);
       } else {
@@ -44,7 +44,7 @@ class DiscoverList extends Component{
     if(this.state.data.length == 0){
       return(
         <div>
-          <h1>loading...</h1>
+          <h1>加载加载</h1>
         </div>
       )
     } else {
