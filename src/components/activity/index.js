@@ -28,7 +28,7 @@ class Activity extends Component{
           let ActivityAddress=item.ActivityAddress;
           let PeopleNum=item.PeopleNum;
           return(
-              <Col xs={20} sm={16} md={12} lg={12}>
+              <Col xs={{span:20}} sm={{span:20}} md={{span:8}} lg={{span:8}}>
                 <div className='page' key={ii}>
                   <div className='pageImg'>
                     <div className='pageOverlay'></div>

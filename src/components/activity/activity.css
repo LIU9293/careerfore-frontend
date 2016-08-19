@@ -86,15 +86,17 @@ Row{
   margin: 0;
 }
 .Img{
-  height:50%;
+  max-height:350px;
   overflow: hidden;
   position: relative;
   z-index: 1;
   display: block;
+  transition: all 500ms ease 0ms;
 }
 .Img>img{
   max-width:calc(100%);
   height: auto;
+  padding-top:(100px - calc(50%));
 }
 .Img:hover img{
   transform: scale(1.2);
