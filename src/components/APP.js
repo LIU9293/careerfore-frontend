@@ -13,13 +13,12 @@ class home extends Component{
   constructor(props){
     super(props);
     this.state = {
-      rightMenuItem: <a href="/login" target="_blank">登录</a>,
+      rightMenuItem: <a href="/login">登录</a>,
     }
   }
 
   componentDidMount(){
     let userid = Cookies.get('UserID');
-    console.log(userid);
     if(userid !== undefined){
       this.props.login(userid);
       getUserInfo(userid, (err,data) => {
@@ -41,7 +40,32 @@ class home extends Component{
     }
   }
 
-  
+  componentWillReceiveProps(nextProps){
+    if(nextProps.userinfo.login == true){
+      let id = nextProps.userinfo.userid;
+      getUserInfo(id, (err,data) => {
+        if(err){
+          console.log(err);
+        } else {
+          let avatar = data.ZUT_HEADIMG,
+              nickName = data.ZUT_NICKNAME,
+              phone = data.ZUT_PHONE;
+          this.setState({
+            rightMenuItem:  <div className="menuProfileArea">
+                              <a href={'/my/'+ id } >
+                                <img src={avatar} className="menuProfileAvatar" />
+                              </a>
+                            </div>
+          });
+        }
+      });
+    } else {
+      this.setState({
+        rightMenuItem: <a href="/login">登录</a>
+      })
+    }
+  }
+
 
   render(){
     return(
@@ -49,14 +73,14 @@ class home extends Component{
         <div className="navbar-container">
           <Menu mode="horizontal" className="navbar">
             <Menu.Item key="home">
-              <a href="/" target="_blank">主页</a>
+              <a href="/">主页</a>
             </Menu.Item>
             <Menu.Item key="activity">
-              <a href="/activity" target="_blank">活动</a>
+              <a href="/activity">活动</a>
             </Menu.Item>
             <SubMenu title={<span>发现</span>}>
               <Menu.Item key="discover:1">
-                <a href="/discover" target="_blank">发现</a>
+                <a href="/discover">发现</a>
               </Menu.Item>
               <Menu.Item key="discover:2">选项2</Menu.Item>
               <Menu.Item key="discover:3">选项3</Menu.Item>

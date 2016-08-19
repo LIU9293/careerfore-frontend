@@ -3,7 +3,8 @@ import { Form, Input, Button, Checkbox } from 'antd';
 import style from './index.css';
 import Cookies from 'js-cookie';
 import { userLogin } from '../../vendor/connection';
-import { browserHistory } from 'react-router'
+import { browserHistory } from 'react-router';
+import { connect } from 'react-redux';
 
 const FormItem = Form.Item;
 
@@ -39,6 +40,7 @@ class Login extends Component{
           } else {
             Cookies.set('UserID', UserID);
           }
+          this.props.login(UserID);
           console.log('已将用户ID存入cookie, cookie是：');
           console.log(Cookies.get('UserID'));
           browserHistory.push('/')
@@ -80,4 +82,15 @@ class Login extends Component{
 
 Login = Form.create()(Login);
 
-module.exports = Login
+function mapStateToProps(store){
+  return {
+    userinfo: store.user
+  }
+}
+function mapDispatchToProps(dispatch){
+  return {
+    login: (userid) => {dispatch({type:'LOG_IN', userid:userid})}
+  }
+}
+
+module.exports = connect(mapStateToProps, mapDispatchToProps)(Login)
