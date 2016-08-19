@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { getPlaygroundPost } from '../../vendor/connection';
 import { Row, Col } from 'antd';
-import { BaiduMap } from 'react-baidu-map';
 import styles from './activity.css';
 class ActivityPost extends Component{
 
