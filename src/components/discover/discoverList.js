@@ -11,6 +11,7 @@ class DiscoverList extends Component{
     this.state = {
       data: [],
       index: 1,
+      loadContent:"点击加载更多",
     }
     this.loadData = this.loadData.bind(this);
     this.loadChannelList = this.loadChannelList.bind(this);
@@ -77,10 +78,10 @@ class DiscoverList extends Component{
   }
 
   render(){
-    if(this.state.data.length == 0){
+    if(this.state.data.length === 0){
       return(
         <div>
-          <h1>loading...</h1>
+          <h1 style={{textAlign: 'center'}}>loading...</h1>
         </div>
       )
     } else {
@@ -88,57 +89,102 @@ class DiscoverList extends Component{
         let channerN = this.getChannelIdByChannelName(item.ZctName);
         let bg = 'url(' + item.PictureUrl + ')';
         let nikeName = item.NickName === "管理员"?"小C":item.NickName;
-        return(
-          <div key={ii} className="sectionMain recentNews cf-box" data-tid = {item.PostsID}>
-          <div className='box-top'>
-              <a href={'/user/'+item.NickName}>
-                  <img data-uid={item.UserID} src={item.HeadUrl} className="box-avatar" />
+        var con = item.Content;
+        if(con.length > 70){
+          con = con.substring(0,70)+'...';
+        }
+        console.log(con);
+        if(item.PictureUrl && item.PictureUrl !==undefined){
+          return(
+            <div key={ii} className="sectionMain recentNews cf-box" data-tid = {item.PostsID}>
+            <div className='box-top'>
+                <a href={'/user/'+item.NickName}>
+                    <img data-uid={item.UserID} src={item.HeadUrl} className="box-avatar" />
+                </a>
+                <div className="nameAndCategory">
+                    <div className="row" >
+                      <a href={'/user/'+item.NickName}>
+                        <div className="box-name">{nikeName}</div><br/>
+                      </a>
+                    </div>
+                    <div className="row">
+                      <a href={'/category/'+channerN}>
+                        <div className="icon">
+                          <i className="fa fa-fw fa-bank"></i>
+                        </div>
+                          <div className="box-category">{item.ZctName}</div>
+                      </a>
+                    </div>
+                  </div>
+                  <div className="box-time">
+                      <span className="timeago" >{item.Date}</span>
+                  </div>
+            </div>
+            <div className="box-middle">
+              <a href={'/discover/:'+item.PostsID}>
+              <div className="box-content" style={{backgroundImage:bg}}>
+              </div>
+
+
               </a>
-              <div className="nameAndCategory">
-                  <div className="row" >
-                    <a href={'/user/'+item.NickName}>
-                      <div className="box-name">{item.NickName}</div><br/>
-                    </a>
-                  </div>
-                  <div className="row">
-                    <a href={'/category/'+channerN}>
-                      <div className="icon">
-                        <i className="fa fa-fw fa-bank"></i>
-                      </div>
-                        <div className="box-category">{item.ZctName}</div>
-                    </a>
-                  </div>
-                </div>
-                <div className="box-time">
-                    <span className="timeago" >{item.Date}</span>
-                </div>
-          </div>
-          <div className="box-middle">
-            <a href={'/discover/:'+item.PostsID}>
-            <div className="box-content" style={{backgroundImage:bg}}>
+              </div>
+              <div className="box-bottom">
+              <a href={'/discover/:'+item.PostsID} className="aStyle">
+                <div className="box-title">{item.Title}</div>
+              </a>
+              <p>{con}</p>
+              <a href={'/discover/:'+item.PostsID}>
+                <div className="box-time" style={{fontSize:'12px'}}>继续阅读</div>
+              </a>
+              {item.CommentNum} 回复 &amp; {0} 查看
             </div>
 
-
-            </a>
             </div>
-            <div className="box-bottom">
-            <a href={'/discover/:'+item.PostsID} className="aStyle">
-              <div className="box-title">{item.Title}</div>
-            </a>
-            <p>前言两年前，如果有人问我“什么是青春”，我会毫不犹豫地告诉他“青春就是在放荡不羁的岁月里，做自己不后悔的事”。现在，我的回答是“青春就是，和...</p>
-            <a href={'/discover/:'+item.PostsID}>
-              <div className="box-time" style={{fontSize:'12px'}}>继续阅读</div>
-            </a>
-            {item.CommentNum} 回复 &amp; {0} 查看
-          </div>
-
-          </div>
-        )
+          )
+        }else {
+          return(
+            <div key={ii} className="sectionMain recentNews cf-box" data-tid = {item.PostsID}>
+            <div className='box-top'>
+                <a href={'/user/'+item.NickName}>
+                    <img data-uid={item.UserID} src={item.HeadUrl} className="box-avatar" />
+                </a>
+                <div className="nameAndCategory">
+                    <div className="row" >
+                      <a href={'/user/'+item.NickName}>
+                        <div className="box-name">{nikeName}</div><br/>
+                      </a>
+                    </div>
+                    <div className="row">
+                      <a href={'/category/'+channerN}>
+                        <div className="icon">
+                          <i className="fa fa-fw fa-bank"></i>
+                        </div>
+                          <div className="box-category">{item.ZctName}</div>
+                      </a>
+                    </div>
+                  </div>
+                  <div className="box-time">
+                      <span className="timeago" >{item.Date}</span>
+                  </div>
+                  </div>
+                    <div className="box-bottom">
+                    <a href={'/discover/:'+item.PostsID} className="aStyle">
+                      <div className="box-title">{item.Title}</div>
+                    </a>
+                    <p>{con}</p>
+                    <a href={'/discover/:'+item.PostsID}>
+                      <div className="box-time" style={{fontSize:'12px'}}>继续阅读</div>
+                    </a>
+                    {item.CommentNum} 回复 &amp; {0} 查看
+                  </div>
+            </div>
+          )
+        }
       })
       return(
         <div>
           {myReactComponent}
-          <Button type="primary" onClick={()=>{this.loadData()}}>点击加载更多</Button>
+          <div type="primary" className="loadMore" onClick={this.loadData}>{this.state.loadContent}</div>
         </div>
       )
     }
