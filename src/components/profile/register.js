@@ -3,6 +3,7 @@ import { Form, Input, Button, Checkbox } from 'antd';
 import style from './index.css';
 import { sendSMS, userRegister } from '../../vendor/connection';
 import Cookies from 'js-cookie';
+import { connect } from 'react-redux';
 
 const FormItem = Form.Item;
 
@@ -60,6 +61,7 @@ class Register extends Component{
           this.setState({errorRegister: null});
           let UserID = data.UserId;
           Cookies.set('UserID', UserID, { expires: 7 });
+          this.props.login(UserID);
           console.log('用户注册成功，并且已将用户ID存入cookie, cookie是：');
           console.log(Cookies.get('UserID'));
         }
@@ -101,4 +103,16 @@ class Register extends Component{
 
 Register = Form.create()(Register);
 
-module.exports = Register
+function mapStateToProps(store){
+  return {
+    userinfo: store.user
+  }
+}
+function mapDispatchToProps(dispatch){
+  return {
+    login: (userid) => {dispatch({type:'LOG_IN', userid:userid})}
+  }
+}
+
+
+module.exports = connect(mapStateToProps, mapDispatchToProps)(Register)
