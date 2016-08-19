@@ -3,6 +3,7 @@ import { Menu, Icon } from 'antd';
 import style from './APP.css';
 import Cookies from 'js-cookie';
 import { getUserInfo } from '../vendor/connection';
+import { connect } from 'react-redux';
 
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
@@ -12,7 +13,6 @@ class home extends Component{
   constructor(props){
     super(props);
     this.state = {
-      userinfo: null,
       rightMenuItem: <a href="/login" target="_blank">登录</a>,
     }
   }
@@ -21,6 +21,7 @@ class home extends Component{
     let userid = Cookies.get('UserID');
     console.log(userid);
     if(userid !== undefined){
+      this.props.login(userid);
       getUserInfo(userid, (err,data) => {
         if(err){
           console.log(err);
@@ -29,12 +30,6 @@ class home extends Component{
               nickName = data.ZUT_NICKNAME,
               phone = data.ZUT_PHONE;
           this.setState({
-            userinfo: {
-              avatar: avatar,
-              nickName: nickName,
-              phone: phone,
-              userid: userid,
-            },
             rightMenuItem:  <div className="menuProfileArea">
                               <a href={'/my/'+ userid } >
                                 <img src={avatar} className="menuProfileAvatar" />
@@ -45,6 +40,8 @@ class home extends Component{
       })
     }
   }
+
+  
 
   render(){
     return(
@@ -83,4 +80,15 @@ class home extends Component{
   }
 }
 
-module.exports = home
+function mapStateToProps(store){
+  return {
+    userinfo: store.user
+  }
+}
+function mapDispatchToProps(dispatch){
+  return {
+    login: (userid) => {dispatch({type:'LOG_IN', userid:userid})}
+  }
+}
+
+module.exports = connect(mapStateToProps, mapDispatchToProps)(home)
