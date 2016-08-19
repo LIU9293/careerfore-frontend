@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Cookies from 'js-cookie';
 import {  Button, } from 'antd';
 import { browserHistory } from 'react-router';
+import { connect } from 'react-redux';
 
 class Home extends Component{
 
@@ -21,6 +22,7 @@ class Home extends Component{
 
   logout(){
     Cookies.remove('UserID');
+    this.props.logout();
     browserHistory.push('/');
   }
 
@@ -36,4 +38,15 @@ class Home extends Component{
 
 }
 
-module.exports = Home
+function mapStateToProps(store){
+  return {
+    userinfo: store.user
+  }
+}
+function mapDispatchToProps(dispatch){
+  return {
+    logout: () => {dispatch({type:'LOG_OUT'})}
+  }
+}
+
+module.exports = connect(mapStateToProps, mapDispatchToProps)(Home)
