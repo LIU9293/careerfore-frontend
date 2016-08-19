@@ -14,7 +14,7 @@ class Discover extends Component{
       <div>
         <DiscoverTag />
         <DiscoverCarousel />
-        <DiscoverList />
+        <DiscoverList NumPerPage={6} />
       </div>
     )
   }

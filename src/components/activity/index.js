@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { getPlaygroundList } from '../../vendor/connection';
 import styles from './activity.css';
+import { Row, Col } from 'antd';
 
 class Activity extends Component{
 
@@ -27,21 +28,23 @@ class Activity extends Component{
           let ActivityAddress=item.ActivityAddress;
           let PeopleNum=item.PeopleNum;
           return(
-            <div className='page' key={ii}>
-              <div className='pageImg'>
-                <div className='pageOverlay'></div>
-                <div className='pageCategory'>{ActivityState}</div>
-                <div className='pageNum'>已有{PeopleNum}个小伙伴报名</div>
-                <img src={PictureUrl}/>
-              </div>
-              <div className='Txt'>
-                <h3>{ActivityTitle}</h3>
-                <p>{ActivityContent}</p>
-                <span>{ActivityStartDate} - {ActivityEndDate}</span><br/>
-                <span>{ActivityAddress}</span>
-                <span><a href={'/activity/'+ActivityID}>查看详情</a></span>
-              </div>
-            </div>
+              <Col xs={20} sm={16} md={12} lg={12}>
+                <div className='page' key={ii}>
+                  <div className='pageImg'>
+                    <div className='pageOverlay'></div>
+                    <div className='pageCategory'>{ActivityState}</div>
+                    <div className='pageNum'>已有{PeopleNum}个小伙伴报名</div>
+                    <img src={PictureUrl}/>
+                  </div>
+                  <div className='Txt'>
+                    <h3>{ActivityTitle}</h3>
+                    <p>{ActivityContent}</p>
+                    <span>{ActivityStartDate} - {ActivityEndDate}</span><br/>
+                    <span>{ActivityAddress}</span>
+                    <span><a href={'/activity/'+ActivityID}>查看详情</a></span>
+                  </div>
+                </div>
+              </Col>
           )
         });
         this.setState({
@@ -54,7 +57,9 @@ class Activity extends Component{
   render(){
     return(
       <div>
+        <Row>
         {this.state.data}
+        </Row>
       </div>
     )
   }
