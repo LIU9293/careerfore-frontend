@@ -1,0 +1,53 @@
+.detailFoot{
+  margin-top: 10px;
+}
+.allComment{
+  padding-bottom: 10px;
+}
+.allComment > span{
+  font-size: 16px;
+  color: #333;
+}
+.list{
+
+}
+.list > .single{
+  position: relative;
+  box-sizing: border-box;
+  font-size: 12px;
+  line-height: 30px;
+  color: #4b4c4c;
+  display: block;
+  padding: 0 20px 0 20px;
+  margin: 80px 0 20px 0;
+  text-align: left;
+  font-family: "PingFang SC", "Microsoft JhengHei";
+}
+
+.commentBox{
+
+}
+.commentBox > img{
+      display: inline;
+      margin: auto;
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+      vertical-align: middle;
+}
+.commentBox > span{
+  font-size: 10px;
+  float: right;
+}
+.commentContent{
+  font-size: 16px;
+  padding-left: 55px;
+  margin-bottom: 10px;
+}
+hr {
+  margin-bottom: 5px;
+  padding: 0;
+  border: 0;
+  background-color: #cacdd2;
+  height: 1px;
+}

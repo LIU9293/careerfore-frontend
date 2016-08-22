@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { getDiscoverList,getDiscoverFilterList } from '../../vendor/connection';
-import { Button } from 'antd';
+import { Button} from 'antd';
 import style from './discover.css';
-// import {millseconds2DateDiff}
+import { browserHistory } from 'react-router';
+import QueueAnim from 'rc-queue-anim';
 
 class DiscoverList extends Component{
 
@@ -12,12 +13,14 @@ class DiscoverList extends Component{
       data: [],
       index: 1,
       loadContent:"点击加载更多",
+      show: true,
     }
     this.loadData = this.loadData.bind(this);
     this.loadChannelList = this.loadChannelList.bind(this);
     this.getChannelIdByChannelName = this.getChannelIdByChannelName.bind(this);
     this.canFresh = true;
     this.channel = [];
+    this.dataContent = [];
   }
 
   componentDidMount(){
@@ -40,9 +43,7 @@ class DiscoverList extends Component{
       }
     })
   }
-
   getChannelIdByChannelName(name){
-    console.log(this.channel);
     let a = null;
     this.channel.map((item,iii)=>{
       if(item.key == name){
@@ -55,22 +56,29 @@ class DiscoverList extends Component{
   loadData(){
     if(this.canFresh){
       this.canFresh = false;
+      this.setState({loadContent:"正在加载..."});
       getDiscoverList('', this.state.index, 5, (err,data)=>{
         this.canFresh = true;
         if(err){
           console.log(err);
         } else {
-          console.log(data.PostsList);
-          if(this.state.index === 1){
-            this.setState({
-              data: data.PostsList,
-              index :this.state.index + 1
-            })
-          }else {
-            this.setState({
-              data: this.state.data.concat(data.PostsList),
-              index: this.state.index + 1
-            })
+          console.log(data.PostsList)
+          if(data.PostsList.length <= 0){
+              this.setState({loadContent:"没有更多内容了"});
+          }else{
+            this.setState({loadContent:"数据处理中..."});
+            if(this.state.index === 1){
+              this.setState({
+                data: data.PostsList,
+                index :this.state.index + 1
+              })
+            }else {
+              this.setState({
+                data: this.state.data.concat(data.PostsList),
+                index: this.state.index + 1
+              })
+            }
+            this.setState({loadContent:"点击加载更多"});
           }
         }
       })
@@ -85,6 +93,7 @@ class DiscoverList extends Component{
         </div>
       )
     } else {
+      this.dataContent = [];
       let myReactComponent = this.state.data.map((item,ii)=>{
         let channerN = this.getChannelIdByChannelName(item.ZctName);
         let bg = 'url(' + item.PictureUrl + ')';
@@ -93,8 +102,7 @@ class DiscoverList extends Component{
         if(con.length > 70){
           con = con.substring(0,70)+'...';
         }
-        console.log(con);
-        if(item.PictureUrl && item.PictureUrl !==undefined){
+        if(item.PictureUrl && item.PictureUrl !== undefined){
           return(
             <div key={ii} className="sectionMain recentNews cf-box" data-tid = {item.PostsID}>
             <div className='box-top'>
@@ -104,7 +112,7 @@ class DiscoverList extends Component{
                 <div className="nameAndCategory">
                     <div className="row" >
                       <a href={'/user/'+item.NickName}>
-                        <div className="box-name">{nikeName}</div><br/>
+                        <div className="box-name" >{nikeName}</div><br/>
                       </a>
                     </div>
                     <div className="row">
@@ -121,24 +129,18 @@ class DiscoverList extends Component{
                   </div>
             </div>
             <div className="box-middle">
-              <a href={'/discover/:'+item.PostsID}>
-              <div className="box-content" style={{backgroundImage:bg}}>
+
+              <div className="box-content" style={{backgroundImage:bg}} onClick={()=>{browserHistory.push(`/discover/${item.PostsID}`);}}>
               </div>
-
-
-              </a>
               </div>
               <div className="box-bottom">
-              <a href={'/discover/:'+item.PostsID} className="aStyle">
+              <a href={'/discover/'+item.PostsID} className="aStyle">
                 <div className="box-title">{item.Title}</div>
               </a>
               <p>{con}</p>
-              <a href={'/discover/:'+item.PostsID}>
-                <div className="box-time" style={{fontSize:'12px'}}>继续阅读</div>
-              </a>
-              {item.CommentNum} 回复 &amp; {0} 查看
+              <div className="box-time" style={{fontSize:'12px'}} onClick={()=>{browserHistory.push(`/discover/${item.PostsID}`);}}>继续阅读</div>
+              {item.CommentNum} 评论 &amp; {0} 查看
             </div>
-
             </div>
           )
         }else {
@@ -168,13 +170,11 @@ class DiscoverList extends Component{
                   </div>
                   </div>
                     <div className="box-bottom">
-                    <a href={'/discover/:'+item.PostsID} className="aStyle">
+                    <a href={'/discover/'+item.PostsID} className="aStyle">
                       <div className="box-title">{item.Title}</div>
                     </a>
                     <p>{con}</p>
-                    <a href={'/discover/:'+item.PostsID}>
-                      <div className="box-time" style={{fontSize:'12px'}}>继续阅读</div>
-                    </a>
+                    <div className="box-time" style={{fontSize:'12px'}} onClick={()=>{browserHistory.push(`/discover/${item.PostsID}`);}}>继续阅读</div>
                     {item.CommentNum} 回复 &amp; {0} 查看
                   </div>
             </div>
@@ -183,8 +183,13 @@ class DiscoverList extends Component{
       })
       return(
         <div>
-          {myReactComponent}
-          <div type="primary" className="loadMore" onClick={this.loadData}>{this.state.loadContent}</div>
+              <QueueAnim component="ul" type={['right', 'left']} >
+                {this.state.show ? myReactComponent  : null}
+              </QueueAnim>
+
+          <div className="loadCover">
+              <span type="primary" className="loadMore" onClick={this.loadData}>{this.state.loadContent}</span>
+          </div>
         </div>
       )
     }
@@ -193,12 +198,4 @@ class DiscoverList extends Component{
 }
 
 module.exports = DiscoverList
-/*
-<div className="box-content" style={{backgroundImage:item.PictureUrl}}></div>
-
-*/
-
-
-/*
-
-*/
+//{myReactComponent}

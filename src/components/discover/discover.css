@@ -149,6 +149,7 @@ p {
     color: #929292;
     float: right;
     display: inline-block;
+    cursor: pointer;
 }
 .aStyle{
   display:block;
@@ -156,7 +157,9 @@ p {
   height:31px;
   margin-bottom:10px;
 }
-
+.loadCover{
+  text-align: center;
+}
 .loadMore{
   text-align: center;
   font-family: 微软雅黑;

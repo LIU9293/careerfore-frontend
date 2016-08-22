@@ -1,0 +1,114 @@
+*{
+    box-sizing: border-box;
+}
+*:before, *:after {
+    box-sizing: border-box;
+}
+button, a {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+a {
+    color: #337ab7;
+    text-decoration: none;
+    background-color: transparent;
+}
+.loadMore{
+  text-align: center;
+  font-family: 微软雅黑;
+  font-size: 17px;
+  cursor: pointer;
+}
+.content {
+    max-width: 1000px;
+    padding: 0;
+    transition: all ease 150ms;
+}
+.box-content{
+  height: 180px;
+  background-size: cover;
+  background-position: center;
+  transition: all ease .4s;
+}
+.box-content:hover{
+  margin-top: 18px;
+  transform: scale(1.2);
+}
+.title{
+  text-transform: initial;
+  word-wrap: break-word;
+  font-size: 28px;
+  line-height: 32px;
+  overflow: hidden;
+  text-align: center;
+  display: inline-block;
+  margin-top: 20px;
+  color: #000;
+  width: 100%;
+}
+.alert{
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 0;
+}
+.alert-warning {
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+    color: #8a6d3b;
+    text-align: center;
+}
+.userinfo{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+.userinfo > .userphoto{
+  margin-right: 15px;
+  border-radius: 50%;
+  width: 46px;
+  height: 46px;
+  line-height: 46px;
+  font-size: 2.4rem;
+  margin: 10px;
+}
+.introduction{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+.introduction > span{
+  font-size: 16px;
+  color: #000;
+}
+.pageContent{
+  margin-left: 0;
+  margin-top: 20px;
+  padding-bottom: 1px;
+  word-wrap: break-word;
+  overflow: hidden;
+  line-height: 1.6em;
+  font-size: 16px;
+}
+.pageContent > p > img{
+  width: 100%
+}
+
+.like {
+    position: relative;
+    height: 20px;
+    font-family: "PingFang SC", "Microsoft JhengHei";
+    color: #4b4c4c;
+    border-bottom: 1px solid #cacdd2;
+}
+.Postlike {
+    position: relative;
+    padding-right: 10px;
+    font-family: "PingFang SC", "Microsoft JhengHei";
+    color: #4b4c4c;
+    float: right;
+}
+i, cite, em, var, address, dfn {
+    font-style: italic;
+}

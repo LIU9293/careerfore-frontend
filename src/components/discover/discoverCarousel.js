@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Carousel } from 'antd';
 import { getCarousel } from '../../vendor/connection';
-import styles from './index.css';
-import sty from './discover.css';
+import style from './index.css';
+// import style from './discover.css';
 
 class DiscoverCarousel extends Component{
 
