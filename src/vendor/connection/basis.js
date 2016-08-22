@@ -157,7 +157,7 @@ export const getDataBase64 = (route, object, callback) => {
 
   let PostDataString = JSON.stringify(MyBLRequestContainer);//JSON序列化
 
-  const myRequest = new Request('http://114.55.41.78:8888/AMSService/APP',{
+  const myRequest = new Request('http://app.careerfore.com:8888/AMSService/APP',{
     method: "POST",
     headers: {
       'Content-Type': 'text/plain; charset=UTF-8'
@@ -187,7 +187,7 @@ export const getData = (route, object, callback) => {
 
   let PostDataString = JSON.stringify(MyBLRequestContainer);//JSON序列化
 
-  const myRequest = new Request('http://114.55.41.78:8888/AMSService/APP',{
+  const myRequest = new Request('http://app.careerfore.com:8888/AMSService/APP',{
     method: "POST",
     headers: {
       'Content-Type': 'text/plain; charset=UTF-8'
