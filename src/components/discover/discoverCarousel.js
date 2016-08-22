@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Carousel } from 'antd';
 import { getCarousel } from '../../vendor/connection';
-import styles from './index.css';
+import style from './index.css';
+// import style from './discover.css';
+
 class DiscoverCarousel extends Component{
 
   constructor(props){
@@ -21,6 +23,8 @@ class DiscoverCarousel extends Component{
        }
      })
    }
+   //<img key={ii} src={item.PictureUrl} />
+   //<div key={ii} className="box-content" style={{backgroundImage:bg}}>
   render(){
     if (this.state.data.length<=0) {
       return(
@@ -28,10 +32,10 @@ class DiscoverCarousel extends Component{
       )
     }else {
       let myHomeFigList=this.state.data.map((item,ii)=>{
+        let bg = 'url(' + item.PictureUrl + ')';
         return(
-          <img key={ii}
-          src={item.PictureUrl}
-          />
+          <img key={ii} src={item.PictureUrl} />
+
         )
       })
       return(
