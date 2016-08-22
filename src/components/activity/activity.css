@@ -19,6 +19,8 @@
   border-top-left-radius:7px;
   z-index: 1;
   height: 168px;
+  background-size: cover;
+  background-position: center;
 }
 .page .pageOverlay{
   position: absolute;
@@ -33,10 +35,10 @@
   max-width: 100%;
   height: auto;
   display: block;
-  transition: all 500ms ease 0ms;
 }
 .page>:hover img{
   transform: scale(1.2);
+  transition: all 500ms ease 0ms;
 }
 .pageCategory{
   position: absolute;
@@ -82,22 +84,30 @@
 }
 /* activitydetail */
 Row{
-  padding: 0;
+  padding:15px 20px;
   margin: 0;
 }
 .Img{
-  max-height:350px;
-  overflow: hidden;
-  position: relative;
-  z-index: 1;
   display: block;
-  transition: all 500ms ease 0ms;
+  max-height: 250px;
+  background-position: center;
+  background-size: cover;
+  overflow: hidden;
 }
 .Img>img{
-  max-width:calc(100%);
-  height: auto;
-  padding-top:(100px - calc(50%));
+  width:calc(100%);
 }
 .Img:hover img{
-  transform: scale(1.2);
+  transform:scale(1.2);
+  transition: all 500ms ease 0ms;
+}
+.FontLg{
+  font-size: 20px;
+}
+.detail{
+  line-height: 2;
+}
+.detail>p{
+  font-size:16px;
+  line-height: 20px;
 }

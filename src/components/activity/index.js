@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { getPlaygroundList } from '../../vendor/connection';
 import styles from './activity.css';
-import { Row, Col } from 'antd';
+import { Row, Col ,Icon} from 'antd';
 
 class Activity extends Component{
 
@@ -28,7 +28,7 @@ class Activity extends Component{
           let ActivityAddress=item.ActivityAddress;
           let PeopleNum=item.PeopleNum;
           return(
-              <Col xs={{span:20}} sm={{span:20}} md={{span:8}} lg={{span:8}}>
+              <Col xs={{span:20}} sm={{span:20}} md={{span:8}} lg={{span:8}} key={Math.random()}>
                 <div className='page' key={ii}>
                   <div className='pageImg'>
                     <div className='pageOverlay'></div>
@@ -39,8 +39,8 @@ class Activity extends Component{
                   <div className='Txt'>
                     <h3>{ActivityTitle}</h3>
                     <p>{ActivityContent}</p>
-                    <span>{ActivityStartDate} - {ActivityEndDate}</span><br/>
-                    <span>{ActivityAddress}</span>
+                    <span><Icon type="clock-circle-o" />{ActivityStartDate} - {ActivityEndDate}</span><br/>
+                    <span><Icon type="environment-o" />{ActivityAddress}</span>
                     <span><a href={'/activity/'+ActivityID}>查看详情</a></span>
                   </div>
                 </div>

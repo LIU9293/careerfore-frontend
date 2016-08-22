@@ -370,6 +370,23 @@ export const getPlaygroundList = (AreaID, pageCurrent, pageSize, callback) => {
     }
   })
 }
+//获取活动首页轮播图
+export const getHomeFigList = (AreaID, callback) => {
+  let queryObj = {
+    areaID: AreaID,
+  }
+  getDataBase64('ZQ.APP.ActivityManage.HomeFig', queryObj, (err, data)=>{
+    if(err){
+      callback(err)
+    } else {
+      if (data.ResultCode === 1){
+        callback(null, data.HomeFigList);
+      } else {
+        callback(data.ResultMessage);
+      }
+    }
+  })
+}
 
 //获取活动详情
 export const getPlaygroundPost = (id, userid, callback) => {
@@ -378,6 +395,25 @@ export const getPlaygroundPost = (id, userid, callback) => {
     UserID: userid
   };
   getDataBase64('ZQ.APP.ActivityManage.GetActivityByID', queryObj, (err, data)=>{
+    if(err){
+      callback(err)
+    } else {
+      if (data.ResultCode === 1){
+        callback(null, data);
+      } else {
+        callback(data.ResultMessage);
+      }
+    }
+  })
+}
+//获取活动评论
+export const GetCommentList = (id, userid,pageNum, callback) => {
+  let queryObj = {
+    EventID: id,
+    UserID: userid,
+    PageNum: pageNum
+  };
+  getData('ZQ.APP.ActivityManage.GetCommentList', queryObj, (err, data)=>{
     if(err){
       callback(err)
     } else {
