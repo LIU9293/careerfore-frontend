@@ -29,10 +29,7 @@ a {
   background-position: center;
   transition: all ease .4s;
 }
-.box-content:hover{
-  margin-top: 18px;
-  transform: scale(1.2);
-}
+
 .title{
   text-transform: initial;
   word-wrap: break-word;
