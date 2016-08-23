@@ -4,6 +4,7 @@ import style from './APP.css';
 import Cookies from 'js-cookie';
 import { getUserInfo } from '../vendor/connection';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
@@ -30,7 +31,7 @@ class home extends Component{
               phone = data.ZUT_PHONE;
           this.setState({
             rightMenuItem:  <div className="menuProfileArea">
-                              <a href={'/my/'+ userid } >
+                              <a onClick={(e)=>{browserHistory.push('/my/'+ this.props.userinfo.userid)}}>
                                 <img src={avatar} className="menuProfileAvatar" />
                               </a>
                             </div>
@@ -52,7 +53,7 @@ class home extends Component{
               phone = data.ZUT_PHONE;
           this.setState({
             rightMenuItem:  <div className="menuProfileArea">
-                              <a href={'/my/'+ id } >
+                              <a onClick={(e)=>{browserHistory.push('/my/'+ this.props.userinfo.userid)}}>
                                 <img src={avatar} className="menuProfileAvatar" />
                               </a>
                             </div>
