@@ -68,8 +68,23 @@ export const getUserInfo = (userid, callback) => {
   let queryObj = {
     UserId: userid,
   };
-  console.log(queryObj)
   getData('ZQ.APP.Mime.UserBaseInfo', queryObj, (err, data) => {
+    if(err){callback(err)} else {
+      if (data.ResultCode === 1){
+        callback(null, data);
+      } else {
+        callback(data.ResultMessage);
+      }
+    }
+  })
+}
+
+//我的帖子
+export const getUserArticles = (userid, callback) =>{
+  let queryObj = {
+    UserId: userid,
+  };
+  getData('ZQ.APP.Mime.UserArticle', queryObj, (err, data) => {
     if(err){callback(err)} else {
       if (data.ResultCode === 1){
         callback(null, data);

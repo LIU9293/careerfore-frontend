@@ -1,0 +1,14 @@
+.secretaryListBox{
+  border: solid 1px #efefef;
+  border-radius: 3px;
+}
+
+.secretaryListBoxHeader{
+  background-color: #efefef;
+  padding: 10px;
+}
+
+.secretaryListBoxContent{
+  font-size: 18px;
+  padding: 10px;
+}

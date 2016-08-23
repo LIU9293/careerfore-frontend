@@ -1,7 +1,9 @@
 import { getData, getDataBase64, postImage, uploadImageToQiniu } from './basis';
 import { getPlaygroundList, getPlaygroundPost } from './activity';
+
 import { getCarousel, getDiscoverList, getDiscoverPost, postDiscoverArticle, getDiscoverPostComment, getDiscoverFilterList, getMyDiscoverFilterList, updateMyDiscoverFilterList,clickLove} from './discover';
-import { sendSMS, userRegister, userLogin, getUserInfo } from './user';
+import { sendSMS, userRegister, userLogin, getUserInfo, getUserArticles } from './user';
+
 import { secretaryMessage, activityMessage, unreadMessage, unreadMessageContent } from './message';
 
 module.exports = {
@@ -27,5 +29,6 @@ module.exports = {
   secretaryMessage, //获取小秘书消息，(userid, Type, callback)
   activityMessage, //获取活动消息，(userid, callback)
   unreadMessage, //获取未读消息，(userid, callback)
-  unreadMessageContent //获取未读消息内容，(userid, senderid, callback)
+  unreadMessageContent, //获取未读消息内容，(userid, senderid, callback)
+  getUserArticles, //获取用户发布的文章，(userid, callback)
 }
