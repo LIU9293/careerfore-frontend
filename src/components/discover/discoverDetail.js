@@ -95,7 +95,7 @@ class DiscoverDetail extends Component{
   }
 }
 
-const mapStateToProps = (store) => {
+function mapStateToProps(store){
   return {
     userinfo: store.user
   }

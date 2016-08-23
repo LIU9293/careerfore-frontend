@@ -51,3 +51,40 @@ hr {
   background-color: #cacdd2;
   height: 1px;
 }
+.spanLove{
+  font-size: 16px;
+  float: right;
+  cursor: pointer;
+}
+.spanintro{
+  font-size: 14px;
+}
+.single_sec{
+
+}
+.commentBox_sec{
+    margin-left: 25px;
+}
+.spanLove_sec{
+  font-size: 10px;
+  float: right;
+  cursor: pointer;
+}
+.commentBox_sec > img{
+  display: inline;
+  margin: auto;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+.spanintro_sec{
+  font-size: 14px;
+}
+
+.commentContent_sec{
+  font-size: 16px;
+  padding-left: 55px;
+  margin-bottom: 10px;
+  margin-left: 15px;
+}

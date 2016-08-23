@@ -23,4 +23,26 @@ function user(state = {login: false,userid: null}, action){
   }
 }
 
-export default combineReducers({user})
+function dianzan(state = {}, action) {
+  switch (action.type) {
+    case 'LIKE_TOGGLE':
+      if(state[action.commentID] == true){
+        delete state[action.commentID];
+        console.log({...state})
+        return {...state}
+      } else {
+        console.log({
+          ...state,
+          [action.commentID]:true
+        })
+        return{
+          ...state,
+          [action.commentID]:true
+        }
+      }
+    default:
+      return state
+  }
+}
+
+export default combineReducers({user,dianzan})
