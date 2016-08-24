@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Menu, Icon } from 'antd';
 import style from './APP.css';
 import Cookies from 'js-cookie';
-import { getUserInfo } from '../vendor/connection';
+import { getUserInfo, getUserActivities, getPlaygroundList } from '../vendor/connection';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 
@@ -38,7 +38,23 @@ class home extends Component{
           });
         }
       })
+      getUserActivities(userid, (err,data) => {
+        if(err){console.log(err)} else {
+          data.UserActivityList.map((item,ii)=>{
+            this.props.baoming(item.ZET_ID)
+          })
+        }
+      })
     }
+    getPlaygroundList('', 1, 1000, (err,data)=>{
+      if(err){console.log(err)} else {
+        data.map((item,ii)=>{
+          if(item.ActivityState.trim() == '已结束'){
+            this.props.closeActivity(item.ActivityID)
+          }
+        })
+      }
+    })
   }
 
   componentWillReceiveProps(nextProps){
@@ -107,12 +123,15 @@ class home extends Component{
 
 function mapStateToProps(store){
   return {
-    userinfo: store.user
+    userinfo: store.user,
+    joinedActivity: store.yibaoming
   }
 }
 function mapDispatchToProps(dispatch){
   return {
-    login: (userid) => {dispatch({type:'LOG_IN', userid:userid})}
+    login: (userid) => {dispatch({type:'LOG_IN', userid:userid})} ,
+    baoming: (id) => {dispatch({type:'JOIN_ACTIVITY', id: id})} ,
+    closeActivity: (id) => {dispatch({type:'ADD_CLOSED', id: id})},
   }
 }
 

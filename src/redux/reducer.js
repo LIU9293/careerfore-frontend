@@ -52,4 +52,33 @@ function dianzan(state = {}, action) {
   }
 }
 
-export default combineReducers({user,dianzan})
+function yibaoming( state = {}, action ){
+  switch (action.type) {
+    case 'JOIN_ACTIVITY':
+      return {
+        ...state,
+        [action.id]: '已报名',
+      }
+    case 'CANCEL_ACTIVITY':
+      if(state[action.id]){
+        delete state[action.id];
+      }
+      return {...state}
+    default:
+      return state
+  }
+}
+
+function yijieshu( state = {}, action ){
+  switch (action.type) {
+    case 'ADD_CLOSED':
+      return {
+        ...state,
+        [action.id]: '已结束',
+      }
+    default:
+      return state
+  }
+}
+
+export default combineReducers({user,dianzan,yibaoming,yijieshu})

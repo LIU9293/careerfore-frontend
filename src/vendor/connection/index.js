@@ -1,5 +1,5 @@
 import { getData, getDataBase64, postImage, uploadImageToQiniu } from './basis';
-import { getPlaygroundList, getPlaygroundPost, getUserActivities } from './activity';
+import { getPlaygroundList, getPlaygroundPost, getActivityComment, getActivityCarousel, getSignUpResult, getActivitySignUp, getUserActivities } from './activity';
 import { getCarousel, getDiscoverList, getDiscoverPost, postDiscoverArticle, getDiscoverPostComment, getDiscoverFilterList, getMyDiscoverFilterList, updateMyDiscoverFilterList,clickLove} from './discover';
 import { sendSMS, userRegister, userLogin, getUserInfo, getUserArticles, getUserCollection, postUserAvatar } from './user';
 import { secretaryMessage, activityMessage, unreadMessage, unreadMessageContent } from './message';
@@ -9,9 +9,13 @@ module.exports = {
   getDataBase64, //抓base64转码过的数据
   postImage, //传图片到自己的服务器，输入（图片base64,callback)
   uploadImageToQiniu, //传图片到七牛，输入（图片base64,callback)
+  getActivityCarousel, //获取首页活动轮播图，输入（areaID,callback)
   getPlaygroundList, //获取活动列表，输入(AreaID, pageCurrent, pageSize, callback)
   getPlaygroundPost, //获取活动详情，输入(id, userid, callback)
+  getActivityComment,//获取活动评论列表，输入（eventid，userid，pageNum，callback）
   getCarousel, //获取发现轮播图，参数只有一个callback
+  getSignUpResult,//获取活动报名结果，输入(userID,ActivityID,callback)
+  getActivitySignUp,//获取活动报名，输入(userID,ActivityID,callback)
   getDiscoverList, //获取发现帖子列表，参数(userID, pageNumber, perPageNumber, callback)
   getDiscoverPost, //获取发现帖子详情，参数(postID, userID, callback)
   postDiscoverArticle, //发现板块发布帖子，输入(userid, title, cover, category, HTMLcontent, type, coverSRC, postid, callback)
@@ -31,5 +35,5 @@ module.exports = {
   getUserArticles, //获取用户发布的文章，(userid, callback)
   getUserActivities, //获取用户参加的活动 （userid, callback)
   getUserCollection, //获取用户的收藏 （userid, callback)
-  postUserAvatar, //更新用户头像 (userid, useravatar, callback) 
+  postUserAvatar, //更新用户头像 (userid, useravatar, callback)
 }
