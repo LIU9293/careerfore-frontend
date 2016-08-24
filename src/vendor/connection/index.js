@@ -1,9 +1,7 @@
 import { getData, getDataBase64, postImage, uploadImageToQiniu } from './basis';
-import { getPlaygroundList, getPlaygroundPost } from './activity';
-
+import { getPlaygroundList, getPlaygroundPost, getUserActivities } from './activity';
 import { getCarousel, getDiscoverList, getDiscoverPost, postDiscoverArticle, getDiscoverPostComment, getDiscoverFilterList, getMyDiscoverFilterList, updateMyDiscoverFilterList,clickLove} from './discover';
-import { sendSMS, userRegister, userLogin, getUserInfo, getUserArticles } from './user';
-
+import { sendSMS, userRegister, userLogin, getUserInfo, getUserArticles, getUserCollection, postUserAvatar } from './user';
 import { secretaryMessage, activityMessage, unreadMessage, unreadMessageContent } from './message';
 
 module.exports = {
@@ -31,4 +29,7 @@ module.exports = {
   unreadMessage, //获取未读消息，(userid, callback)
   unreadMessageContent, //获取未读消息内容，(userid, senderid, callback)
   getUserArticles, //获取用户发布的文章，(userid, callback)
+  getUserActivities, //获取用户参加的活动 （userid, callback)
+  getUserCollection, //获取用户的收藏 （userid, callback)
+  postUserAvatar, //更新用户头像 (userid, useravatar, callback) 
 }

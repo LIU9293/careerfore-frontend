@@ -38,3 +38,21 @@ export const getPlaygroundPost = (id, userid, callback) => {
     }
   })
 }
+
+//查看一个用户已经报名的活动
+export const getUserActivities = (userid, callback) => {
+  let queryObj = {
+    UserId: userid
+  };
+  getData('ZQ.APP.Mime.UserActivity', queryObj, (err, data) => {
+    if(err){
+      callback(err)
+    } else {
+      if (data.ResultCode === 1){
+        callback(null, data);
+      } else {
+        callback(data.ResultMessage);
+      }
+    }
+  })
+}

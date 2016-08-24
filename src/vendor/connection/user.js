@@ -94,3 +94,36 @@ export const getUserArticles = (userid, callback) =>{
     }
   })
 }
+
+//我的收藏
+export const getUserCollection = (userid, callback) =>{
+  let queryObj = {
+    UserId: userid,
+  };
+  getData('ZQ.APP.Mime.UserCollect', queryObj, (err, data) => {
+    if(err){callback(err)} else {
+      if (data.ResultCode === 1){
+        callback(null, data);
+      } else {
+        callback(data.ResultMessage);
+      }
+    }
+  })
+}
+
+//更新我的头像
+export const postUserAvatar = (userid, useravatar, callback) =>{
+  let queryObj = {
+    UserId: userid,
+    UserHeadImg: useravatar
+  };
+  getData('ZQ.APP.Mime.UploadHeadImg', queryObj, (err, data) => {
+    if(err){callback(err)} else {
+      if (data.ResultCode === 1){
+        callback(null, data);
+      } else {
+        callback(data.ResultMessage);
+      }
+    }
+  })
+}

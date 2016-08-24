@@ -7,6 +7,8 @@ import { getUserInfo, activityMessage, unreadMessage, unreadMessageContent } fro
 import BlurImg from '../common/blurimg';
 import Message from './include/message';
 import Article from './include/article';
+import Activity from './include/activity';
+import Setting from './include/setting';
 import Collect from './include/collect';
 
 class Home extends Component{
@@ -19,9 +21,11 @@ class Home extends Component{
       Menulist: {
         message: <Message /> ,
         article: <Article /> ,
-        collect: <Collect />
+        collect: <Collect /> ,
+        activity: <Activity /> ,
+        setting: <Setting />
       },
-      current: <Message />
+      current: <Collect />
     }
   }
 
@@ -51,7 +55,7 @@ class Home extends Component{
   handleClick(e){
     this.setState({
       current: this.state.Menulist[e.key]
-    },()=>{console.log(this.state.current)});
+    });
   }
 
   render(){
@@ -69,8 +73,14 @@ class Home extends Component{
               <Menu.Item key="article">
                 文章
               </Menu.Item>
+              <Menu.Item key="activity">
+                活动
+              </Menu.Item>
               <Menu.Item key="collect">
                 收藏
+              </Menu.Item>
+              <Menu.Item key="setting">
+                设置
               </Menu.Item>
             </Menu>
           </Col>
