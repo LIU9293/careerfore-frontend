@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import DiscoverTag from './discoverTag';
 import DiscoverCarousel from './discoverCarousel';
 import DiscoverList from './discoverList';
+import SimpEditor from './PostArticle';
+
 
 class Discover extends Component{
 
   constructor(props){
     super(props);
+    this.editor = null;
   }
 
   render(){

@@ -12,11 +12,13 @@ import DiscoverDetail from '../components/discover/discoverDetail';
 import Login from '../components/profile/login';
 import Register from '../components/profile/register';
 import MyHome from '../components/profile/home';
+import Simditor from '../components/discover/PostArticle';
 
 const Routes = ({ history }) =>
   <Router history={history}>
     <Route path="/" component={APP}>
       <Route path="/activity" component={Activity} />
+      <Route path="/new" component={Simditor} />
       <Route path="/activity/:activityID" component={ActivityDetail} />
       <Route path="/discover" component={Discover} />
       <Route path="/discover/new" component={NewArticle} />

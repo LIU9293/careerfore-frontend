@@ -226,8 +226,8 @@ export const postImage = (base64, callback) => {
 //输入是base64的图片，不包含data:image...的前缀，callback是图片链接
 export const uploadImageToQiniu = (imageBase64,callback) => {
 
-    Scope = `react`;
-    Deadline = Math.floor(Date.now() / 1000) + 3600;
+   let  Scope = `react`;
+   let  Deadline = Math.floor(Date.now() / 1000) + 3600;
 
     //STEP 1
     var putPolicy = {

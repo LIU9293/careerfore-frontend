@@ -1,7 +1,7 @@
 import { getData, getDataBase64, postImage, uploadImageToQiniu } from './basis';
 import { getPlaygroundList, getPlaygroundPost } from './activity';
 
-import { getCarousel, getDiscoverList, getDiscoverPost, postDiscoverArticle, getDiscoverPostComment, getDiscoverFilterList, getMyDiscoverFilterList, updateMyDiscoverFilterList,clickLove} from './discover';
+import { getCarousel, getDiscoverList, getDiscoverPost, postDiscoverArticle, getDiscoverPostComment, getDiscoverFilterList, getMyDiscoverFilterList, updateMyDiscoverFilterList,clickLove,addComment} from './discover';
 import { sendSMS, userRegister, userLogin, getUserInfo, getUserArticles } from './user';
 
 import { secretaryMessage, activityMessage, unreadMessage, unreadMessageContent } from './message';
@@ -22,6 +22,7 @@ module.exports = {
   getMyDiscoverFilterList, //获取用户已经订阅的筛选列表，参数(userid, callback)
   updateMyDiscoverFilterList, // 更新用户订阅筛选列表，参数(userid, channels, callback)
   clickLove,//点赞
+  addComment,//添加评论
   sendSMS, //发送短信，参数(phone, type, callback)，type是（注册／忘记密码／绑定手机）
   userRegister, //用户注册，(phone, code, password, c_id, ios_token, callback)
   userLogin, //用户登录，(phone, password, c_id, ios_token, callback)
