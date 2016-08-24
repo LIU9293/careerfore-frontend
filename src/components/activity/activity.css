@@ -26,6 +26,8 @@
   height: 168px;
   background-size: cover;
   background-position: center;
+  cursor: pointer;
+  transition: all 500ms ease 0ms;
 }
 .page .pageOverlay{
   position: absolute;
@@ -40,6 +42,7 @@
   max-width: 100%;
   height: auto;
   display: block;
+  transition: all 500ms ease 0ms;
 }
 .page>:hover img{
   transform: scale(1.2);
@@ -70,6 +73,7 @@
 }
 .Txt{
   padding: 5px 15px 5px 15px;
+
 }
 .Txt>h3,p{
   margin: 0px;

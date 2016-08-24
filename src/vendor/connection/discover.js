@@ -86,7 +86,7 @@ export const getDiscoverPostComment = (userid,postsId,pageNum,callback) => {
     PostsId: postsId,
     PageNum: pageNum
   };
-  getDataBase64('ZQ.APP.Found.CommentInfo', queryObj, (err, data) => {
+  getData('ZQ.APP.Found.CommentInfo', queryObj, (err, data) => {
     if(err){
       callback(err);
     } else {
@@ -141,6 +141,27 @@ export const updateMyDiscoverFilterList = (userid, channels, callback) => {
       if (data.ResultCode === 1){
         callback(null, data);
       } else {
+        callback(data.ResultMessage);
+      };
+    }
+  })
+}
+
+//点赞
+export const clickLove = (userID,objectID,state,callback)=>{
+  let queryObj = {
+    UserID: userID,
+    ObjectID: objectID,
+    State:state
+  };
+  getData("ZQ.APP.Found.AppLike",queryObj,(err,data)=>{
+    if(err){
+      callback(err);
+    }else {
+      console.log(data);
+      if(data.ResultCode === 1){
+        callback(null, data);
+      }else {
         callback(data.ResultMessage);
       };
     }

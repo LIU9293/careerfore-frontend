@@ -38,8 +38,9 @@ export const getPlaygroundPost = (id, userid, callback) => {
     }
   })
 }
+
 //获取活动首页轮播图
-export const getActivityCarousel=(areaid,callback)=>{
+export const getActivityCarousel = (areaid, callback) => {
   let queryObj={
     areaID:areaid
   }
@@ -55,8 +56,9 @@ export const getActivityCarousel=(areaid,callback)=>{
    }
  })
 }
+
 //获取活动评论详情
-export const getActivityComment=(eventid,userid,pageNum,callback)=>{
+export const getActivityComment = (eventid, userid, pageNum, callback) => {
   let queryObj={
     EventID:eventid,
     UserID:userid,
@@ -74,13 +76,18 @@ export const getActivityComment=(eventid,userid,pageNum,callback)=>{
     }
   })
 }
+
 //获取活动报名
-export const getActivitySignUp=(userid,activityid,callback)=>{
+export const getActivitySignUp = (userid, activityid, isneedaudit, paytype, payaccount, orderno, callback) => {
   let queryObj={
-    UserID:userid,
-    ActivityID:activityid,
+    UserID: userid,
+    ActivityID: activityid,
+    IsNeedAudit: isneedaudit,
+    PayType: paytype,
+    PayAccount: payaccount,
+    OrderNo: orderno
   };
-  getdata('ZQ.APP.ActivityManage.SignUp',queryObj,(err,data)=>{
+  getData('ZQ.APP.ActivityManage.SignUp',queryObj,(err,data)=>{
     if (err){
       callback(err)
     }else{
@@ -92,19 +99,38 @@ export const getActivitySignUp=(userid,activityid,callback)=>{
     }
   })
 }
+
 //获取活动报名结果
-export const getSignUpResult=(userid,activityid,callback)=>{
+export const getSignUpResult=(userid, activityid, callback)=>{
   let queryObj={
-    UserID:userid,
-    ActivityID:activityid,
+    UserID: userid,
+    ActivityID: activityid,
   };
-  getdata('ZQ.APP.ActivityManage.GetSignUpResult',queryObj,(err,data)=>{
+  getData('ZQ.APP.ActivityManage.GetSignUpResult',queryObj,(err,data)=>{
     if (err) {
       callback(err)
     }else {
       if(data.ResultCode===1){
         callback(null,data);
       }else {
+        callback(data.ResultMessage);
+      }
+    }
+  })
+}
+
+//查看一个用户已经报名的活动
+export const getUserActivities = (userid, callback) => {
+  let queryObj = {
+    UserId: userid,
+  };
+  getData('ZQ.APP.Mime.UserActivity', queryObj, (err, data) => {
+    if(err){
+      callback(err)
+    } else {
+      if (data.ResultCode === 1){
+        callback(null, data);
+      } else {
         callback(data.ResultMessage);
       }
     }

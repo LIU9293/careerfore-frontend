@@ -1,7 +1,7 @@
 import { getData, getDataBase64 } from './basis.js';
 
 //查找小秘书消息 type = 全部消息、未读消息
-export const secretaryMessage = (userid, Type, callback) => {
+export const secretaryMessage = (userid, type, callback) => {
   let queryObj = {
     UserId: userid,
     Type: type

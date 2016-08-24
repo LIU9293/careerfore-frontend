@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { getPlaygroundList } from '../../vendor/connection';
+import { browserHistory } from 'react-router';
 import styles from './activity.css';
 import { Row, Col ,Icon} from 'antd';
 import ActivityCarousels from './ActivityCarousel';
@@ -18,7 +19,6 @@ class Activity extends Component{
   componentDidMount(){
     getPlaygroundList('',1,10,(err,data)=>{
       if(err){console.log(err)} else {
-        console.log(data);
         let activityList = data.map((item,ii)=>{
           let ActivityState=item.ActivityState;
           let PictureUrl=item.PictureUrl;
@@ -34,11 +34,10 @@ class Activity extends Component{
           if (ActivityContent.length>20) {
               realContent= ActivityContent.substring(0,20)+"...";
           }
-          console.log(realContent);
           return(
 
               <Col xs={{span:20}} sm={{span:20}} md={{span:8}} lg={{span:8}} key={Math.random()}>
-                <div className='page' key={ii}>
+                <div className='page' key={ii} onClick={()=>{browserHistory.push(`/activity/${item.ActivityID}`)}}>
                   <div className='pageImg'>
                     <div className='pageOverlay'></div>
                     <div className='pageCategory'>{ActivityState}</div>
@@ -51,7 +50,7 @@ class Activity extends Component{
                     <span><Icon type="clock-circle-o" />{ActivityStartDate} - {ActivityEndDate}</span><br/>
                     <span><Icon type="environment-o" />{ActivityAddress}</span>
                     <div className="DetailComment">
-                      <span><a href={'/activity/'+ActivityID}>查看详情</a></span>
+                      <span><a>查看详情</a></span>
                     </div>
                   </div>
                 </div>

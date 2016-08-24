@@ -4,6 +4,7 @@ import { Button} from 'antd';
 import style from './discover.css';
 import { browserHistory } from 'react-router';
 import QueueAnim from 'rc-queue-anim';
+import Loading from '../loading';
 
 class DiscoverList extends Component{
 
@@ -88,9 +89,7 @@ class DiscoverList extends Component{
   render(){
     if(this.state.data.length === 0){
       return(
-        <div>
-          <h1 style={{textAlign: 'center'}}>loading...</h1>
-        </div>
+        <Loading />
       )
     } else {
       this.dataContent = [];

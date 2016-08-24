@@ -1,7 +1,7 @@
 import { getData, getDataBase64, postImage, uploadImageToQiniu } from './basis';
-import { getPlaygroundList, getPlaygroundPost, getActivityComment,getActivityCarousel,getSignUpResult,getActivitySignUp} from './activity';
-import { getCarousel, getDiscoverList, getDiscoverPost, postDiscoverArticle, getDiscoverPostComment, getDiscoverFilterList, getMyDiscoverFilterList, updateMyDiscoverFilterList} from './discover';
-import { sendSMS, userRegister, userLogin, getUserInfo } from './user';
+import { getPlaygroundList, getPlaygroundPost, getActivityComment, getActivityCarousel, getSignUpResult, getActivitySignUp, getUserActivities } from './activity';
+import { getCarousel, getDiscoverList, getDiscoverPost, postDiscoverArticle, getDiscoverPostComment, getDiscoverFilterList, getMyDiscoverFilterList, updateMyDiscoverFilterList,clickLove} from './discover';
+import { sendSMS, userRegister, userLogin, getUserInfo, getUserArticles, getUserCollection, postUserAvatar } from './user';
 import { secretaryMessage, activityMessage, unreadMessage, unreadMessageContent } from './message';
 
 module.exports = {
@@ -23,6 +23,7 @@ module.exports = {
   getDiscoverFilterList, //获取发现文章筛选列表，参数只有callback
   getMyDiscoverFilterList, //获取用户已经订阅的筛选列表，参数(userid, callback)
   updateMyDiscoverFilterList, // 更新用户订阅筛选列表，参数(userid, channels, callback)
+  clickLove,//点赞
   sendSMS, //发送短信，参数(phone, type, callback)，type是（注册／忘记密码／绑定手机）
   userRegister, //用户注册，(phone, code, password, c_id, ios_token, callback)
   userLogin, //用户登录，(phone, password, c_id, ios_token, callback)
@@ -30,5 +31,9 @@ module.exports = {
   secretaryMessage, //获取小秘书消息，(userid, Type, callback)
   activityMessage, //获取活动消息，(userid, callback)
   unreadMessage, //获取未读消息，(userid, callback)
-  unreadMessageContent //获取未读消息内容，(userid, senderid, callback)
+  unreadMessageContent, //获取未读消息内容，(userid, senderid, callback)
+  getUserArticles, //获取用户发布的文章，(userid, callback)
+  getUserActivities, //获取用户参加的活动 （userid, callback)
+  getUserCollection, //获取用户的收藏 （userid, callback)
+  postUserAvatar, //更新用户头像 (userid, useravatar, callback)
 }

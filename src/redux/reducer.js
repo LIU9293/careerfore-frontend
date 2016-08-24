@@ -1,10 +1,17 @@
 /*
  * this is the file that contains whole reducers for app
  */
-
+import Cookies from 'js-cookie';
 import { combineReducers } from 'redux';
 
-function user(state = {login: false,userid: null}, action){
+let userid = Cookies.get('UserID');
+if(userid !== undefined){
+  var initUserState = { login: true, userid: userid};
+} else {
+  var initUserState = {login: false,userid: null}
+}
+
+function user(state = initUserState, action){
   switch (action.type) {
     case 'LOG_IN':
       return {
@@ -23,4 +30,55 @@ function user(state = {login: false,userid: null}, action){
   }
 }
 
-export default combineReducers({user})
+function dianzan(state = {}, action) {
+  switch (action.type) {
+    case 'LIKE_TOGGLE':
+      if(state[action.commentID] == true){
+        delete state[action.commentID];
+        console.log({...state})
+        return {...state}
+      } else {
+        console.log({
+          ...state,
+          [action.commentID]:true
+        })
+        return{
+          ...state,
+          [action.commentID]:true
+        }
+      }
+    default:
+      return state
+  }
+}
+
+function yibaoming( state = {}, action ){
+  switch (action.type) {
+    case 'JOIN_ACTIVITY':
+      return {
+        ...state,
+        [action.id]: '已报名',
+      }
+    case 'CANCEL_ACTIVITY':
+      if(state[action.id]){
+        delete state[action.id];
+      }
+      return {...state}
+    default:
+      return state
+  }
+}
+
+function yijieshu( state = {}, action ){
+  switch (action.type) {
+    case 'ADD_CLOSED':
+      return {
+        ...state,
+        [action.id]: '已结束',
+      }
+    default:
+      return state
+  }
+}
+
+export default combineReducers({user,dianzan,yibaoming,yijieshu})

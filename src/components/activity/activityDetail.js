@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { getPlaygroundPost } from '../../vendor/connection';
-import { Row, Col, Icon,Button,Carousel,Collapse,Calendar,BackTop,Spin,Tooltip } from 'antd';
+import { getPlaygroundPost, getActivitySignUp, getSignUpResult } from '../../vendor/connection';
+import { Row, Col, Icon, Button, Carousel, Collapse, Calendar, BackTop, Spin, Tooltip, message } from 'antd';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import styles from './activity.css';
@@ -16,17 +16,17 @@ class ActivityPost extends Component{
     super(props);
     this.state={
       activityData: null,
-      show: true
+      show: true,
+      joinActivityError: null,
     }
+    this.joinActivity = this.joinActivity.bind(this);
   }
-
 
   componentDidMount(){
     getPlaygroundPost(this.props.params.activityID, '',(err,data)=>{
       if(err){
         console.log(err);
       } else {
-        console.log(data);
         let image = data.Activity.ActivityPictureUrl;
         let content = data.Activity.ActivityContent;
         let title = data.Activity.ActivityTitle;
@@ -44,25 +44,47 @@ class ActivityPost extends Component{
             image: image,
             content: content,
             title: title,
-            Address:Address,
-            StartDate:StartDate,
-            EndDate:EndDate,
-            CheckPeopleNum:CheckPeopleNum,
-            PeopleNum:PeopleNum,
-            Fee:Fee,
-            Latitude:Latitude,
-            Longitude:Longitude,
-            LikeCount:LikeCount
+            Address: Address,
+            StartDate: StartDate,
+            EndDate: EndDate,
+            CheckPeopleNum: CheckPeopleNum,
+            PeopleNum: PeopleNum,
+            Fee: Fee,
+            Latitude: Latitude,
+            Longitude: Longitude,
+            LikeCount: LikeCount
           }
         })
       };
     })
-    console.log(this.state.activityData);
+  }
+
+  joinActivity(){
+    if(!this.props.userinfo.login){
+      browserHistory.push('/login');
+    } else {
+      getActivitySignUp(this.props.userinfo.userid, this.props.params.activityID, 0, 0, '', '', (err, data) => {
+        if(err){
+          console.log(err);
+          this.setState({joinActivityError: err});
+        } else {
+          getSignUpResult(this.props.userinfo.userid, this.props.params.activityID, (err, data) => {
+            if(err){console.log(err)} else {
+              if(data.Type == 1){
+                this.props.baoming(this.props.params.activityID);
+                message.success('活动报名成功');
+              } else {
+                message.warning('活动报名失败');
+              }
+            }
+          })
+        }
+      })
+    }
   }
 
   render(){
     if(this.state.activityData){
-      console.log(this.state.activityData.Latitude)
       let Fee;
       if (this.state.activityData.Fee==0) {
           Fee='活动免费';
@@ -75,12 +97,6 @@ class ActivityPost extends Component{
       }
       function onPanelChange(value, mode) {
         console.log(value, mode);
-      }
-      const userid='';
-      function  onclick(){
-        if (this.props.userinfo.userid===undefined) {
-            browserHistory.push(`/login`);
-        }
       }
       return(
         <div className="width1000" >
@@ -103,7 +119,10 @@ class ActivityPost extends Component{
                   </Tooltip>
                   <Button type="ghost" size="large"><Icon type="share-alt" />我要分享</Button>
                   <Button type="ghost" size="large"><Icon type="heart-o" />喜欢{this.state.activityData.LikeCount}</Button>
-                  <Button type="primary" size="large" >我要报名</Button>
+                  <Button type="primary" size="large"
+                    disabled={this.props.joinedActivity[this.props.params.activityID] || this.props.closedActivity[this.props.params.activityID] || false } onClick={this.joinActivity} >
+                    {this.props.joinedActivity[this.props.params.activityID] || this.props.closedActivity[this.props.params.activityID] || '我要报名'}
+                  </Button>
                   </div>
                   <div className="contentDt" style={{paddingRight:'10px'}}>
                       <h2>活动详情</h2>
@@ -145,7 +164,7 @@ class ActivityPost extends Component{
       return (
         <div className="load">
           <Spin size="small" />
-          <Spin />
+            <Spin />
           <Spin size="large" />
         </div>
       )
@@ -155,8 +174,15 @@ class ActivityPost extends Component{
 
 function mapStateToProps(store){
   return {
-    userinfo: store.user
+    userinfo: store.user ,
+    joinedActivity: store.yibaoming ,
+    closedActivity: store.yijieshu ,
+  }
+}
+function mapDispatchToProps(dispatch){
+  return {
+    baoming: (id) => {dispatch({type:'JOIN_ACTIVITY', id: id})}
   }
 }
 
-module.exports = connect(mapStateToProps)(ActivityPost)
+module.exports = connect(mapStateToProps,mapDispatchToProps)(ActivityPost)

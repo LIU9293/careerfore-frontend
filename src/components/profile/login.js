@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
 import style from './index.css';
 import Cookies from 'js-cookie';
-import { userLogin } from '../../vendor/connection';
+import { userLogin, getUserActivities } from '../../vendor/connection';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 
@@ -43,6 +43,13 @@ class Login extends Component{
           this.props.login(UserID);
           console.log('已将用户ID存入cookie, cookie是：');
           console.log(Cookies.get('UserID'));
+          getUserActivities(UserID, (err,data) => {
+            if(err){console.log(err)} else {
+              data.UserActivityList.map((item,ii)=>{
+                this.props.baoming(item.ZET_ID)
+              })
+            }
+          })
           browserHistory.push('/')
         }
       })
@@ -89,7 +96,8 @@ function mapStateToProps(store){
 }
 function mapDispatchToProps(dispatch){
   return {
-    login: (userid) => {dispatch({type:'LOG_IN', userid:userid})}
+    login: (userid) => {dispatch({type:'LOG_IN', userid:userid})} ,
+    baoming: (id) => {dispatch({type:'JOIN_ACTIVITY', id: id})} ,
   }
 }
 
