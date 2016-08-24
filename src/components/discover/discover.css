@@ -74,6 +74,7 @@ img {
     font-size: 18px;
     color: #69707A;
     display: block;
+    padding-right: 50px;
 }
 .box-time {
     margin-top: 0;
@@ -112,6 +113,8 @@ p {
 .box-category{
   line-height:20px;
   margin-left:5px;
+  float: left;
+  font-size: 15px;
 }
 .box-middle{
   position: relative;
@@ -146,11 +149,21 @@ p {
     color: #929292;
     float: right;
     display: inline-block;
+    cursor: pointer;
 }
 .aStyle{
   display:block;
   overflow:hidden;
   height:31px;
   margin-bottom:10px;
+}
+.loadCover{
+  text-align: center;
+}
+.loadMore{
+  text-align: center;
+  font-family: 微软雅黑;
+  font-size: 17px;
+  cursor: pointer;
 }
 /*发现 结束*/

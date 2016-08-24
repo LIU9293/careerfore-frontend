@@ -1,17 +1,25 @@
 import React, { Component } from 'react';
 import { getPlaygroundPost } from '../../vendor/connection';
-import { Row, Col, Icon } from 'antd';
+import { Row, Col, Icon,Button,Carousel,Collapse,Calendar,BackTop,Spin,Tooltip } from 'antd';
+import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 import styles from './activity.css';
 import ActivityComment from './activityComment';
+import ActivityMapView from './mapview';
+import ActivityCarousels from './ActivityCarousel';
+import ActivitySignUps from './ActivityResult';
+import QueueAnim from 'rc-queue-anim';
 
 class ActivityPost extends Component{
 
   constructor(props){
     super(props);
     this.state={
-      activityData:{},
+      activityData: null,
+      show: true
     }
   }
+
 
   componentDidMount(){
     getPlaygroundPost(this.props.params.activityID, '',(err,data)=>{
@@ -30,6 +38,7 @@ class ActivityPost extends Component{
         let Fee=data.Activity.Fee;
         let Latitude=data.Activity.ActivityLatitude;
         let Longitude=data.Activity.ActivityLongitude;
+        let LikeCount=data.Activity.ActivityLikeCount;
         this.setState({
           activityData:{
             image: image,
@@ -43,6 +52,7 @@ class ActivityPost extends Component{
             Fee:Fee,
             Latitude:Latitude,
             Longitude:Longitude,
+            LikeCount:LikeCount
           }
         })
       };
@@ -51,26 +61,102 @@ class ActivityPost extends Component{
   }
 
   render(){
-    return(
-      <Row>
-        <Col xs={2} sm={4} md={6} lg={4} />
-          <Col xs={20} sm={16} md={12} lg={16}>
-            <div className="Img">
-            <img src={this.state.activityData.image || ''}/>
-            </div>
-            <div className="detail">
-              <h1>{this.state.activityData.title || ''}</h1>
-              <div className="FontLg" dangerouslySetInnerHTML={{__html: this.state.activityData.content || ''}} />
-              <p><Icon type="clock-circle-o" />{this.state.activityData.StartDate || ''} - {this.state.activityData.EndDate || ''}</p>
-              <p><Icon type="team" />{this.state.activityData.PeopleNum || '0'}人(限{this.state.activityData.CheckPeopleNum || ''}人报名)</p>
-              <p><Icon type="environment-o" />{this.state.activityData.Address}</p>
-              <ActivityComment activityID={this.props.params.activityID} />
-            </div>
-          </Col>
-        <Col xs={2} sm={4} md={6} lg={4} />
-      </Row>
-    )
+    if(this.state.activityData){
+      console.log(this.state.activityData.Latitude)
+      let Fee;
+      if (this.state.activityData.Fee==0) {
+          Fee='活动免费';
+      }else {
+          Fee=this.state.activityData.Fee;
+      }
+      const Panel = Collapse.Panel;
+      function callback(key) {
+        console.log(key);
+      }
+      function onPanelChange(value, mode) {
+        console.log(value, mode);
+      }
+      const userid='';
+      function  onclick(){
+        if (this.props.userinfo.userid===undefined) {
+            browserHistory.push(`/login`);
+        }
+      }
+      return(
+        <div className="width1000" >
+          <Row>
+            <Col xs={24}>
+              <div className="Img">
+              <img src={this.state.activityData.image || ''}/>
+              </div>
+              <div className="detail">
+                <Col xs={16} sm={16} md={16} lg={16}>
+                  <h1>{this.state.activityData.title || ''}</h1>
+                  <p><Icon type="clock-circle-o" /><span>{this.state.activityData.StartDate || ''} - {this.state.activityData.EndDate || ''}</span></p>
+                  <p><Icon type="team" /><span>{this.state.activityData.PeopleNum || '0'}人(限{this.state.activityData.CheckPeopleNum || ''}人报名)</span></p>
+                  <p><Icon type="environment-o" /><span>{this.state.activityData.Address}</span></p>
+                  <p><Icon type="pay-circle-o" /><span>{Fee}</span></p>
+                  <p><Icon type="tags-o" /><span style={{fontSize:'15px'}}>Careerfore活动俱乐部承办</span><Icon style={{marginLeft:'10px'}} type="phone" /><span style={{fontSize:'15px'}}>025-6667974 (详情咨询)</span></p>
+                  <div className="button">
+                  <Tooltip title="如需申请退款请于活动开始前24小时外申请。申请方式：登陆careerfore官网—发送电子邮件给我们审核并给予退款。【careerfore】将统一收取原票价的10%作为退票手续费，请知悉。">
+                    <span><Icon type="exclamation-circle-o" />缴费说明</span>
+                  </Tooltip>
+                  <Button type="ghost" size="large"><Icon type="share-alt" />我要分享</Button>
+                  <Button type="ghost" size="large"><Icon type="heart-o" />喜欢{this.state.activityData.LikeCount}</Button>
+                  <Button type="primary" size="large" >我要报名</Button>
+                  </div>
+                  <div className="contentDt" style={{paddingRight:'10px'}}>
+                      <h2>活动详情</h2>
+                      <hr style={{marginBottom:'20px'}}/>
+                      <Collapse defaultActiveKey={['1']} onChange={callback}>
+                          <Panel header="Detail" key="1">
+                            <div className="FontLg" dangerouslySetInnerHTML={{__html: this.state.activityData.content || ''}}/>
+                          </Panel>
+                        </Collapse>
+                  </div>
+                  <ActivityComment activityid={this.props.params.activityID} />
+                </Col>
+                <Col xs={8} sm={8} md={8} lg={8}>
+                  <div className="contentDt2">
+                      <h2>活动主办方介绍</h2><hr/>
+                      <p>careerfor更懂大学生职业规划的平台，旗下活动俱乐部，专门为大学生举办线下关于职业规划的
+                         沙龙讲座与交流，参访顶尖券商企业，实地考察体验优质高等职业生涯。
+                      </p>
+                  </div>
+                  <div className="carousle">
+                    <ActivityCarousels arerid={this.props.arerID} />
+                  </div>
+                  <h2>活动地点</h2><hr/>
+                  <ActivityMapView Latitude={this.state.activityData.Latitude} Longitude={this.state.activityData.Longitude} />
+                  <h2>活动日历</h2><hr/>
+                  <div style={{ width: 290, border: '1px solid #d9d9d9', borderRadius: 4,marginLeft:20 ,marginTop:10}}>
+                    <Calendar fullscreen={false} onPanelChange={onPanelChange} />
+                  </div>
+                </Col>
+              </div>
+            </Col>
+          </Row>
+          <BackTop style={{ bottom: 100 }}>
+            <div className="upScroll">UP</div>
+          </BackTop>
+        </div>
+      )
+    } else {
+      return (
+        <div className="load">
+          <Spin size="small" />
+          <Spin />
+          <Spin size="large" />
+        </div>
+      )
+    }
   }
 }
 
-module.exports = ActivityPost
+function mapStateToProps(store){
+  return {
+    userinfo: store.user
+  }
+}
+
+module.exports = connect(mapStateToProps)(ActivityPost)

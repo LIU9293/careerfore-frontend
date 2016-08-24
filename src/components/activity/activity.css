@@ -1,11 +1,16 @@
 /* activity */
+.width1000{
+  max-width: 1000px;
+  margin:auto;
+}
+/* activity content*/
 .page{
   position: relative;
-  max-width: 100%;
+  max-width: 1000px;
   background: #fff;
   margin-bottom: 30px;
-  box-shadow: 0px 0px 20px #928c8c;
-  border-radius: 7px;
+  box-shadow: 0px 0px 21px 0px rgba(19, 95, 158, 0.2);
+  border-radius: 6px;
   margin: 30px 15px 30px 15px;
   overflow: hidden;
   transition: all .3s ease-in-out 1s;
@@ -15,8 +20,8 @@
 .page .pageImg{
   position: relative;
   overflow: hidden;
-  border-top-right-radius:7px;
-  border-top-left-radius:7px;
+  border-top-right-radius:6px;
+  border-top-left-radius:6px;
   z-index: 1;
   height: 168px;
   background-size: cover;
@@ -47,7 +52,7 @@
   padding: 2px 10px;
   font-size: 10px;
   border: 1px solid #fff;
-  border-radius: 7px;
+  border-radius: 6px;
   color: #fff;
   display: inline-block;
   line-height: 1.5;
@@ -82,6 +87,19 @@
   text-align: center;
   margin: 10px 0;
 }
+/*activity carousle*/
+.carouselImg{
+  width: 100%;
+  height: 300px;
+}
+.carouselImg img{
+  width: 100%;
+}
+.picImg p{
+  font-size: 20px;
+  text-align: center;
+  color: #333;
+}
 /* activitydetail */
 Row{
   padding:15px 20px;
@@ -97,17 +115,101 @@ Row{
 .Img>img{
   width:calc(100%);
 }
-.Img:hover img{
+/*.Img:hover img{
   transform:scale(1.2);
   transition: all 500ms ease 0ms;
-}
+}*/
 .FontLg{
   font-size: 20px;
 }
 .detail{
-  line-height: 2;
+  line-height: 2.5;
 }
-.detail>p{
+.detail p{
   font-size:16px;
-  line-height: 20px;
+  line-height: 30px;
+  margin-left: 50px;
+}
+.detail h1{
+  text-align: right;
+  padding-right: 80px;
+}
+.detail p span{
+  font-size: 16px;
+  padding-left: 20px;
+}
+.button{
+  margin-top: 20px;
+}
+.button button{
+  float: right;
+  margin-right: 80px;
+}
+.contentDt,
+.contentDt2{
+  padding-top: 60px;
+  position: relative;
+}
+.contentDt2 p{
+  margin-left: 0px;
+}
+.carousle div{
+  height:100%;
+}
+.carousle div img{
+  width: 100%;
+}
+/*Acitivity Comment*/
+.comment{
+  position: relative;
+  box-sizing: border-box;
+  font-size:12px;
+  line-height: 30px;
+  color: #4b4c4c;
+  display:block;
+  padding:0 20px 0 20px;
+  margin:80px 0 20px 0;
+  text-align: left;
+  font-family: "PingFang SC", "Microsoft JhengHei";
+  width: 100%;
+  }
+.commentBox{
+  width: 100%;
+}
+.commentBox>img{
+  display: inline;
+  height:40px;
+  width:40px;
+  border-radius:50%;
+  vertical-align: middle;
+}
+.commentBox>a{
+  text-decoration:none;
+  color: #4b4c4c;
+}
+.DetailComment span{
+  float: right;
+}
+.comment>.commentContent{
+  font-size: 16px;
+  padding-left: 55px;
+  margin-bottom: 10px;
+}
+.comment>.globalComment{
+  font-size: 20px;
+}
+/*Up Scroll*/
+.upScroll{
+   height: 40px;
+   width: 40px;
+   line-height:40px;
+   border-radius: 4px;
+   background-color: #57c5f7;
+   color: #fff;
+   text-align:center;
+   font-size: 20px;
+}
+/*Loading...*/
+.load{
+  text-align: center;
 }

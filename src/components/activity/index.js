@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { getPlaygroundList } from '../../vendor/connection';
 import styles from './activity.css';
 import { Row, Col ,Icon} from 'antd';
+import ActivityCarousels from './ActivityCarousel';
+import QueueAnim from 'rc-queue-anim';
+
 
 class Activity extends Component{
 
@@ -16,7 +19,7 @@ class Activity extends Component{
     getPlaygroundList('',1,10,(err,data)=>{
       if(err){console.log(err)} else {
         console.log(data);
-        let discvoerList = data.map((item,ii)=>{
+        let activityList = data.map((item,ii)=>{
           let ActivityState=item.ActivityState;
           let PictureUrl=item.PictureUrl;
           let ActivityTitle=item.ActivityTitle;
@@ -27,7 +30,13 @@ class Activity extends Component{
           let CityID=item.CityID;
           let ActivityAddress=item.ActivityAddress;
           let PeopleNum=item.PeopleNum;
+          let realContent=ActivityContent;
+          if (ActivityContent.length>20) {
+              realContent= ActivityContent.substring(0,20)+"...";
+          }
+          console.log(realContent);
           return(
+
               <Col xs={{span:20}} sm={{span:20}} md={{span:8}} lg={{span:8}} key={Math.random()}>
                 <div className='page' key={ii}>
                   <div className='pageImg'>
@@ -38,29 +47,38 @@ class Activity extends Component{
                   </div>
                   <div className='Txt'>
                     <h3>{ActivityTitle}</h3>
-                    <p>{ActivityContent}</p>
+                    <p>{realContent}</p>
                     <span><Icon type="clock-circle-o" />{ActivityStartDate} - {ActivityEndDate}</span><br/>
                     <span><Icon type="environment-o" />{ActivityAddress}</span>
-                    <span><a href={'/activity/'+ActivityID}>查看详情</a></span>
+                    <div className="DetailComment">
+                      <span><a href={'/activity/'+ActivityID}>查看详情</a></span>
+                    </div>
                   </div>
                 </div>
               </Col>
           )
         });
         this.setState({
-          data: discvoerList
+          data: activityList
         })
       }
     })
   }
-
   render(){
     return(
-      <div>
+      <div className="width1000">
+        <QueueAnim type={['right', 'left']} delay={500}>
+          {this.state.show ? activityList : null}
+        </QueueAnim>
+        <div>
+        <ActivityCarousels arerid={this.props.arerID} />
+        </div>
         <Row>
         {this.state.data}
         </Row>
       </div>
+
+
     )
   }
 }
