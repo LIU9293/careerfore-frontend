@@ -167,3 +167,26 @@ export const clickLove = (userID,objectID,state,callback)=>{
     }
   })
 }
+
+export const addComment = (UserID,PostsID,ObjectFatherID,Comment,ObjectID,callback)=>{
+  let queryObj = {
+    UserID: UserID,
+    PostID: PostsID,
+    ObjectFatherID:ObjectFatherID,
+    Comment:Comment,
+    ObjectID:ObjectID
+  };
+  console.log(queryObj);
+  getData("ZQ.APP.Found.PostComment",queryObj,(err,data)=>{
+    if(err){
+      callback(err);
+    }else {
+      console.log(data);
+      if(data.ResultCode === 1){
+        callback(null, data);
+      }else {
+        callback(data.ResultMessage);
+      };
+    }
+  })
+}

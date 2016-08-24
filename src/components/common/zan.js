@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {Icon} from 'antd';
 import { clickLove} from '../../vendor/connection/index';
+import { browserHistory } from 'react-router';
+
 const style = {
   container:{
     float:'right',
@@ -23,7 +25,8 @@ class Zan extends Component {
   loveClickHandler(id){
     if(this.props.userinfo.userid === null)
     {
-      alert("登陆");
+      // alert("登陆");
+      browserHistory.push(`/login`);
     }else {
       this.props.zan(id);
       clickLove(this.props.userinfo.userid,this.props.objid,this.props.type,(err,data)=>{
