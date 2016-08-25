@@ -54,7 +54,7 @@ class Collection extends Component {
   render(){
     if(this.state.collectionError){
       return(
-        <div>this.state.collectionError</div>
+        <div>{this.state.collectionError}</div>
       )
     } else if(this.state.collectionData.loaded){
 

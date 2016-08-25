@@ -5,9 +5,7 @@ import Cookies from 'js-cookie';
 import { getUserInfo, getUserActivities, getPlaygroundList } from '../vendor/connection';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
-
-const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
+import Navbar from './common/navbar';
 
 class home extends Component{
 
@@ -21,21 +19,17 @@ class home extends Component{
   componentDidMount(){
     let userid = Cookies.get('UserID');
     if(userid !== undefined){
-      this.props.login(userid);
       getUserInfo(userid, (err,data) => {
         if(err){
           console.log(err);
         } else {
-          let avatar = data.ZUT_HEADIMG,
-              nickName = data.ZUT_NICKNAME,
-              phone = data.ZUT_PHONE;
-          this.setState({
-            rightMenuItem:  <div className="menuProfileArea">
-                              <a onClick={(e)=>{browserHistory.push('/my/'+ this.props.userinfo.userid)}}>
-                                <img src={avatar} className="menuProfileAvatar" />
-                              </a>
-                            </div>
-          });
+          console.log(data)
+          let userData = {
+            avatar: data.ZUT_HEADIMG,
+            nickName: data.ZUT_NICKNAME,
+            phone: data.ZUT_PHONE
+          }
+          this.props.login(userid, userData);
         }
       })
       getUserActivities(userid, (err,data) => {
@@ -57,57 +51,10 @@ class home extends Component{
     })
   }
 
-  componentWillReceiveProps(nextProps){
-    if(nextProps.userinfo.login == true){
-      let id = nextProps.userinfo.userid;
-      getUserInfo(id, (err,data) => {
-        if(err){
-          console.log(err);
-        } else {
-          let avatar = data.ZUT_HEADIMG,
-              nickName = data.ZUT_NICKNAME,
-              phone = data.ZUT_PHONE;
-          this.setState({
-            rightMenuItem:  <div className="menuProfileArea">
-                              <a onClick={(e)=>{browserHistory.push('/my/'+ this.props.userinfo.userid)}}>
-                                <img src={avatar} className="menuProfileAvatar" />
-                              </a>
-                            </div>
-          });
-        }
-      });
-    } else {
-      this.setState({
-        rightMenuItem: <a href="/login">登录</a>
-      })
-    }
-  }
-
-
   render(){
     return(
       <div>
-        <div className="navbar-container">
-          <Menu mode="horizontal" className="navbar">
-            <Menu.Item key="home">
-              <a href="/">主页</a>
-            </Menu.Item>
-            <Menu.Item key="activity">
-              <a href="/activity">活动</a>
-            </Menu.Item>
-            <SubMenu title={<span>发现</span>}>
-              <Menu.Item key="discover:1">
-                <a href="/discover">发现</a>
-              </Menu.Item>
-              <Menu.Item key="discover:2">选项2</Menu.Item>
-              <Menu.Item key="discover:3">选项3</Menu.Item>
-              <Menu.Item key="discover:4">选项4</Menu.Item>
-            </SubMenu>
-            <Menu.Item key="profile" style={{float: 'right'}}>
-              {this.state.rightMenuItem || ''}
-            </Menu.Item>
-          </Menu>
-        </div>
+        <Navbar />
         <div className="main" >
           {this.props.children}
         </div>
@@ -129,7 +76,7 @@ function mapStateToProps(store){
 }
 function mapDispatchToProps(dispatch){
   return {
-    login: (userid) => {dispatch({type:'LOG_IN', userid:userid})} ,
+    login: (userid,data) => {dispatch({type:'LOG_IN', userid:userid, userdata:data})} ,
     baoming: (id) => {dispatch({type:'JOIN_ACTIVITY', id: id})} ,
     closeActivity: (id) => {dispatch({type:'ADD_CLOSED', id: id})},
   }
