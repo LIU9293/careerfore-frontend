@@ -25,6 +25,7 @@ class DiscoverDetailFoot extends Component {
   }
 
   back(fatherid,objid,username){
+    console.log("****" + fatherid,objid,username)
     this.props.callback(fatherid,objid,username);
   }
 
@@ -81,20 +82,22 @@ class DiscoverDetailFoot extends Component {
           )
           comment.push({...firstComment,key:Math.random()});
           //laod section comment
+          console.log(item.ID);
           if(item.ChildList.length > 0){
-            item.ChildList.map((item,index)=>{
+            item.ChildList.map((item2,index)=>{
+              debugger;
               let secondComment = (
-                <div className="single_sec" onClick = {this.back.bind(this,item.fatherID,item.UserID,item.UserNickName)}>
+                <div className="single_sec" onClick = {this.back.bind(this,item2.UserID,item.ID,item2.UserNickName)}>
                   <div className="commentBox_sec">
-                    <img src={item.HeadImg} onClick={()=>{browserHistory.push(`/my/${item.UserID}`);}}/>
-                    <label className="spanintro_sec" onClick={()=>{browserHistory.push(`/my/${item.UserID}`);}}>&nbsp;{item.UserNickName}&nbsp;</label>
+                    <img src={item2.HeadImg} onClick={()=>{browserHistory.push(`/my/${item2.UserID}`);}}/>
+                    <label className="spanintro_sec" onClick={()=>{browserHistory.push(`/my/${item2.UserID}`);}}>&nbsp;{item2.UserNickName}&nbsp;</label>
                     <label className="spanintro_sec" >{date}</label>
-                    <Zan objid = {item.ID} isLiked = {item.IsLike === 1?true:false} baseNum = {item.PraiseNumbers} type={1}/>
+                    <Zan objid = {item2.ID} isLiked = {item2.IsLike === 1?true:false} baseNum = {item2.PraiseNumbers} type={1}/>
                     <div style={{marginTop: '-8px', paddingBottom: '5px'}}>
-                      <label style={{fontSize: '13px',marginLeft: '45px'}}>回复:</label><font style={{color:'blue',fontSize: '16px'}}>{item.fatherName}</font>
+                      <label style={{fontSize: '13px',marginLeft: '45px'}}>回复:</label><font style={{color:'blue',fontSize: '16px'}}>{item2.fatherName}</font>
                     </div>
                   </div>
-                  <div className="commentContent_sec">{item.Content}</div>
+                  <div className="commentContent_sec">{item2.Content}</div>
                   <hr/>
                 </div>
               )

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getDiscoverPost,addComment } from '../../vendor/connection/index';
+import { getDiscoverPost,addComment,AddCTR } from '../../vendor/connection/index';
 import { Row, Col ,Button} from 'antd';
 import Cookies from 'js-cookie';
 import { connect } from 'react-redux';
@@ -7,6 +7,7 @@ import style from './discoverDetail.css';
 import {millseconds2DateDiff} from '../../vendor/helper/timeTransfer';
 import DiscoverDetailFoot from './discoverDetailFoot';
 import SimpEditor from './PostArticle';
+import Zan from '../common/zan';
 
 class DiscoverDetail extends Component{
   constructor(props){
@@ -14,37 +15,37 @@ class DiscoverDetail extends Component{
     this.state = {
       postData:null,
       loadContent:"Loading...",
-      userName : ""
+      userName : "",
+      objFatherid:"",
+      objid:""
     }
     this.postsId = 0;
-    this.objFatherid = 0;
-    this.objid = "";
     this.loadData = this.loadData.bind(this);
     this.getClickComment = this.getClickComment.bind(this);
+    this.addReadNum = this.addReadNum.bind(this);
+    this.addComments = this.addComments.bind(this);
   }
 
   componentDidMount(){
     this.loadData();
+    this.addReadNum();
   }
 
   chooseFid(fid){
-    this.objFatherid = "";
-    this.objid = "";
+    this.setState({objFatherid:""});
+    this.setState({objid:""});
     this.setState({userName:""});
   }
 
   getClickComment(fatherid,objid,username){
-    console.log("*&**" + fatherid,objid,username);
-    this.objFatherid = fatherid;
-    this.objid = objid;
+    this.setState({objFatherid:fatherid});
+    this.setState({objid:objid});
     let reply =  "回复:"+username;
-    console.log(reply);
     this.setState({userName:reply});
-    console.log(this.state.userName)
+    console.log("second = " + this.state.objFatherid)
   }
 
-  addComment(fatherid,objid,username){
-    console.log("))))" + fatherid,objid,username)
+  addComments(){
     if(this.props.userinfo.userid === undefined){
       browserHistory.push(`/login`);
     }else {
@@ -52,7 +53,7 @@ class DiscoverDetail extends Component{
       if(commentContent.replace(' ','').length === 0){
         console.log("请输入有效的评论");
       }else {
-        addComment(this.props.userinfo.userid,this.postsId,this.objFatherid,commentContent,this.objid,(err,data)=>{
+        addComment(this.props.userinfo.userid,this.postsId,this.state.objFatherid,commentContent,this.state.objid,(err,data)=>{
           if(err){
             console.log(err);
           }else {
@@ -78,6 +79,22 @@ class DiscoverDetail extends Component{
         }
     })
   }
+
+  addReadNum(){
+    var userid = "";
+    if(this.props.userinfo.userid !== undefined)
+    {
+      userid = this.props.userinfo.userid;
+    }
+    AddCTR(userid,this.props.params.discoverID,(err,data)=>{
+      if(err){
+        console.log(err);
+      }else {
+        console.log(data);
+      }
+    })
+  }
+
   render(){
     if(this.state.postData){
       let post = this.state.postData;
@@ -115,10 +132,11 @@ class DiscoverDetail extends Component{
               <div className="border">
                 <textarea ref = "textArea" placeholder = {this.state.userName}></textarea>
               </div>
-              <Button type="primary" style={{float: 'right',marginTop: '10px'}} onClick={this.addComment.bind(this)}>评论</Button>
+              <Button type="primary" style={{float: 'right',marginTop: '10px'}} onClick={this.addComments}>评论</Button>
             </div>
           </div>
           }
+        let fl = "left";
         let con = (
           <div className="content">
               <div className="box-content" style={{backgroundImage:bg, width:'150%'}}></div>
@@ -136,7 +154,8 @@ class DiscoverDetail extends Component{
               <div id="like" className="like">
                 <div className="Postlike">
                     <span className="love">
-                    <i className="love_icon"></i>赞·{info.LikeNum}</span>
+                      <Zan float = {fl} className ="love_icon" objid = {info.PostID} isLiked = {true} baseNum = {info.LikeNum} type={0}/>
+                    </span>
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <span className="collect">
                     <i className="collect_icon"></i>收藏·{info.CollectionNumbers}</span>

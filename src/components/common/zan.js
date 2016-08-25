@@ -4,12 +4,6 @@ import {Icon} from 'antd';
 import { clickLove} from '../../vendor/connection/index';
 import { browserHistory } from 'react-router';
 
-const style = {
-  container:{
-    float:'right',
-    display:'inline'
-  }
-}
 
 class Zan extends Component {
   constructor(props) {
@@ -38,18 +32,21 @@ class Zan extends Component {
     }
   }
   render(){
+    let fl = this.props.float ? this.props.float : 'right';
     if(this.props.dianzan[this.props.objid]){
       return(
-        <div style={style.container}>
-        <span className="spanLove_sec" onClick={this.loveClickHandler.bind(this,this.props.objid)}><Icon style={{color:'red'}} type="heart" />&nbsp;
+        <div style={{display:'inline',float:fl}} >
+        <span className="spanLove_sec" onClick={this.loveClickHandler.bind(this,this.props.objid)}>
+            <Icon style={{color:'red'}} type="heart" />&nbsp;
           {this.props.baseNum + 1}
         </span>
       </div>
     )
     }else {
       return(
-        <div style={style.container}>
-          <span className="spanLove_sec" onClick={this.loveClickHandler.bind(this,this.props.objid)}><Icon type="heart-o" />&nbsp;
+        <div style={{display:'inline',float:fl}} >
+          <span className="spanLove_sec" onClick={this.loveClickHandler.bind(this,this.props.objid)}>
+            <Icon type="heart-o" />&nbsp;
             {this.props.baseNum }
           </span>
         </div>

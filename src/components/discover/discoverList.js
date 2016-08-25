@@ -128,7 +128,6 @@ class DiscoverList extends Component{
                   </div>
             </div>
             <div className="box-middle">
-
               <div className="box-content" style={{backgroundImage:bg}} onClick={()=>{browserHistory.push(`/discover/${item.PostsID}`);}}>
               </div>
               </div>
