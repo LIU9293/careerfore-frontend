@@ -15,7 +15,6 @@ class Home extends Component{
 
   constructor(props){
     super(props);
-    this.logout = this.logout.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.state = {
       Menulist: {
@@ -30,7 +29,7 @@ class Home extends Component{
   }
 
   componentDidMount(){
-    if(this.props.userinfo.login == false){
+    if(this.props.userinfo.login == false && !Cookies.get('UserID')){
       this.redirect2login();
     }
     getUserInfo(this.props.userinfo.userid, (err,data)=>{
@@ -40,12 +39,6 @@ class Home extends Component{
         })
       }
     });
-  }
-
-  logout(){
-    Cookies.remove('UserID');
-    this.props.logout();
-    browserHistory.push('/');
   }
 
   redirect2login(){
@@ -99,10 +92,5 @@ function mapStateToProps(store){
     userinfo: store.user
   }
 }
-function mapDispatchToProps(dispatch){
-  return {
-    logout: () => {dispatch({type:'LOG_OUT'})}
-  }
-}
 
-module.exports = connect(mapStateToProps, mapDispatchToProps)(Home)
+module.exports = connect(mapStateToProps)(Home)

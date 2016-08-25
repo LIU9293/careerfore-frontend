@@ -13,19 +13,21 @@ import Login from '../components/profile/login';
 import Register from '../components/profile/register';
 import MyHome from '../components/profile/home';
 import Simditor from '../components/discover/PostArticle';
+import Draft from '../components/common/draft';
 
 const Routes = ({ history }) =>
   <Router history={history}>
     <Route path="/" component={APP}>
       <Route path="/activity" component={Activity} />
       <Route path="/new" component={Simditor} />
+      <Route path="/draft" component={Draft} />
       <Route path="/activity/:activityID" component={ActivityDetail} />
       <Route path="/discover" component={Discover} />
       <Route path="/discover/new" component={NewArticle} />
       <Route path="/discover/:discoverID" component={DiscoverDetail} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
-      <Route path="/my/:UserID" component={MyHome} />
+      <Route path="/profile" component={MyHome} />
     </Route>
     <Route path="*" component={NotFound} />
   </Router>;
