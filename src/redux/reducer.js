@@ -31,13 +31,8 @@ function dianzan(state = {}, action) {
     case 'LIKE_TOGGLE':
       if(state[action.commentID] == true){
         delete state[action.commentID];
-        console.log({...state})
         return {...state}
       } else {
-        console.log({
-          ...state,
-          [action.commentID]:true
-        })
         return{
           ...state,
           [action.commentID]:true
@@ -46,6 +41,45 @@ function dianzan(state = {}, action) {
     default:
       return state
   }
+}
+
+function editorOperate(state = {},action) {
+  console.log("enter")
+  switch (action.type) {
+    case 'UPDATE_EDITOR':
+      return{
+        ...state,
+        [action.userid]:action.editorcomment
+      }
+    default:
+      return state
+  }
+}
+
+function commentOperate(state = {},action) {
+    switch (action.type) {
+      case 'UPDATE_COMMENT':
+        return{
+          ...state,
+          [action.postID]: action.commentData
+        }
+      case 'INSERT_TOP_LEVEL_COMMENT':
+        state[action.postID].push(action.commentData);
+        return {...state}
+      case 'INSERT_SECOND_LEVEL_COMMENT':
+        let newState = state[action.postID].map((item,ii)=>{
+          if(item.ID == action.ID){
+            item.ChildList.push(action.commentData)
+          };
+          return item
+        })
+        return {
+          ...state,
+          [action.postID]: newState
+        }
+      default:
+        return state
+    }
 }
 
 function yibaoming( state = {}, action ){
@@ -77,4 +111,4 @@ function yijieshu( state = {}, action ){
   }
 }
 
-export default combineReducers({user,dianzan,yibaoming,yijieshu})
+export default combineReducers({user,dianzan,yibaoming,yijieshu,commentOperate,editorOperate})

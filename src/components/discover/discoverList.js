@@ -101,83 +101,49 @@ class DiscoverList extends Component{
         if(con.length > 70){
           con = con.substring(0,70)+'...';
         }
+        var bgDiv;
         if(item.PictureUrl && item.PictureUrl !== undefined){
-          return(
-            <div key={ii} className="sectionMain recentNews cf-box" data-tid = {item.PostsID}>
-            <div className='box-top'>
-                <a href={'/user/'+item.NickName}>
-                    <img data-uid={item.UserID} src={item.HeadUrl} className="box-avatar" />
-                </a>
-                <div className="nameAndCategory">
-                    <div className="row" >
-                      <a href={'/user/'+item.NickName}>
-                        <div className="box-name" >{nikeName}</div><br/>
-                      </a>
-                    </div>
-                    <div className="row">
-                      <a href={'/category/'+channerN}>
-                        <div className="icon">
-                          <i className="fa fa-fw fa-bank"></i>
-                        </div>
-                          <div className="box-category">{item.ZctName}</div>
-                      </a>
-                    </div>
-                  </div>
-                  <div className="box-time">
-                      <span className="timeago" >{item.Date}</span>
-                  </div>
-            </div>
-            <div className="box-middle">
-              <div className="box-content" style={{backgroundImage:bg}} onClick={()=>{browserHistory.push(`/discover/${item.PostsID}`);}}>
-              </div>
-              </div>
-              <div className="box-bottom">
-              <a href={'/discover/'+item.PostsID} className="aStyle">
-                <div className="box-title">{item.Title}</div>
-              </a>
-              <p>{con}</p>
-              <div className="box-time" style={{fontSize:'12px'}} onClick={()=>{browserHistory.push(`/discover/${item.PostsID}`);}}>继续阅读</div>
-              {item.CommentNum} 评论 &amp; {0} 查看
-            </div>
-            </div>
-          )
-        }else {
-          return(
-            <div key={ii} className="sectionMain recentNews cf-box" data-tid = {item.PostsID}>
-            <div className='box-top'>
-                <a href={'/user/'+item.NickName}>
-                    <img data-uid={item.UserID} src={item.HeadUrl} className="box-avatar" />
-                </a>
-                <div className="nameAndCategory">
-                    <div className="row" >
-                      <a href={'/user/'+item.NickName}>
-                        <div className="box-name">{nikeName}</div><br/>
-                      </a>
-                    </div>
-                    <div className="row">
-                      <a href={'/category/'+channerN}>
-                        <div className="icon">
-                          <i className="fa fa-fw fa-bank"></i>
-                        </div>
-                          <div className="box-category">{item.ZctName}</div>
-                      </a>
-                    </div>
-                  </div>
-                  <div className="box-time">
-                      <span className="timeago" >{item.Date}</span>
-                  </div>
-                  </div>
-                    <div className="box-bottom">
-                    <a href={'/discover/'+item.PostsID} className="aStyle">
-                      <div className="box-title">{item.Title}</div>
-                    </a>
-                    <p>{con}</p>
-                    <div className="box-time" style={{fontSize:'12px'}} onClick={()=>{browserHistory.push(`/discover/${item.PostsID}`);}}>继续阅读</div>
-                    {item.CommentNum} 回复 &amp; {0} 查看
-                  </div>
-            </div>
-          )
+          bgDiv = (<div className="box-content" style={{backgroundImage:bg}} onClick={()=>{browserHistory.push(`/discover/${item.PostsID}`);}}>
+          </div>);
         }
+        return(
+          <div key={ii} className="sectionMain recentNews cf-box" data-tid = {item.PostsID}>
+          <div className='box-top'>
+              <a href={'/user/'+item.NickName}>
+                  <img data-uid={item.UserID} src={item.HeadUrl} className="box-avatar" />
+              </a>
+              <div className="nameAndCategory">
+                  <div className="row" >
+                    <a href={'/user/'+item.NickName}>
+                      <div className="box-name" >{nikeName}</div><br/>
+                    </a>
+                  </div>
+                  <div className="row">
+                    <a href={'/category/'+channerN}>
+                      <div className="icon">
+                        <i className="fa fa-fw fa-bank"></i>
+                      </div>
+                        <div className="box-category">{item.ZctName}</div>
+                    </a>
+                  </div>
+                </div>
+                <div className="box-time">
+                    <span className="timeago" >{item.Date}</span>
+                </div>
+          </div>
+          <div className="box-middle">
+            {bgDiv}
+            </div>
+            <div className="box-bottom">
+            <a href={'/discover/'+item.PostsID} className="aStyle">
+              <div className="box-title">{item.Title}</div>
+            </a>
+            <p>{con}</p>
+            <div className="box-time" style={{fontSize:'12px'}} onClick={()=>{browserHistory.push(`/discover/${item.PostsID}`);}}>继续阅读</div>
+            {item.CommentNum} 评论 &amp; {item.LikeNum} 收藏
+          </div>
+          </div>
+        )
       })
       return(
         <div>

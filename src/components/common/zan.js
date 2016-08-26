@@ -12,27 +12,28 @@ class Zan extends Component {
 
   componentDidMount(){
     if(this.props.isLiked == true){
-      this.props.zan(this.props.objid)
+      this.props.zan(this.props.objid);
     }
   }
 
   loveClickHandler(id){
     if(this.props.userinfo.userid === null)
     {
-      // alert("登陆");
       browserHistory.push(`/login`);
     }else {
       this.props.zan(id);
       clickLove(this.props.userinfo.userid,this.props.objid,this.props.type,(err,data)=>{
         if(err){
-          console.log(err);
+
         }else {
-          console(data.ResultMessage);
-        }})
+
+        }
+      })
     }
   }
   render(){
     let fl = this.props.float ? this.props.float : 'right';
+    console.log(this.props.dianzan[this.props.objid])
     if(this.props.dianzan[this.props.objid]){
       return(
         <div style={{display:'inline',float:fl}} >
@@ -44,7 +45,7 @@ class Zan extends Component {
     )
     }else {
       return(
-        <div style={{display:'inline',float:fl}} >
+        <div style={{display:'inline',float:fl,marginRight:'1%'}} >
           <span className="spanLove_sec" onClick={this.loveClickHandler.bind(this,this.props.objid)}>
             <Icon type="heart-o" />&nbsp;
             {this.props.baseNum }

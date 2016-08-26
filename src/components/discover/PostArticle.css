@@ -207,6 +207,8 @@
   position: relative;
   z-index: 1;
   background: transparent;
+  height: 300px;
+  overflow-y: auto;
 }
 .simditor .simditor-body a.selected {
   background: #b3d4fd;

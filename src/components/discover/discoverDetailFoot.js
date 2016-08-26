@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { getDiscoverPostComment ,clickLove} from '../../vendor/connection/index';
-import { Row, Col } from 'antd';
+import { Row, Col ,Button} from 'antd';
 import { connect } from 'react-redux';
 import styles from './discoverDetailFoot.css';
 import {millseconds2DateDiff} from '../../vendor/helper/timeTransfer';
@@ -24,9 +24,8 @@ class DiscoverDetailFoot extends Component {
       this.loadComment();
   }
 
-  back(fatherid,objid,username){
-    console.log("****" + fatherid,objid,username)
-    this.props.callback(fatherid,objid,username);
+  back(fatherid,objid,username,fatherName,uid){
+    this.props.callback(fatherid,objid,username,fatherName,uid);
   }
 
   loadComment() {
@@ -39,15 +38,19 @@ class DiscoverDetailFoot extends Component {
             console.log(err);
           }else {
             console.log(data);
-            if(data.CommentList.length > 0){
+            if(data.CommentList.length >= 0){
               this.setState({loadContent:"点击加载更多评论"});
               if(this.pageIndex === 1){
                 this.commentNum += data.CommentNum;
-                this.setState({data:data.CommentList},()=>{console.log(this.state.data)});
+                this.setState({data:data.CommentList},()=>{
+                  this.props.commentOperate(this.props.postid,this.state.data);
+                });
               } else {
                 this.commentNum += data.CommentNum;
                 this.setState({
                   data:this.state.data.concat(data.CommentList)
+                },()=>{
+                  this.props.commentOperate(this.props.postid,this.state.data);
                 })
               }
               this.pageIndex ++;
@@ -61,15 +64,22 @@ class DiscoverDetailFoot extends Component {
 
 
   render(){
-    if(this.state.data){
-      console.log('render in parent')
+    if(this.props.commentLists[this.props.postid]){
         var comment = [];
-        let commengList = this.state.data;
-        console.log(commengList)
+        let commengList = this.props.commentLists[this.props.postid];
         commengList.map((item,index)=>{
           let date = millseconds2DateDiff(item.ReleaseTime);
+          let reply1;
+          let delete1;
+          if(item.UserID !== this.props.userinfo.userid){
+            reply1 = (<Button type="primary" style={{marginRight:'1%'}} onClick = {this.back.bind(this,item.UserID,item.ID,item.UserNickName,item.UserNickName,item.UserID)}>评论</Button>);
+          }
+          if(item.UserID === this.props.userinfo.userid)
+          {
+            delete1 = (<Button type="primary" style={{marginRight:'1%'}}>删除</Button>)
+          }
           let firstComment = (
-            <div className="single" onClick = {this.back.bind(this,item.UserID,item.ID,item.UserNickName)}>
+            <div className="single" >
               <div className="commentBox">
                 <img src={item.HeadImg} onClick={()=>{browserHistory.push(`/my/${item.UserID}`);}}/>
                 <label className="spanintro" onClick={()=>{browserHistory.push(`/my/${item.UserID}`);}}>&nbsp;{item.UserNickName}&nbsp;</label>
@@ -77,27 +87,43 @@ class DiscoverDetailFoot extends Component {
                 <Zan objid = {item.ID} isLiked = {item.IsLike === 1?true:false} baseNum = {item.PraiseNumbers} type={1}/>
               </div>
               <div className="commentContent">{item.Content}</div>
+              <div style={{textAlign:'right'}}>
+                {reply1}
+                {delete1}
+              </div>
               <hr/>
             </div>
           )
           comment.push({...firstComment,key:Math.random()});
           //laod section comment
-          console.log(item.ID);
           if(item.ChildList.length > 0){
             item.ChildList.map((item2,index)=>{
-              debugger;
+              let date2 = millseconds2DateDiff(item2.ReleaseTime);
+              let reply2;
+              let delete2;
+              if(item2.UserID !== this.props.userinfo.userid){
+                reply2 = (<Button type="primary" style={{marginRight:'1%'}} onClick = {this.back.bind(this,item2.UserID,item.ID,item2.UserNickName,item2.UserNickName,item.UserID)}>评论</Button>);
+              }
+              if(item2.UserID === this.props.userinfo.userid)
+              {
+                delete2 = (<Button type="primary" style={{marginRight:'1%'}}>删除</Button>)
+              }
               let secondComment = (
-                <div className="single_sec" onClick = {this.back.bind(this,item2.UserID,item.ID,item2.UserNickName)}>
-                  <div className="commentBox_sec">
+                <div className="single_sec" >
+                  <div className="commentBox_sec" >
                     <img src={item2.HeadImg} onClick={()=>{browserHistory.push(`/my/${item2.UserID}`);}}/>
                     <label className="spanintro_sec" onClick={()=>{browserHistory.push(`/my/${item2.UserID}`);}}>&nbsp;{item2.UserNickName}&nbsp;</label>
-                    <label className="spanintro_sec" >{date}</label>
+                    <label className="spanintro_sec" >{date2}</label>
                     <Zan objid = {item2.ID} isLiked = {item2.IsLike === 1?true:false} baseNum = {item2.PraiseNumbers} type={1}/>
                     <div style={{marginTop: '-8px', paddingBottom: '5px'}}>
                       <label style={{fontSize: '13px',marginLeft: '45px'}}>回复:</label><font style={{color:'blue',fontSize: '16px'}}>{item2.fatherName}</font>
                     </div>
                   </div>
                   <div className="commentContent_sec">{item2.Content}</div>
+                  <div style={{textAlign:'right'}}>
+                    {reply2}
+                    {delete2}
+                  </div>
                   <hr/>
                 </div>
               )
@@ -125,9 +151,14 @@ class DiscoverDetailFoot extends Component {
 function mapStateToProps(store){
   return {
     userinfo: store.user,
+    commentLists:store.commentOperate
   }
 }
 
+function mapDispatchToProps(dispatch){
+  return {
+    commentOperate:(postid,newcommentlist)=>{dispatch({type:'UPDATE_COMMENT',commentData:newcommentlist,postID:postid})}
+  }
+}
 
-
-module.exports = connect(mapStateToProps)(DiscoverDetailFoot)
+module.exports = connect(mapStateToProps,mapDispatchToProps)(DiscoverDetailFoot)
