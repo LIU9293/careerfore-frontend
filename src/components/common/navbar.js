@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Menu, Icon } from 'antd';
 import { browserHistory } from 'react-router';
+import Search from './searchInput';
 
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
@@ -22,10 +23,12 @@ class Navbar extends Component{
   }
 
   handleClick(e){
-    this.setState({
-      currentMenu: e.key
-    });
-    browserHistory.push(e.key)
+    if(e.key !== '/search'){
+      this.setState({
+        currentMenu: e.key
+      });
+      browserHistory.push(e.key)
+    }
   }
 
   render(){
@@ -42,12 +45,15 @@ class Navbar extends Component{
             <Menu.Item key="/discover" style={style.menuItem}>
               发现
             </Menu.Item>
-            <Menu.Item key="/profile"  style={{...style.menuItem, float:'right'}}>
+            <Menu.Item key="/profile"  style={{...style.menuItem, float:'right',}}>
               <div className="menuProfileArea">
                 <a>
                   <img src={this.props.user.userdata.avatar} className="menuProfileAvatar" />
                 </a>
               </div>
+            </Menu.Item>
+            <Menu.Item key="/search" style={{...style.menuItem, float:'right', borderBottom: 'none'}}>
+              <Search />
             </Menu.Item>
           </Menu>
         </div>
@@ -67,6 +73,9 @@ class Navbar extends Component{
             </Menu.Item>
             <Menu.Item key="/login" style={{...style.menuItem, float:'right'}}>
               登录
+            </Menu.Item>
+            <Menu.Item key="/search" style={{...style.menuItem, float:'right', borderBottom: 'none'}}>
+              <Search />
             </Menu.Item>
           </Menu>
         </div>
