@@ -63,41 +63,88 @@ const styles = {
 class ArticleList extends Component{
   render(){
     const { data } = this.props;
+    const essence = <div>
+                      <Icon type="star" />
+                      <span>    职前精华</span>
+                    </div>
+    const recommand = <div>
+                        <Icon type="like" />
+                        <span>    职前推荐</span>
+                      </div>
+
     let articles = data.map((item, ii)=>{
-      return(
-        <div style={styles.box} key={ii}>
-          <div style={styles.header}>
-            <div style={{...styles.headerBlock, float: 'left'}}>
-              <img style={styles.avatar} src={item.avatar || 'http://img.careerfore.com/bear.jpg'} />
-            </div>
-            <div style={{...styles.headerBlock, float: 'left', marginLeft: '12px'}}>
-              <div style={styles.author}>{item.nickName}</div>
-              <div style={styles.category}>
-                <img src={`http://img.careerfore.com/${item.category}@2x.png`} style={{height:'20px',marginRight:'5px'}} />
-                <div style={{verticleAlign:'middle', display:'inline-block'}}>{item.category}</div>
+      if(item.cover !== ''){
+        return(
+          <div style={styles.box} key={ii}>
+            <div style={styles.header}>
+              <div style={{...styles.headerBlock, float: 'left'}}>
+                <img style={styles.avatar} src={item.avatar || 'http://img.careerfore.com/bear.jpg'} />
+              </div>
+              <div style={{...styles.headerBlock, float: 'left', marginLeft: '12px'}}>
+                <div style={styles.author}>{item.nickName}</div>
+                <div style={styles.category}>
+                  <img src={`http://img.careerfore.com/${item.category}@2x.png`} style={{height:'20px',marginRight:'5px'}} />
+                  <div style={{verticleAlign:'middle', display:'inline-block'}}>{item.category}</div>
+                </div>
+              </div>
+              <div style={{...styles.headerBlock, float: 'right', fontSize:'18px', marginTop:'10px'}}>
+                {item.time}
               </div>
             </div>
-            <div style={{...styles.headerBlock, float: 'right', fontSize:'18px', marginTop:'10px'}}>
-              {item.time}
-            </div>
-          </div>
-          <a onClick={e => browserHistory.push('/discover/'+item.id)} >
-            <div style={{...styles.middle, backgroundImage: 'url(' + item.cover + ')'}} />
-          </a>
-          <div style={styles.footer}>
-            <a onClick={e => browserHistory.push('/discover/'+item.id)} style={{color:'#5d5d5d'}}>
-              <h1 style={{marginBottom: '10px'}}>{item.title}</h1>
+            <a onClick={e => browserHistory.push('/discover/'+item.id)} >
+              <div style={{...styles.middle, backgroundImage: 'url(' + item.cover + ')'}} />
             </a>
-            <p style={styles.description}>{item.description}</p>
-            <div style={{...styles.iconArea, fontSize: '18px', color:'#999'}}>
-              <div style={{display:'inline-block', float:'right'}}>
-                <Icon type="eye-o" />
-                <span>       {item.viewNum}</span>
+            <div style={styles.footer}>
+              <a onClick={e => browserHistory.push('/discover/'+item.id)} style={{color:'#5d5d5d'}}>
+                <h1 style={{marginBottom: '10px'}}>{item.title}</h1>
+              </a>
+              <p style={styles.description}>{item.description}</p>
+              <div style={{...styles.iconArea, fontSize: '18px', color:'#999'}}>
+                <div style={{display:'inline-block', float:'left'}}>
+                  { item.essence == 0 ? null : essence }
+                  { item.recommand == 0 ? null : recommand }
+                </div>
+                <div style={{display:'inline-block', float:'right'}}>
+                  <Icon type="eye-o" />
+                  <span>       {item.viewNum}</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )
+        )
+      } else {
+        return(
+          <div style={{...styles.box, height:'240px'}} key={ii}>
+            <div style={styles.header}>
+              <div style={{...styles.headerBlock, float: 'left'}}>
+                <img style={styles.avatar} src={item.avatar || 'http://img.careerfore.com/bear.jpg'} />
+              </div>
+              <div style={{...styles.headerBlock, float: 'left', marginLeft: '12px'}}>
+                <div style={styles.author}>{item.nickName}</div>
+                <div style={styles.category}>
+                  <img src={`http://img.careerfore.com/${item.category}@2x.png`} style={{height:'20px',marginRight:'5px'}} />
+                  <div style={{verticleAlign:'middle', display:'inline-block'}}>{item.category}</div>
+                </div>
+              </div>
+              <div style={{...styles.headerBlock, float: 'right', fontSize:'18px', marginTop:'10px'}}>
+                {item.time}
+              </div>
+            </div>
+            <div style={styles.footer}>
+              <a onClick={e => browserHistory.push('/discover/'+item.id)} style={{color:'#5d5d5d'}}>
+                <h1 style={{marginBottom: '10px'}}>{item.title}</h1>
+              </a>
+              <p style={styles.description}>{item.description}</p>
+              <div style={{...styles.iconArea, fontSize: '18px', color:'#999'}}>
+                <div style={{display:'inline-block', float:'right'}}>
+                  <Icon type="eye-o" />
+                  <span>       {item.viewNum}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        )
+      }
     });
     return(
       <div>

@@ -100,6 +100,22 @@ function search( state = { text: '', result: [] }, action ){
 }
 
 //这个Reducer存放所有发现页列表，任何需要展示发现文章列表地方可以直接用
+// discoverListData.data =
+// {
+//   avatar: 头像链接,
+//   category: 频道字符串,
+//   description: 描述，最大72长度,
+//   nickName: 昵称,
+//   cover: 封面，没有的话写‘’！！！
+//   title: 标题,
+//   time: 时间，（2小时前。。。）
+//   viewNum: Int, 查看量
+//   likeNum: Int, 赞数量
+//   essence: Int, 是否精华，1精华，0不精华
+//   top: Int, 是否置顶，同上
+//   recommand: Int, 是否推荐，同上
+//   id: 帖子ID
+// }
 function discoverListData( state = {data: []}, action ){
     switch (action.type) {
       case 'UPDATE_DISCOVER_LIST_DATA':

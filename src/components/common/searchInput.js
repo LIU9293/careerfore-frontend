@@ -85,6 +85,7 @@ class Search extends Component{
                 likeNum: 0,
                 essence: 0,
                 top: 0,
+                recommand: 0,
                 id: item.ID,
               }
             )
