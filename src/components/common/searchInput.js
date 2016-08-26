@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Input, Button } from 'antd';
 import classNames from 'classnames';
-import { search } from '../../vendor/connection';
+import { searchFound } from '../../vendor/connection';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import S from 'string';
@@ -62,8 +62,8 @@ class Search extends Component{
     this._search = this._search.bind(this);
   }
   _search(key){
-    this.props.search(key);
-    search(key, 1, 10, (err,data)=>{
+    this.props.updateSearchKey(key);
+    searchFound(key, 1, 10, (err,data)=>{
       if(err){console.log(err)} else {
         console.log(data);
         if(data.SearchFoundList){
@@ -91,6 +91,7 @@ class Search extends Component{
             )
           });
           this.props.updateDiscoverData(discoverData);
+          this.props.updatePage(1, data.SearchFoundList.length == 10 ? true : false);
         }
       }
     })
@@ -112,8 +113,8 @@ function mapStateToProps(store){
 }
 function mapDispatchToProps(dispatch){
   return{
-    search: (key) => {dispatch({type:'UPDATE_SEARCH', key: key})} ,
-    updateResult: (result) => {dispatch({type:'UPDATE_RESULT', result: result})} ,
+    updateSearchKey: (key) => {dispatch({type:'UPDATE_SEARCH_KEY', key: key})} ,
+    updatePage: (page,haveMore) => {dispatch({type:'UPDATE_SEARCH_PAGE', page: page, haveMore: haveMore, })} ,
     updateDiscoverData: (data) => {dispatch({type:'UPDATE_DISCOVER_LIST_DATA', data: data})} ,
   }
 }

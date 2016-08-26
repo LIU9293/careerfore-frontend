@@ -82,20 +82,22 @@ function yijieshu( state = {}, action ){
 }
 
 //这个Reducer会存放搜索的关键字和数据
-function search( state = { text: '', result: [] }, action ){
+function search( state = {key: '', page: 0, haveMore: false }, action ){
   switch (action.type) {
-    case 'UPDATE_SEARCH':
+    case 'UPDATE_SEARCH_KEY':
+      console.log(action)
       return {
         ...state,
-        text: action.key
+        key: action.key
       }
-    case 'UPDATE_RESULT':
+    case 'UPDATE_SEARCH_PAGE':
       return {
         ...state,
-        result: action.result
+        page: action.page,
+        haveMore: action.haveMore,
       }
     default:
-      return search
+      return state
   }
 }
 

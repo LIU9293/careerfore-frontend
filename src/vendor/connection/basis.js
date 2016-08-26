@@ -272,7 +272,7 @@ export const uploadImageToQiniu = (imageBase64,callback) => {
 
 }
 
-export const search = ( keyword, pageNumber, perPageNumber, callback ) => {
+export const searchFound = ( keyword, pageNumber, perPageNumber, callback ) => {
   let queryObj ={
 		Keywords: keyword,
 		PageNumber: pageNumber,

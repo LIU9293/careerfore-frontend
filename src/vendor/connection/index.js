@@ -1,4 +1,4 @@
-import { getData, getDataBase64, postImage, uploadImageToQiniu, search } from './basis';
+import { getData, getDataBase64, postImage, uploadImageToQiniu, searchFound } from './basis';
 import { getPlaygroundList, getPlaygroundPost, getActivityCarousel, getActivityComment, getActivitySignUp, getSignUpResult, getUserActivities } from './activity';
 import { getCarousel, getDiscoverList, getDiscoverPost, postDiscoverArticle, getDiscoverPostComment, getDiscoverFilterList, getMyDiscoverFilterList, updateMyDiscoverFilterList,clickLove,addComment} from './discover';
 import { sendSMS, userRegister, userLogin, getUserInfo, getUserArticles, getUserCollection, postUserAvatar } from './user';
@@ -37,5 +37,5 @@ module.exports = {
   getUserActivities, //获取用户参加的活动 （userid, callback)
   getUserCollection, //获取用户的收藏 （userid, callback)
   postUserAvatar, //更新用户头像 (userid, useravatar, callback)
-  search, //搜索 (keyword, pageNumber, perPageNumber, callback)
+  searchFound, //搜索发现文章 (keyword, pageNumber, perPageNumber, callback)
 }
