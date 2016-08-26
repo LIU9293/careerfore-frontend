@@ -167,7 +167,7 @@ export const clickLove = (userID,objectID,state,callback)=>{
     }
   })
 }
-
+//添加评论
 export const addComment = (UserID,PostsID,ObjectFatherID,Comment,ObjectID,callback)=>{
   let queryObj = {
     UserID: UserID,
@@ -176,7 +176,6 @@ export const addComment = (UserID,PostsID,ObjectFatherID,Comment,ObjectID,callba
     Comment:Comment,
     ObjectID:ObjectID
   };
-  console.log(queryObj);
   getData("ZQ.APP.Found.PostComment",queryObj,(err,data)=>{
     if(err){
       callback(err);
@@ -187,6 +186,64 @@ export const addComment = (UserID,PostsID,ObjectFatherID,Comment,ObjectID,callba
       }else {
         callback(data.ResultMessage);
       };
+    }
+  })
+}
+//增加帖子点击率
+export const AddCTR = (userid,postid,callback)=>{
+  let queryObj = {
+    UserID: userid,
+    PostsID: postid
+  };
+  getData("ZQ.APP.Found.AddCTR",queryObj,(err,data)=>{
+    if(err){
+      callback(err);
+    }else {
+      if(data.ResultCode === 1){
+        callback(null, data);
+      }else {
+        callback(data.ResultMessage);
+      }
+    }
+  })
+}
+
+//收藏
+export const Collect = (userid,objid,type,callback)=>{
+  let queryObj = {
+    UserID: userid,
+    ObjectID: objid,
+    type:type
+  };
+  getData("ZQ.APP.Found.Collect",queryObj,(err,data)=>{
+    if(err){
+      callback(err);
+    }else {
+      if(data.ResultCode === 1)
+      {
+        callback(null, data);
+      }else {
+        callback(data.ResultMessage);
+      }
+    }
+  })
+}
+
+//获取发帖的channel
+export const PostsChannel = (userid,callback)=>{
+  let queryObj = {
+    UserID: userid
+  };
+  getData("ZQ.APP.Found.PostsChannel",queryObj,(err,data)=>{
+    if(err){
+      callback(err);
+    }else {
+      if(data.ResultCode === 1)
+      {
+        callback(null, data);
+      }else {
+        callback(data.ResultMessage);
+      }
     }
   })
 }

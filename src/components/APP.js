@@ -16,9 +16,10 @@ class home extends Component{
     }
   }
 
-  componentDidMount(){
+  componentWillMount(){
     let userid = Cookies.get('UserID');
     if(userid !== undefined){
+      this.props.login(userid, {});
       getUserInfo(userid, (err,data) => {
         if(err){
           console.log(err);

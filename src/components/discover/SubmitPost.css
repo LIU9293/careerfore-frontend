@@ -1,0 +1,72 @@
+.SubmitPost{
+  max-width: 1000px;
+  margin: auto;
+}
+.posttitle{
+    font-size: 16px;
+    margin-left: 1%;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid #ccc;
+    width: 50%;
+    text-indent: 10px;
+}
+.submittitle{
+  text-align: left;
+  margin-top: 20px;
+}
+.title > .titlediv{
+  font-size: 17px;
+  color: #333;
+}
+.previewImage{
+  width: 70%;
+  margin-left: 20%;
+}
+.preview{
+  width:50%;
+  height: auto;
+  margin-top: 10px;
+}
+.inputWapperS{
+  position: absolute;
+    display: inline-block;
+    background: #fff;
+    border: 1px solid #1E88C7;
+    border-radius: 4px;
+    padding: 0 12px;
+    overflow: hidden;
+    color: #1E88C7;
+    margin-left: 1%;
+    font-size: 17px;
+}
+.inputWapper:hover{
+  border: 1px solid #57c5f7;
+}
+.inputButton{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  font-size: 100px;
+  right: 0;
+  top: 0;
+  opacity: 0;
+}
+.form-control {
+    width: 50%;
+    height: 34px;
+    margin-left: 1%;
+    padding: 6px 12px;
+    background-color: #fff;
+    border: 1px solid #c2cad8;
+    border-radius: 4px;
+    outline: none;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    font-size: 14px;
+    line-height: 1.42857;
+    color: #555;
+}

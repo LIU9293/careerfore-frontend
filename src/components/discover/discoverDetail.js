@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getDiscoverPost,addComment } from '../../vendor/connection/index';
+import { getDiscoverPost,addComment,AddCTR,Collect } from '../../vendor/connection/index';
 import { Row, Col ,Button} from 'antd';
 import Cookies from 'js-cookie';
 import { connect } from 'react-redux';
@@ -7,6 +7,7 @@ import style from './discoverDetail.css';
 import {millseconds2DateDiff} from '../../vendor/helper/timeTransfer';
 import DiscoverDetailFoot from './discoverDetailFoot';
 import SimpEditor from './PostArticle';
+import Zan from '../common/zan';
 
 class DiscoverDetail extends Component{
   constructor(props){
@@ -14,49 +15,118 @@ class DiscoverDetail extends Component{
     this.state = {
       postData:null,
       loadContent:"Loading...",
-      userName : ""
+      userName : "",
+      objFatherid:"",
+      objid:"",
+      fatherName:"",
+      collectNum:0,
     }
     this.postsId = 0;
-    this.objFatherid = 0;
-    this.objid = "";
     this.loadData = this.loadData.bind(this);
     this.getClickComment = this.getClickComment.bind(this);
+    this.addReadNum = this.addReadNum.bind(this);
+    this.addComments = this.addComments.bind(this);
   }
 
   componentDidMount(){
     this.loadData();
+    this.addReadNum();
   }
 
   chooseFid(fid){
-    this.objFatherid = "";
-    this.objid = "";
+    this.setState({objFatherid:""});
+    this.setState({objid:""});
     this.setState({userName:""});
   }
 
-  getClickComment(fatherid,objid,username){
-    console.log("*&**" + fatherid,objid,username);
-    this.objFatherid = fatherid;
-    this.objid = objid;
-    let reply =  "回复:"+username;
-    console.log(reply);
-    this.setState({userName:reply});
-    console.log(this.state.userName)
+  collecPost(objid){
+    if(this.props.user.userid === undefined){
+      alert("请登录");
+    }else {
+      this.setState({collectNum:(this.state.collectNum ++)},()=>{console.log("****" + this.state.collectNum)})
+      console.log("****" + this.state.collectNum)
+      Collect(this.props.user.userid,objid,0,(err,data)=>{
+        if(err){
+          console.log(err);
+        }else {
+          console.log(data);
+        }
+      })
+    }
   }
 
-  addComment(fatherid,objid,username){
-    console.log("))))" + fatherid,objid,username)
-    if(this.props.userinfo.userid === undefined){
+  getClickComment(fatherid,objid,username,fatherName,uid){
+    if(this.props.user.userid === undefined){
+      browserHistory.push(`/login`);
+    }else {
+      if(uid === this.props.user.userid){
+        //alert("不能给自己回复评论");
+      }else {
+        this.setState({
+          objFatherid:fatherid,
+          objid:objid,
+          fatherName:fatherName
+        });
+        let reply =  "回复:"+username;
+        this.setState({userName:reply});
+        window.scrollBy(0,document.getElementById('comment').offsetTop);
+        console.log(document.getElementById('comment').offsetTop)
+      }
+    }
+  }
+
+  addComments(){
+    if(this.props.user.userid === undefined){
       browserHistory.push(`/login`);
     }else {
       let commentContent = this.refs.textArea.value;
       if(commentContent.replace(' ','').length === 0){
         console.log("请输入有效的评论");
       }else {
-        addComment(this.props.userinfo.userid,this.postsId,this.objFatherid,commentContent,this.objid,(err,data)=>{
+        addComment(this.props.user.userid,this.postsId,this.state.objFatherid,commentContent,this.state.objid,(err,data)=>{
           if(err){
             console.log(err);
-          }else {
+          } else {
+            console.log('this.state.objFatherid',this.state.objFatherid)
+            if(this.state.objFatherid==''){
+              this.props.insertTopLevelComment({
+                ChildList:[],
+                Content:commentContent,
+                HeadImg: this.props.user.userdata.avatar,
+                ID: Math.random().toString(),
+                IsLike:0,
+                Level:1,
+                Phone:this.props.user.userdata.phone,
+                PostID:this.postsId,
+                PraiseNumbers:0,
+                ReleaseTime:'/Date('+ new Date().getTime() + ')/',
+                ReplyNumbers:0,
+                ResultCode:0,
+                UserID:this.props.user.userid,
+                UserNickName:this.props.user.userdata.nickName,
+              },this.postsId)
+            } else {
+              this.props.insertSecondLevelComment(this.state.objid,{
+                Content:commentContent,
+                HeadImg: this.props.user.userdata.avatar,
+                ID: Math.random().toString(),
+                IsLike:0,
+                Level:2,
+                Phone:this.props.user.userdata.phone,
+                PostID:this.postsId,
+                PraiseNumbers:0,
+                ReleaseTime:'/Date('+ new Date().getTime() + ')/',
+                ReplyNumbers:0,
+                ResultCode:0,
+                UserID:this.props.user.userid,
+                UserNickName:this.props.user.userdata.nickName,
+                fatherID:this.state.objid,
+                fatherName:this.state.fatherName
+              },this.postsId)
+            }
+
             console.log(data);
+
           }
         })
       }
@@ -65,19 +135,35 @@ class DiscoverDetail extends Component{
 
   loadData(){
     let userid = "";
-    if(this.props.userinfo.userid !== undefined)
+    if(this.props.user.userid !== undefined)
     {
-      userid =this.props.userinfo.userid;
+      userid =this.props.user.userid;
     }
     getDiscoverPost(this.props.params.discoverID,userid,(err,data)=>{
         if(err){
           console.log(err);
         }else {
           console.log(data);
-          this.setState({postData:data});
+          this.setState({postData:data,collectNum:data.PostosInfo.CollectionNumbers});
         }
     })
   }
+
+  addReadNum(){
+    var userid = "";
+    if(this.props.user.userid !== undefined)
+    {
+      userid = this.props.user.userid;
+    }
+    AddCTR(userid,this.props.params.discoverID,(err,data)=>{
+      if(err){
+        console.log(err);
+      }else {
+        console.log(data);
+      }
+    })
+  }
+
   render(){
     if(this.state.postData){
       let post = this.state.postData;
@@ -93,8 +179,8 @@ class DiscoverDetail extends Component{
         let time = millseconds2DateDiff(info.PostsDate);
         let name = info.UserName === "管理员"?"小C" :info.UserName;
         let commentArea ;
-        if(this.props.userinfo.userid === undefined){
-          commentArea = <div style={{width:'100%',width: '100%',float:'left',marginTop: '20px'}}>
+        if(this.props.user.userid === undefined){
+          commentArea = <div style={{width:'100%',width: '100%',float:'left',marginTop: '20px'}} id="comment">
             <div className="left">
               <img src = "http://imageservice.pine-soft.com/logo.png" />
             </div>
@@ -107,18 +193,19 @@ class DiscoverDetail extends Component{
             </div>
           </div>
         }else {
-          commentArea = <div style={{width:'100%',width: '100%',float:'left',marginTop: '20px'}}>
+          commentArea = <div style={{width:'100%',width: '100%',float:'left',marginTop: '20px'}} id="comment">
             <div className="left">
-              <img src = "http://imageservice.pine-soft.com/logo.png" />
+              <img src = {this.props.user.userdata.avatar} />
             </div>
             <div className = "right">
               <div className="border">
                 <textarea ref = "textArea" placeholder = {this.state.userName}></textarea>
               </div>
-              <Button type="primary" style={{float: 'right',marginTop: '10px'}} onClick={this.addComment.bind(this)}>评论</Button>
+              <Button type="primary" style={{float: 'right',marginTop: '10px'}} onClick={this.addComments}>评论</Button>
             </div>
           </div>
           }
+        let fl = "left";
         let con = (
           <div className="content">
               <div className="box-content" style={{backgroundImage:bg, width:'150%'}}></div>
@@ -136,15 +223,17 @@ class DiscoverDetail extends Component{
               <div id="like" className="like">
                 <div className="Postlike">
                     <span className="love">
-                    <i className="love_icon"></i>赞·{info.LikeNum}</span>
+                      <Zan float = {fl} className ="love_icon" objid = {info.PostID} isLiked = {true} baseNum = {info.LikeNum} type={0}/>
+                    </span>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <span className="collect">
-                    <i className="collect_icon"></i>收藏·{info.CollectionNumbers}</span>
+                    <span className="collect" onClick = {this.collecPost.bind(this,info.PostID)}>
+                    <i className="collect_icon"></i>收藏·{this.state.collectNum}</span>
                     &nbsp;&nbsp;&nbsp;&nbsp;阅读数·{info.ReadNum}
                 </div>
               </div>
-                {commentArea}
+
               <DiscoverDetailFoot postid={this.props.params.discoverID} callback={this.getClickComment}/>
+              {commentArea}
           </div>
         )
         return(
@@ -171,8 +260,14 @@ class DiscoverDetail extends Component{
 
 function mapStateToProps(store){
   return {
-    userinfo: store.user
+    user: store.user
+  }
+}
+function mapDispatchToProps(dispatch){
+  return {
+    insertTopLevelComment: (commentData,postID) => {dispatch({type:'INSERT_TOP_LEVEL_COMMENT', commentData: commentData, postID: postID})},
+    insertSecondLevelComment: (ID,commentData,postID) => {dispatch({type:'INSERT_SECOND_LEVEL_COMMENT', commentData: commentData, ID:ID, postID: postID})},
   }
 }
 
-module.exports = connect(mapStateToProps)(DiscoverDetail)
+module.exports = connect(mapStateToProps,mapDispatchToProps)(DiscoverDetail)

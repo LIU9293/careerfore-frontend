@@ -14,6 +14,7 @@ import Register from '../components/profile/register';
 import MyHome from '../components/profile/home';
 import Simditor from '../components/discover/PostArticle';
 import Draft from '../components/common/draft';
+import SubmitPosts from '../components/discover/SubmitPost';
 import Search from '../components/common/searchPage';
 
 const Routes = ({ history }) =>
@@ -29,6 +30,7 @@ const Routes = ({ history }) =>
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
       <Route path="/profile" component={MyHome} />
+      <Route path="/submitpost" component = {SubmitPosts} />
       <Route path="/search" component={Search} />
     </Route>
     <Route path="*" component={NotFound} />
