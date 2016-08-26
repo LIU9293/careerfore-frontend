@@ -271,3 +271,20 @@ export const uploadImageToQiniu = (imageBase64,callback) => {
       .catch((error) => {callback(error)});
 
 }
+
+export const search = ( keyword, pageNumber, perPageNumber, callback ) => {
+  let queryObj ={
+		Keywords: keyword,
+		PageNumber: pageNumber,
+		PerPageNumber: perPageNumber
+	};
+  getData('ZQ.APP.Found.SearchFound', queryObj, (err, data) => {
+    if(err){callback(err)} else {
+      if (data.ResultCode === 1){
+        callback(null, data);
+      } else {
+        callback(data.ResultMessage);
+      }
+    }
+  })
+}
