@@ -32,13 +32,6 @@ class Home extends Component{
     if(this.props.userinfo.login == false && !Cookies.get('UserID')){
       this.redirect2login();
     }
-    getUserInfo(this.props.userinfo.userid, (err,data)=>{
-      if(err){console.log(err)} else {
-        this.setState({
-          baseInfo: {data:data, loaded:true}
-        })
-      }
-    });
   }
 
   redirect2login(){
@@ -92,5 +85,11 @@ function mapStateToProps(store){
     userinfo: store.user
   }
 }
+function mapDispatchToProps(dispatch){
+  return {
+    startLoading: () => {dispatch({type:'START_LOADING'})},
+    stopLoading: () => {dispatch({type:'STOP_LOADING'})},
+  }
+}
 
-module.exports = connect(mapStateToProps)(Home)
+module.exports = connect(mapStateToProps,mapDispatchToProps)(Home)

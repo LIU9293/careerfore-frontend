@@ -6,7 +6,6 @@ import { Row, Col ,Icon} from 'antd';
 import ActivityCarousels from './ActivityCarousel';
 import QueueAnim from 'rc-queue-anim';
 
-
 class Activity extends Component{
 
   constructor(props){
@@ -76,8 +75,6 @@ class Activity extends Component{
         {this.state.data}
         </Row>
       </div>
-
-
     )
   }
 }

@@ -20,6 +20,10 @@ class SearchPage extends Component{
     this.moreSearch = this.moreSearch.bind(this);
   }
 
+  componentWillUnmount(){
+    this.props.updateDiscoverListData([]);
+  }
+
   moreSearch(){
     searchFound(this.props.searchContent.key, this.props.searchContent.page + 1, 10, (err,data)=>{
       if(err){console.log(err)} else {

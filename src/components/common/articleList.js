@@ -48,6 +48,7 @@ const styles = {
     fontSize: '14px',
     color: '#999',
     lineHeight: '20px',
+    height: '20px',
     marginTop: '5px'
   },
   description: {
@@ -57,6 +58,12 @@ const styles = {
   },
   iconArea: {
     width: '100%',
+  },
+  title: {
+    overflow: 'hidden',
+    textOverflow:'ellipsis',
+    whiteSpace: 'nowrap',
+    marginBottom: '10px',
   }
 }
 
@@ -84,7 +91,7 @@ class ArticleList extends Component{
                 <div style={styles.author}>{item.nickName}</div>
                 <div style={styles.category}>
                   <img src={`http://img.careerfore.com/${item.category}@2x.png`} style={{height:'20px',marginRight:'5px'}} />
-                  <div style={{verticleAlign:'middle', display:'inline-block'}}>{item.category}</div>
+                  <span style={{position:'absolute'}}>{item.category}</span>
                 </div>
               </div>
               <div style={{...styles.headerBlock, float: 'right', fontSize:'18px', marginTop:'10px'}}>
@@ -96,13 +103,12 @@ class ArticleList extends Component{
             </a>
             <div style={styles.footer}>
               <a onClick={e => browserHistory.push('/discover/'+item.id)} style={{color:'#5d5d5d'}}>
-                <h1 style={{marginBottom: '10px'}}>{item.title}</h1>
+                <h1 style={styles.title}>{item.title}</h1>
               </a>
               <p style={styles.description}>{item.description}</p>
               <div style={{...styles.iconArea, fontSize: '18px', color:'#999'}}>
                 <div style={{display:'inline-block', float:'left'}}>
                   { item.essence == 0 ? null : essence }
-                  { item.recommand == 0 ? null : recommand }
                 </div>
                 <div style={{display:'inline-block', float:'right'}}>
                   <Icon type="eye-o" />
@@ -123,7 +129,7 @@ class ArticleList extends Component{
                 <div style={styles.author}>{item.nickName}</div>
                 <div style={styles.category}>
                   <img src={`http://img.careerfore.com/${item.category}@2x.png`} style={{height:'20px',marginRight:'5px'}} />
-                  <div style={{verticleAlign:'middle', display:'inline-block'}}>{item.category}</div>
+                  <span style={{position:'absolute'}}>{item.category}</span>
                 </div>
               </div>
               <div style={{...styles.headerBlock, float: 'right', fontSize:'18px', marginTop:'10px'}}>
@@ -132,10 +138,13 @@ class ArticleList extends Component{
             </div>
             <div style={styles.footer}>
               <a onClick={e => browserHistory.push('/discover/'+item.id)} style={{color:'#5d5d5d'}}>
-                <h1 style={{marginBottom: '10px'}}>{item.title}</h1>
+                <h1 style={styles.title}>{item.title}</h1>
               </a>
               <p style={styles.description}>{item.description}</p>
               <div style={{...styles.iconArea, fontSize: '18px', color:'#999'}}>
+                <div style={{display:'inline-block', float:'left'}}>
+                  { item.essence == 0 ? null : essence }
+                </div>
                 <div style={{display:'inline-block', float:'right'}}>
                   <Icon type="eye-o" />
                   <span>       {item.viewNum}</span>

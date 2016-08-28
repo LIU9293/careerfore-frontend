@@ -46,7 +46,6 @@ function dianzan(state = {}, action) {
 }
 
 function editorOperate(state = {},action) {
-  console.log("enter")
   switch (action.type) {
     case 'UPDATE_EDITOR':
       return{
@@ -152,6 +151,7 @@ function search( state = {key: '', page: 0, haveMore: false }, action ){
 //   recommand: Int, 是否推荐，同上
 //   id: 帖子ID
 // }
+
 function discoverListData( state = {data: []}, action ){
     switch (action.type) {
       case 'UPDATE_DISCOVER_LIST_DATA':
@@ -164,4 +164,25 @@ function discoverListData( state = {data: []}, action ){
     }
 }
 
-export default combineReducers({user,dianzan,yibaoming,yijieshu,search,discoverListData,commentOperate,editorOperate})
+function loading ( state = false, action){
+  switch (action.type) {
+    case 'START_LOADING':
+      return true
+    case 'STOP_LOADING':
+      return false
+    default:
+      return state
+  }
+}
+
+export default combineReducers({
+  user,
+  dianzan,
+  yibaoming,
+  yijieshu,
+  search,
+  discoverListData,
+  commentOperate,
+  editorOperate,
+  loading,
+})

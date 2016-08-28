@@ -6,6 +6,13 @@ import { getUserInfo, getUserActivities, getPlaygroundList } from '../vendor/con
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import Navbar from './common/navbar';
+import Loading from './loading';
+
+const styles = {
+  wapper: {
+    backgroundColor: '#f6f6f6',
+  }
+}
 
 class home extends Component{
 
@@ -55,13 +62,16 @@ class home extends Component{
   render(){
     return(
       <div>
-        <Navbar />
-        <div className="main" >
-          {this.props.children}
-        </div>
-        <div className="footer-container">
-          <div className="footer">
-            <h5 style={{textAlign:'center'}}>careerfore - the missing piece of higher education</h5>
+        <Loading />
+        <div style={{...styles.wapper, display: this.props.loading ? 'none' : 'block'}}>
+          <Navbar />
+          <div className="main" >
+            {this.props.children}
+          </div>
+          <div className="footer-container">
+            <div className="footer">
+              <h5 style={{textAlign:'center'}}>careerfore - the missing piece of higher education</h5>
+            </div>
           </div>
         </div>
       </div>
@@ -80,6 +90,8 @@ function mapDispatchToProps(dispatch){
     login: (userid,data) => {dispatch({type:'LOG_IN', userid:userid, userdata:data})} ,
     baoming: (id) => {dispatch({type:'JOIN_ACTIVITY', id: id})} ,
     closeActivity: (id) => {dispatch({type:'ADD_CLOSED', id: id})},
+    startLoading: () => {dispatch({type:'START_LOADING'})},
+    stopLoading: () => {dispatch({type:'STOP_LOADING'})},
   }
 }
 

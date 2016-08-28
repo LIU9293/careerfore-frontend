@@ -4,6 +4,18 @@ import { getCarousel } from '../../vendor/connection';
 import style from './index.css';
 // import style from './discover.css';
 
+const styles = {
+  wapper: {
+    height: '400px',
+    width: '1000px',
+    margin: 'auto',
+  },
+  Carousel: {
+    height: '100%',
+    width: '100%',
+  }
+}
+
 class DiscoverCarousel extends Component{
 
   constructor(props){
@@ -32,16 +44,19 @@ class DiscoverCarousel extends Component{
       )
     }else {
       let myHomeFigList=this.state.data.map((item,ii)=>{
-        let bg = 'url(' + item.PictureUrl + ')';
         return(
-          <img key={ii} src={item.PictureUrl} />
-
+          <div style={{width: '1000px', height: '400px',
+           backgroundSize:  'cover',
+           backgroundPosition: 'center center',
+           backgroundImage: 'url('+item.PictureUrl+')'}} key={ii} />
         )
       })
       return(
-        <Carousel autoplay className="size">
-          {myHomeFigList}
-        </Carousel>
+        <div style={styles.wapper}>
+          <Carousel autoplay style={styles.Carousel}>
+            {myHomeFigList}
+          </Carousel>
+        </div>
       )
     }
   }

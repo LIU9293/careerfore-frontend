@@ -57,6 +57,10 @@ class Setting extends Component{
     this.handleModalCancel = this.handleModalCancel.bind(this);
   }
 
+  componentWillMount(){
+    this.props.startLoading();
+  }
+
   componentDidMount(){
     getUserInfo(this.props.userinfo.userid,(err,data)=>{
       if(err){console.log(err)} else {
@@ -65,6 +69,7 @@ class Setting extends Component{
           user: data
         })
       }
+      this.props.stopLoading()
     })
   }
 
@@ -267,7 +272,9 @@ function mapStateToProps(store){
 function mapDispatchToProps(dispatch){
   return {
     login: (userid,data) => {dispatch({type:'LOG_IN', userid:userid, userdata:data})} ,
-    logout: () => {dispatch({type:'LOG_OUT'})}
+    logout: () => {dispatch({type:'LOG_OUT'})},
+    startLoading: () => {dispatch({type:'START_LOADING'})},
+    stopLoading: () => {dispatch({type:'STOP_LOADING'})},
   }
 }
 
