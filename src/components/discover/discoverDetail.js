@@ -102,42 +102,38 @@ class DiscoverDetail extends Component{
         let name = info.UserName === "管理员"?"小C" :info.UserName;
         let fl = "left";
         let con = (
-          <div className="content">
-              <div className="box-content" style={{backgroundImage:bg, width:'150%'}}></div>
-              <h1 className="title">{info.PostsTitle}</h1>
-              <div className="postcontent">
-                <div className="userinfo">
-                    <img className = "userphoto" src={info.UserHeadUrl}  />
-                    <div className = "introduction">
-                        <span>{name} - {info.ChannelName} - {time}</span>
-                    </div>
+          <div>
+            <div className="box-content" style={{backgroundImage:bg,height:'400px'}}></div>
+            <div className="content" style={{maxWidth:'1000px',margin:'auto'}}>
+                <h1 className="title">{info.PostsTitle}</h1>
+                <div className="postcontent">
+                  <div className="userinfo">
+                      <img className = "userphoto" src={info.UserHeadUrl}  />
+                      <div className = "introduction">
+                          <span>{name} - {info.ChannelName} - {time}</span>
+                      </div>
+                  </div>
+                  <div onClick = {this.chooseFid.bind(this,info.PostID)} id="content" className="pageContent" dangerouslySetInnerHTML = {{__html : info.Content || ''}}>
+                  </div>
                 </div>
-                <div onClick = {this.chooseFid.bind(this,info.PostID)} className="pageContent" dangerouslySetInnerHTML = {{__html : info.Content || ''}}>
+                <div id="like" className="like">
+                  <div className="Postlike">
+                      <span className="love">
+                        <Zan float = {fl} className ="love_icon" objid = {info.PostID} isLiked = {true} baseNum = {info.LikeNum} type={0}/>
+                      </span>
+                      &nbsp;&nbsp;&nbsp;&nbsp;
+                      <span className="collect" onClick = {this.collecPost.bind(this,info.PostID)}>
+                      <i className="collect_icon"></i>收藏·{this.state.collectNum}</span>
+                      &nbsp;&nbsp;&nbsp;&nbsp;阅读数·{info.ReadNum}
+                  </div>
                 </div>
-              </div>
-              <div id="like" className="like">
-                <div className="Postlike">
-                    <span className="love">
-                      <Zan float = {fl} className ="love_icon" objid = {info.PostID} isLiked = {true} baseNum = {info.LikeNum} type={0}/>
-                    </span>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    <span className="collect" onClick = {this.collecPost.bind(this,info.PostID)}>
-                    <i className="collect_icon"></i>收藏·{this.state.collectNum}</span>
-                    &nbsp;&nbsp;&nbsp;&nbsp;阅读数·{info.ReadNum}
-                </div>
-              </div>
-              <DiscoverDetailFoot ref = "discoverDetailFoot" postid={this.props.params.discoverID} callback={this.getClickComment}/>
+                <DiscoverDetailFoot ref = "discoverDetailFoot" postid={this.props.params.discoverID} callback={this.getClickComment}/>
+            </div>
           </div>
         )
         return(
-          <div style={{maxWidth:'1000px',margin:'auto'}}>
-            <Row>
-              <Col xs = {24} md ={16} >
-                {con}
-              </Col>
-              <Col xs = {24} md ={8} >
-              </Col>
-            </Row>
+          <div>
+            {con}
           </div>
         )
       }
