@@ -47,8 +47,8 @@ class Activity extends Component{
                   <div className='Txt'>
                     <h3>{ActivityTitle}</h3>
                     <p>{realContent}</p>
-                    <span><Icon type="clock-circle-o" />{ActivityStartDate} - {ActivityEndDate}</span><br/>
-                    <span><Icon type="environment-o" />{ActivityAddress}</span>
+                    <span><Icon type="clock-circle-o" />&nbsp;&nbsp;{ActivityStartDate} - {ActivityEndDate}</span><br/>
+                    <span><Icon type="environment-o" />&nbsp;&nbsp;{ActivityAddress}</span>
                     <div className="DetailComment">
                       <span><a>查看详情</a></span>
                     </div>
@@ -70,7 +70,7 @@ class Activity extends Component{
           {this.state.show ? activityList : null}
         </QueueAnim>
         <div>
-        <ActivityCarousels arerid={this.props.arerID} />
+        <ActivityCarousels areaid={this.props.areaID} />
         </div>
         <Row>
         {this.state.data}

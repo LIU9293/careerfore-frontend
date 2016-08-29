@@ -3,6 +3,7 @@ import { getActivityComment } from '../../vendor/connection';
 import { Row, Col, Icon } from 'antd';
 import styles from './activity.css';
 import {millseconds2DateDiff} from '../../vendor/helper/timeTransfer';
+import Zan from '../common/zan';
 
 class ActivityComment extends Component{
 
@@ -19,6 +20,7 @@ class ActivityComment extends Component{
           console.log(err)
       } else {
         console.log(data);
+        let commentNum=data.CommentNum;
         let activityList=data.CommentList.map((item,ii)=>{
           let UserID=item.UserID;
           let Content=item.Content;
@@ -56,7 +58,7 @@ class ActivityComment extends Component{
   render(){
     return(
       <div className="comment">
-          <p className="globalComment">｜最新评论：</p>
+          <p className="globalComment">｜全部评论</p>
           {this.state.data}
       </div>
 

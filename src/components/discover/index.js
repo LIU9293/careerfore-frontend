@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import DiscoverTag from './discoverTag';
 import DiscoverCarousel from './discoverCarousel';
 import DiscoverList from './discoverList';
-
+import Essence from './essence';
 class Discover extends Component{
 
   constructor(props){
@@ -15,6 +15,7 @@ class Discover extends Component{
         <DiscoverTag />
         <DiscoverCarousel />
         <DiscoverList NumPerPage={6} />
+        <Essence/>
       </div>
     )
   }

@@ -12,6 +12,9 @@ import DiscoverDetail from '../components/discover/discoverDetail';
 import Login from '../components/profile/login';
 import Register from '../components/profile/register';
 import MyHome from '../components/profile/home';
+import ChannelList from '../components/common/channels';
+import Channel from '../components/discover/channel';
+import About from '../components/common/abouts';
 
 const Routes = ({ history }) =>
   <Router history={history}>
@@ -24,6 +27,9 @@ const Routes = ({ history }) =>
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
       <Route path="/my/:UserID" component={MyHome} />
+      <Route path = "/channel" component={ChannelList}/>
+      <Route path = "/channel/:id" component={Channel}/>
+      <Route path = "/about" component={About}/>
     </Route>
     <Route path="*" component={NotFound} />
   </Router>;

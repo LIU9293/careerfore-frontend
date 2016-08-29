@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getDiscoverList,getDiscoverFilterList } from '../../vendor/connection';
+import { getDiscoverList, getDiscoverFilterList } from '../../vendor/connection';
 import { Button} from 'antd';
 import style from './discover.css';
 import { browserHistory } from 'react-router';
@@ -33,11 +33,13 @@ class DiscoverList extends Component{
       if(err){
         console.log(err);
       }else {
+        console.log(data.ChannelList)
         data.ChannelList.map((item,index)=>{
           var obj ={
             key:item.ChannelName,
             value:item.ChannelID
           }
+
           this.channel.push(obj);
         })
         this.loadData();
@@ -94,8 +96,10 @@ class DiscoverList extends Component{
     } else {
       this.dataContent = [];
       let myReactComponent = this.state.data.map((item,ii)=>{
+        console.log(myReactComponent);
         let channerN = this.getChannelIdByChannelName(item.ZctName);
         let bg = 'url(' + item.PictureUrl + ')';
+        console.log(bg);
         let nikeName = item.NickName === "管理员"?"小C":item.NickName;
         var con = item.Content;
         if(con.length > 70){
@@ -115,7 +119,8 @@ class DiscoverList extends Component{
                       </a>
                     </div>
                     <div className="row">
-                      <a href={'/category/'+channerN}>
+
+                      <a href={'/categarys/'+channerN}>
                         <div className="icon">
                           <i className="fa fa-fw fa-bank"></i>
                         </div>
@@ -156,7 +161,7 @@ class DiscoverList extends Component{
                       </a>
                     </div>
                     <div className="row">
-                      <a href={'/category/'+channerN}>
+                      <a href={'/categorys/'+channerN}>
                         <div className="icon">
                           <i className="fa fa-fw fa-bank"></i>
                         </div>
@@ -181,6 +186,7 @@ class DiscoverList extends Component{
         }
       })
       return(
+
         <div>
               <QueueAnim component="ul" type={['right', 'left']} >
                 {this.state.show ? myReactComponent  : null}

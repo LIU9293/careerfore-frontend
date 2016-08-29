@@ -5,6 +5,7 @@ class NewArticle extends Component{
 
   constructor(props){
     super(props);
+    data:[]
   }
 
   componentDidMount(){

@@ -35,7 +35,6 @@ class DiscoverCarousel extends Component{
         let bg = 'url(' + item.PictureUrl + ')';
         return(
           <img key={ii} src={item.PictureUrl} />
-
         )
       })
       return(

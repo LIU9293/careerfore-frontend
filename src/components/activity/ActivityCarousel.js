@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { getActivityCarousel } from '../../vendor/connection';
 import { Row, Col, Icon ,Carousel} from 'antd';
+import { browserHistory } from 'react-router';
 import styles from './activity.css';
 
 class ActivityCarousels extends Component{
@@ -12,17 +13,17 @@ class ActivityCarousels extends Component{
 }
 
  componentDidMount(){
-  getActivityCarousel(this.props.arerID,(err,data)=>{
+  getActivityCarousel(this.props.areaID,(err,data)=>{
     if (err) {
       console.log(err)
     }else {
-      console.log(data)
+      console.log(data);
       this.setState({
         data:data.HomeFigList
       })
-      console.log(this.state.data);
     }
   })
+
  }
 
  render(){
@@ -33,7 +34,7 @@ class ActivityCarousels extends Component{
    }else{
      let carousleList=this.state.data.map((item,ii)=>{
       return(
-        <div className="picImg" key={ii}>
+        <div className="picImg" key={ii} onClick={()=>{browserHistory.push(`/activity/${item.EventID}`)}}>
         <div className="carouselImg">
         <img src={item.PictureUrl}/>
         </div>

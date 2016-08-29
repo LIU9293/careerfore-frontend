@@ -1,0 +1,89 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+}
+body {
+  color: #333;
+  font-family: -apple-system,PingFang SC,Hiragino Sans GB,Arial,Microsoft YaHei,Helvetica Neue,sans-serif;
+  text-rendering: optimizeLegibility;
+  background-color: #fff;
+}
+.imgoverlay{
+  position: absolute;
+  z-index: 1;
+  background: rgba(5, 232, 96, 0.55);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.career{
+  height: 100vh;
+  color: #ffffff;
+  background-image: url("http://imageservice.pine-soft.com/94A821FB8FD74F619F4CADEC2A4111EE.jpg");
+  text-align: center;
+  position: relative;
+}
+.background-cover{
+  background-position: 50%;
+  background-size: cover;
+  background-repeat: no-repeat no-repeat;
+}
+.vertical-center{
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  box-orient: vertical;
+  -webkit-box-direction: normal;
+  box-direction: normal;
+  -moz-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-direction: column;
+  -webkit-box-pack: center;
+  box-pack: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  -o-justify-content: center;
+  justify-content: center;
+  -ms-flex-pack: center;
+}
+.text{
+  line-height: 40px;
+  color: #ffffff;
+  z-index: 2;
+  font-size: 20px;
+}
+.btn{
+  padding: 15px;
+  border-radius: 4px;
+}
+.btn .appbtn{
+  border-radius: 4px;
+  background-color: hsla(0,0%,100%,.2);
+  border: 1px solid #fff;
+  margin: 0 1em;
+  padding: .5em 1em;
+  -webkit-transition: color,.3s;
+  transition: color,.3s;
+  color: #ffffff;
+  text-decoration: none;
+}
+.page{
+  text-align: center;
+  position: relative;
+  justify-content: center;
+}
+.page>.container{
+  text-align: left;
+  margin: 15px;
+  padding: 20px;
+  line-height: 40px;
+  max-width:500px;
+  position: absolute;
+}

@@ -32,5 +32,5 @@ class ActivitySignUps extends Component{
       <div></div>
     )
   }
-}  
+}
 module.exports = ActivitySignUps

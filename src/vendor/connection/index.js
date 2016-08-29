@@ -1,9 +1,8 @@
 import { getData, getDataBase64, postImage, uploadImageToQiniu } from './basis';
 import { getPlaygroundList, getPlaygroundPost, getActivityComment, getActivityCarousel, getSignUpResult, getActivitySignUp, getUserActivities } from './activity';
-import { getCarousel, getDiscoverList, getDiscoverPost, postDiscoverArticle, getDiscoverPostComment, getDiscoverFilterList, getMyDiscoverFilterList, updateMyDiscoverFilterList,clickLove} from './discover';
+import { getCarousel, getDiscoverList, getDiscoverPost, postDiscoverArticle, getDiscoverPostComment, getDiscoverFilterList, getMyDiscoverFilterList, updateMyDiscoverFilterList, clickLove, getpostlistbychannel, getnicepostlist } from './discover';
 import { sendSMS, userRegister, userLogin, getUserInfo, getUserArticles, getUserCollection, postUserAvatar } from './user';
 import { secretaryMessage, activityMessage, unreadMessage, unreadMessageContent } from './message';
-
 module.exports = {
   getData, //抓数据基础接口，输入(FunctionRouteName,QueryObjectName,callback)
   getDataBase64, //抓base64转码过的数据
@@ -36,4 +35,6 @@ module.exports = {
   getUserActivities, //获取用户参加的活动 （userid, callback)
   getUserCollection, //获取用户的收藏 （userid, callback)
   postUserAvatar, //更新用户头像 (userid, useravatar, callback)
+  getnicepostlist, //获取精华帖子信息(callback)
+  getpostlistbychannel, //获取频道查询帖子信息(channelid,callback )
 }

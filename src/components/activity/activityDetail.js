@@ -23,6 +23,9 @@ class ActivityPost extends Component{
   }
 
   componentDidMount(){
+
+    console.log(this.props.ChannelId);
+
     getPlaygroundPost(this.props.params.activityID, '',(err,data)=>{
       if(err){
         console.log(err);
@@ -106,7 +109,8 @@ class ActivityPost extends Component{
               <img src={this.state.activityData.image || ''}/>
               </div>
               <div className="detail">
-                <Col xs={16} sm={16} md={16} lg={16}>
+                <Col xs={16} sm={16} md={16} lg={16} >
+                <div className="Pagecol">
                   <h1>{this.state.activityData.title || ''}</h1>
                   <p><Icon type="clock-circle-o" /><span>{this.state.activityData.StartDate || ''} - {this.state.activityData.EndDate || ''}</span></p>
                   <p><Icon type="team" /><span>{this.state.activityData.PeopleNum || '0'}人(限{this.state.activityData.CheckPeopleNum || ''}人报名)</span></p>
@@ -115,7 +119,7 @@ class ActivityPost extends Component{
                   <p><Icon type="tags-o" /><span style={{fontSize:'15px'}}>Careerfore活动俱乐部承办</span><Icon style={{marginLeft:'10px'}} type="phone" /><span style={{fontSize:'15px'}}>025-6667974 (详情咨询)</span></p>
                   <div className="button">
                   <Tooltip title="如需申请退款请于活动开始前24小时外申请。申请方式：登陆careerfore官网—发送电子邮件给我们审核并给予退款。【careerfore】将统一收取原票价的10%作为退票手续费，请知悉。">
-                    <span><Icon type="exclamation-circle-o" />缴费说明</span>
+                    <span style={{paddingLeft:'50px'}}><Icon type="exclamation-circle-o" />&nbsp;&nbsp;缴费说明</span>
                   </Tooltip>
                   <Button type="ghost" size="large"><Icon type="share-alt" />我要分享</Button>
                   <Button type="ghost" size="large"><Icon type="heart-o" />喜欢{this.state.activityData.LikeCount}</Button>
@@ -124,11 +128,10 @@ class ActivityPost extends Component{
                     {this.props.joinedActivity[this.props.params.activityID] || this.props.closedActivity[this.props.params.activityID] || '我要报名'}
                   </Button>
                   </div>
+                  </div>
                   <div className="contentDt" style={{paddingRight:'10px'}}>
-                      <h2>活动详情</h2>
-                      <hr style={{marginBottom:'20px'}}/>
                       <Collapse defaultActiveKey={['1']} onChange={callback}>
-                          <Panel header="Detail" key="1">
+                          <Panel header="活动详情" key="1">
                             <div className="FontLg" dangerouslySetInnerHTML={{__html: this.state.activityData.content || ''}}/>
                           </Panel>
                         </Collapse>
@@ -143,13 +146,18 @@ class ActivityPost extends Component{
                       </p>
                   </div>
                   <div className="carousle">
-                    <ActivityCarousels arerid={this.props.arerID} />
+                    <ActivityCarousels arerid={this.props.areaID} />
                   </div>
+                  <div className="Map">
                   <h2>活动地点</h2><hr/>
+                  <p>{this.state.activityData.Address}</p>
                   <ActivityMapView Latitude={this.state.activityData.Latitude} Longitude={this.state.activityData.Longitude} />
+                  </div>
+                  <div className="Calendar">
                   <h2>活动日历</h2><hr/>
-                  <div style={{ width: 290, border: '1px solid #d9d9d9', borderRadius: 4,marginLeft:20 ,marginTop:10}}>
+                  <div style={{ width: 330, borderRadius: 4,marginTop:10}}>
                     <Calendar fullscreen={false} onPanelChange={onPanelChange} />
+                  </div>
                   </div>
                 </Col>
               </div>
@@ -163,8 +171,6 @@ class ActivityPost extends Component{
     } else {
       return (
         <div className="load">
-          <Spin size="small" />
-            <Spin />
           <Spin size="large" />
         </div>
       )

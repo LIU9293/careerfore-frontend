@@ -167,3 +167,45 @@ export const clickLove = (userID,objectID,state,callback)=>{
     }
   })
 }
+
+//获取频道查询帖子信息
+
+export const getpostlistbychannel = (channelid, pagecurrent, pagecount, callback ) => {
+  let queryObj={
+    ChannelId: channelid,
+    PageCurrent: pagecurrent,
+    PageCount: pagecount,
+  }
+
+  getData('ZQ.APP.Found.ByChannelGetPostList', queryObj, ( err, data ) => {
+    if(err){
+      callback(err)
+    } else {
+      if (data.ResultCode === 1){
+        callback(null, data.PostsList);
+      } else {
+        callback(data.ResultMessage);
+      }
+    }
+  })
+}
+
+//获取精华帖子信息
+
+export const getnicepostlist = ( pagecurrent, pagecount, callback ) => {
+  let queryObj={
+    PageCurrent: pagecurrent,
+    PageCount: pagecount,
+  }
+  getData('ZQ.APP.Found.NicePostList', queryObj, (err, data) => {
+    if(err){
+      callback(err)
+    } else {
+      if (data.ResultCode === 1){
+        callback(null, data);
+      } else {
+        callback(data.ResultMessage);
+      }
+    }
+  })
+}
