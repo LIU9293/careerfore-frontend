@@ -29,12 +29,6 @@ const styles = {
 }
 
 class Discover extends Component{
-
-  constructor(props){
-    super(props);
-    this.editor = null;
-  }
-
   render(){
     return(
       <div>

@@ -31,12 +31,10 @@ class DiscoverCarousel extends Component{
          this.setState({
            data:data.HomeFigList,
          })
-         console.log(this.state.data);
        }
      })
    }
-   //<img key={ii} src={item.PictureUrl} />
-   //<div key={ii} className="box-content" style={{backgroundImage:bg}}>
+
   render(){
     if (this.state.data.length<=0) {
       return(

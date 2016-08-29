@@ -9,7 +9,8 @@ class DiscoverList extends Component{
   constructor(props){
     super(props);
     this.state = {
-      page: 2
+      page: 2,
+      haveMore: true,
     }
     this.loadMore = this.loadMore.bind(this);
     this.loadData = this.loadData.bind(this);
@@ -24,7 +25,9 @@ class DiscoverList extends Component{
 
   loadData(index){
     getDiscoverList(this.props.user.userid, index, this.props.NumPerPage, (err,data) => {
-      if(err){console.log(err)} else {
+      if(err){
+        console.log(err);
+      } else {
         let discoverListData = data.PostsList.map((item,ii)=>{
           return {
             avatar: item.HeadUrl,
@@ -42,9 +45,13 @@ class DiscoverList extends Component{
             id: item.PostsID,
           }
         });
+        console.log(data.PostsList.length,data.PostsList.length)
+        if(data.PostsList.length < this.props.NumPerPage){
+          this.setState({haveMore: false})
+        }
         this.props.updateDiscoverListData(this.props.discoverListData.concat(discoverListData));
         this.props.stopLoading();
-      }
+      };
     })
   }
 
@@ -64,7 +71,9 @@ class DiscoverList extends Component{
     return(
       <div>
         <ArticleList />
-        <p onClick={this.loadMore}>点击加载更多...</p>
+        <button type="ghost" onClick={this.loadMore} disabled={!this.state.haveMore}>
+          {this.state.haveMore ? '点击加载更多...' : '没有更多了...'}
+        </button>
       </div>
     )
   }

@@ -101,13 +101,25 @@ function yibaoming( state = {}, action ){
   }
 }
 
-//这个Reducer会在APP一开始的时候更新，获取所有已结束的活动列表
+//这个Reducer会在APP一开始的时候更新，获取所有活动的状态
 function yijieshu( state = {}, action ){
   switch (action.type) {
     case 'ADD_CLOSED':
       return {
         ...state,
         [action.id]: '已结束',
+      }
+    default:
+      return state
+  }
+}
+
+function availableCities( state = {}, action){
+  switch (action.type) {
+    case 'UPDATE_AVAILABLE_CITY':
+      return {
+        ...state,
+        [action.cityID]: state[action.cityID] ? state[action.cityID] + 1 : 1
       }
     default:
       return state
@@ -153,16 +165,45 @@ function search( state = {key: '', page: 0, haveMore: false }, action ){
 // }
 
 function discoverListData( state = {data: []}, action ){
-    switch (action.type) {
-      case 'UPDATE_DISCOVER_LIST_DATA':
-        return{
-          ...state,
-          data: action.data
-        }
-      default:
-        return state
-    }
+  switch (action.type) {
+    case 'UPDATE_DISCOVER_LIST_DATA':
+      return{
+        ...state,
+        data: action.data
+      }
+    default:
+      return state
+  }
 }
+
+//这个Reducer存放所有活动列表，任何需要展示发现文章列表地方可以直接用
+// activityListData.data =
+// {
+//   address: 地址,
+//   content: 内容, HTML字符串
+//   endDate: 结束时间
+//   startDate: 开始时间
+//   id: 活动ID
+//   state: 状态，已开始／未开始
+//   title: 标题
+//   cityID: 城市ID
+//   audit: 是否审核，0不审核，1审核
+//   enrolled: 已报名数量
+//   cover: 封面
+// }
+
+function activityListData( state = {data: []}, action ){
+  switch (action.type) {
+    case 'UPDATE_ACTIVITY_LIST_DATA':
+      return{
+        ...state,
+        data: action.data
+      }
+    default:
+      return state
+  }
+}
+
 
 function loading ( state = false, action){
   switch (action.type) {
@@ -182,7 +223,9 @@ export default combineReducers({
   yijieshu,
   search,
   discoverListData,
+  activityListData,
   commentOperate,
   editorOperate,
   loading,
+  availableCities,
 })

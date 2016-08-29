@@ -1,4 +1,4 @@
-import { getData, getDataBase64, postImage, uploadImageToQiniu, searchFound } from './basis';
+import { getData, getDataBase64, postImage, uploadImageToQiniu, searchFound, area } from './basis';
 import { getPlaygroundList, getPlaygroundPost, getActivityCarousel, getActivityComment,
   getActivitySignUp, getSignUpResult, getUserActivities } from './activity';
 import { getCarousel, getDiscoverList, getDiscoverPost, postDiscoverArticle, getDiscoverPostComment,
@@ -46,4 +46,5 @@ module.exports = {
   searchFound, //搜索发现文章 (keyword, pageNumber, perPageNumber, callback)
   essenceArticle, //精华
   getPostsByChannel, //根据类别筛选文章
+  area, //省市区三级查询, 没有输入参数直接callback
 }
