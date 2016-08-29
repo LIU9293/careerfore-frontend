@@ -6,8 +6,7 @@ import styles from './discoverDetailFoot.css';
 import {millseconds2DateDiff} from '../../vendor/helper/timeTransfer';
 import { browserHistory } from 'react-router';
 import Zan from '../common/zan';
-import FirstReply from '../common/firstReply';
-import SecondReply from '../common/secondReply';
+import Replys from '../common/Reply';
 
 class DiscoverDetailFoot extends Component {
   constructor(props) {
@@ -23,12 +22,10 @@ class DiscoverDetailFoot extends Component {
   }
 
   componentDidMount(){
-      this.loadComment();
+    this.loadComment();
   }
 
-  back(fatherid,objid,username,fatherName,uid){
-    this.props.callback(fatherid,objid,username,fatherName,uid);
-  }
+
 
   loadComment() {
       if(this.canFresh){
@@ -66,34 +63,14 @@ class DiscoverDetailFoot extends Component {
 
 
   render(){
-    if(this.props.commentLists[this.props.postid]){
-        var comment = [];
-        let commengList = this.props.commentLists[this.props.postid];
-        commengList.map((item,index)=>{
-          let first = <FirstReply item = {item} callback = {this.props.callback}/>
-          comment.push({...first,key:Math.random()});
-          //laod section comment
-          if(item.ChildList.length > 0){
-            item.ChildList.map((item2,index)=>{
-              let sec = <SecondReply item2 = {item2} firstObjid = {item.ID} callback = {this.props.callback}/>;
-              comment.push({...sec,key:Math.random()});
-            })
-          }
-        })
-        return(
-          <div className = "detailFoot">
-              <div className="allComment">
-                <span>全部评论({this.commentNum})</span>
-              </div>
-              {comment}
-              <div style={{textAlign:'center'}}>
-                <span onClick={this.loadComment}>{this.state.loadContent}</span>
-              </div>
-          </div>
-        )
-    }else {
-      return(<div />)
-    }
+    return(
+      <div>
+        <Replys commentNum = {this.commentNum} postid = {this.props.postid}/>
+        <div style={{textAlign:'center'}}>
+          <span onClick={this.loadComment}>{this.state.loadContent}</span>
+        </div>
+      </div>
+    )
   }
 }
 
@@ -108,6 +85,10 @@ function mapDispatchToProps(dispatch){
   return {
     commentOperate:(postid,newcommentlist)=>{dispatch({type:'UPDATE_COMMENT',commentData:newcommentlist,postID:postid})}
   }
+}
+
+function clickTest(){
+  console.log("clickTest")
 }
 
 module.exports = connect(mapStateToProps,mapDispatchToProps)(DiscoverDetailFoot)

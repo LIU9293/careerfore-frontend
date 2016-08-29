@@ -12,8 +12,11 @@ class SecondReply extends Component {
   }
 
   back(fatherid,objid,username,fatherName,uid){
-    console.log("enhdhfisdhf>>>");
     this.props.callback(fatherid,objid,username,fatherName,uid);
+  }
+
+  deletecallback(commentid,level){
+    this.props.deletecallback(commentid,level);
   }
 
   render(){
@@ -27,7 +30,7 @@ class SecondReply extends Component {
     }
     else
     {
-      delete2 = (<Button type="primary" style={{marginRight:'1%'}}>删除</Button>)
+      delete2 = (<Button type="primary" style={{marginRight:'1%'}} onClick = {this.deletecallback.bind(this,item2.ID,2)}>删除</Button>)
     }
     return(
       <div className="single_sec" >
@@ -35,7 +38,7 @@ class SecondReply extends Component {
           <img src={item2.HeadImg} onClick={()=>{browserHistory.push(`/my/${item2.UserID}`);}}/>
           <label className="spanintro_sec" onClick={()=>{browserHistory.push(`/my/${item2.UserID}`);}}>&nbsp;{item2.UserNickName}&nbsp;</label>
           <label className="spanintro_sec" >{date2}</label>
-          <Zan objid = {item2.ID} isLiked = {item2.IsLike === 1?true:false} baseNum = {item2.PraiseNumbers} type={1}/>
+            <Zan objid = {item2.ID} isLiked = {item2.IsLike === 1?true:false} baseNum = {item2.PraiseNumbers} type={1}/>
           <div style={{marginTop: '-8px', paddingBottom: '5px'}}>
             <label style={{fontSize: '13px',marginLeft: '45px'}}>回复:</label><font style={{color:'blue',fontSize: '16px'}}>{item2.fatherName}</font>
           </div>

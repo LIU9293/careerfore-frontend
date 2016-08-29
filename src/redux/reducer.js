@@ -45,6 +45,7 @@ function dianzan(state = {}, action) {
   }
 }
 
+//发帖的Reducer
 function editorOperate(state = {},action) {
   switch (action.type) {
     case 'UPDATE_EDITOR':
@@ -56,7 +57,7 @@ function editorOperate(state = {},action) {
       return state
   }
 }
-
+//评论的Reducer
 function commentOperate(state = {},action) {
     switch (action.type) {
       case 'UPDATE_COMMENT':
@@ -78,9 +79,47 @@ function commentOperate(state = {},action) {
           ...state,
           [action.postID]: newState
         }
+      case 'DELETE_TOP_COMMENT':
+        state[action.postID].map((item,ii)=>{
+          if(item.ID === action.commentid){
+            state[action.postID].splice(ii, 1);
+          }
+        })
+        return {
+          ...state,
+          [action.postID]:state[action.postID]
+        }
+      case 'DELETE_SECOND_COMMENT':
+        state[action.postID].map((item,ii)=>{
+          item.ChildList.map((item2,iii)=>{
+            if(item2.ID === action.commentid){
+              item.ChildList.splice(iii, 1);
+            }
+          })
+        })
+        return{
+          ...state,
+          [action.postID]: state[action.postID]
+        }
       default:
         return state
     }
+}
+
+//添加评论请求数据的Reducer
+function addCommentOperate(state = {userName :"",objFatherid:"",objid:"",fatherName:""},action) {
+  switch (action.type) {
+    case 'UPDATE_QUEPARAM':
+      return{
+        ...state,
+        userName : action.userName,
+        objFatherid : action.objFatherid,
+        objid : action.objid,
+        fatherName : action.fatherName
+      }
+    default:
+      return state
+  }
 }
 
 //这个Reducer会在APP刚开始的时候或者用户登录的时候更新，获取到用户所有已经报名的活动列表
@@ -185,4 +224,5 @@ export default combineReducers({
   commentOperate,
   editorOperate,
   loading,
+  addCommentOperate,
 })

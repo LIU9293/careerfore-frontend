@@ -33,7 +33,6 @@ class Zan extends Component {
   }
   render(){
     let fl = this.props.float ? this.props.float : 'right';
-    console.log(this.props.dianzan[this.props.objid])
     if(this.props.dianzan[this.props.objid]){
       return(
         <div style={{display:'inline',float:fl}} >
