@@ -44,7 +44,6 @@ class DiscoverDetail extends Component{
       alert("请登录");
     }else {
       this.setState({collectNum:(this.state.collectNum ++)},()=>{console.log("****" + this.state.collectNum)})
-      console.log("****" + this.state.collectNum)
       Collect(this.props.user.userid,objid,0,(err,data)=>{
         if(err){
           console.log(err);
@@ -56,7 +55,7 @@ class DiscoverDetail extends Component{
   }
 
   getClickComment(fatherid,objid,username,fatherName,uid){
-    if(this.props.user.userid === undefined){
+    if(this.props.user.userid === undefined || this.props.user.userid === null){
       browserHistory.push(`/login`);
     }else {
       if(uid === this.props.user.userid){
@@ -70,12 +69,12 @@ class DiscoverDetail extends Component{
         let reply =  "回复:"+username;
         this.setState({userName:reply});
         window.scrollBy(0,document.getElementById('comment').offsetTop);
-        console.log(document.getElementById('comment').offsetTop)
       }
     }
   }
 
   addComments(){
+    console.log(this.props.user.userid )
     if(this.props.user.userid === undefined){
       browserHistory.push(`/login`);
     }else {
@@ -92,11 +91,11 @@ class DiscoverDetail extends Component{
               this.props.insertTopLevelComment({
                 ChildList:[],
                 Content:commentContent,
-                HeadImg: this.props.user.userdata.avatar,
+                HeadImg: this.props.user.userdata !== null ?this.props.user.userdata.avatar :"http://imageservice.pine-soft.com/logo.png",
                 ID: Math.random().toString(),
                 IsLike:0,
                 Level:1,
-                Phone:this.props.user.userdata.phone,
+                Phone:this.props.user.userdata !== null ?this.props.user.userdata.phone:"",
                 PostID:this.postsId,
                 PraiseNumbers:0,
                 ReleaseTime:'/Date('+ new Date().getTime() + ')/',
@@ -108,11 +107,11 @@ class DiscoverDetail extends Component{
             } else {
               this.props.insertSecondLevelComment(this.state.objid,{
                 Content:commentContent,
-                HeadImg: this.props.user.userdata.avatar,
+                HeadImg: this.props.user.userdata !== null ?this.props.user.userdata.avatar :"http://imageservice.pine-soft.com/logo.png",
                 ID: Math.random().toString(),
                 IsLike:0,
                 Level:2,
-                Phone:this.props.user.userdata.phone,
+                Phone:this.props.user.userdata !== null ?this.props.user.userdata.phone:"",
                 PostID:this.postsId,
                 PraiseNumbers:0,
                 ReleaseTime:'/Date('+ new Date().getTime() + ')/',
@@ -179,7 +178,8 @@ class DiscoverDetail extends Component{
         let time = millseconds2DateDiff(info.PostsDate);
         let name = info.UserName === "管理员"?"小C" :info.UserName;
         let commentArea ;
-        if(this.props.user.userid === undefined){
+        //this.props.user.userdata.avatar
+        if(this.props.user.userid === undefined || this.props.user.userid === null){
           commentArea = <div style={{width:'100%',width: '100%',float:'left',marginTop: '20px'}} id="comment">
             <div className="left">
               <img src = "http://imageservice.pine-soft.com/logo.png" />
@@ -195,7 +195,7 @@ class DiscoverDetail extends Component{
         }else {
           commentArea = <div style={{width:'100%',width: '100%',float:'left',marginTop: '20px'}} id="comment">
             <div className="left">
-              <img src = {this.props.user.userdata.avatar} />
+              <img src = {this.props.user.userdata !== null ?this.props.user.userdata.avatar :"http://imageservice.pine-soft.com/logo.png"} />
             </div>
             <div className = "right">
               <div className="border">
