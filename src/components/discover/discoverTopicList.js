@@ -3,6 +3,11 @@ import { connect } from 'react-redux';
 import { getPostsByChannel } from '../../vendor/connection';
 import ArticleList from '../common/articleList';
 import { millseconds2DateDiff } from '../../vendor/helper/timeTransfer';
+<<<<<<< HEAD
+=======
+import EssenceBox from './essenceBox';
+import Topics from '../common/topics';
+>>>>>>> master
 
 const styles = {
   noArticle: {
@@ -12,7 +17,28 @@ const styles = {
     textAlign: 'center',
     fontSize: '16px',
     color: '#666',
+<<<<<<< HEAD
   }
+=======
+  },
+  wapper: {
+    width: '1000px',
+    margin: 'auto',
+    marginTop: '30px',
+    marginBottom: '30px',
+  },
+  side: {
+    width: '300px',
+    display: 'inline-block',
+    position: 'absolute',
+    paddingLeft: 'auto',
+  },
+  main: {
+    width: '700px',
+    display: 'inline-block',
+    position: 'relative',
+  },
+>>>>>>> master
 }
 
 class DiscoverTopicList extends Component{
@@ -22,20 +48,33 @@ class DiscoverTopicList extends Component{
     this.state = {
       page: 2,
       err: null,
+<<<<<<< HEAD
+=======
+      haveMore: true,
+>>>>>>> master
     }
     this.loadMore = this.loadMore.bind(this);
     this.loadData = this.loadData.bind(this);
   }
 
   loadMore(){
+<<<<<<< HEAD
     this.loadData(this.state.page);
+=======
+    this.loadData(this.props.params.id, this.state.page);
+>>>>>>> master
     this.setState({
       page: this.state.page + 1,
     })
   }
 
+<<<<<<< HEAD
   loadData(index){
     getPostsByChannel(this.props.params.id + ';', index, 10, (err,data) => {
+=======
+  loadData(id, index){
+    getPostsByChannel(id + ';', index, 10, (err,data) => {
+>>>>>>> master
       if(err){
         console.log(err);
         this.setState({
@@ -63,6 +102,12 @@ class DiscoverTopicList extends Component{
           }
         });
         this.props.updateDiscoverListData(this.props.discoverListData.concat(discoverListData));
+<<<<<<< HEAD
+=======
+        if(data.PostsList.length < 10){
+          this.setState({haveMore: false})
+        }
+>>>>>>> master
         this.props.stopLoading();
       }
     })
@@ -73,29 +118,79 @@ class DiscoverTopicList extends Component{
   }
 
   componentDidMount(){
+<<<<<<< HEAD
     this.loadData(1);
+=======
+    this.loadData(this.props.params.id, 1);
+>>>>>>> master
   }
 
   componentWillUnmount(){
     this.props.updateDiscoverListData([]);
   }
 
+<<<<<<< HEAD
+=======
+  componentWillReceiveProps(nextProps){
+    if (nextProps.params.id !== this.props.params.id){
+      this.props.updateDiscoverListData([]);
+      this.setState({
+        page: 2,
+        haveMore: true,
+        err: null
+      });
+      this.loadData(nextProps.params.id, 1);
+    }
+  }
+
+>>>>>>> master
   render(){
     return(
       this.state.err == null
       ? <div className='wapper1000'>
+<<<<<<< HEAD
           <ArticleList />
           <p onClick={this.loadMore}>点击加载更多...</p>
         </div>
       : <div className='wapper1000'>
           <div style={styles.noArticle}>
             {this.state.err}
+=======
+          <div style={styles.main}>
+            <ArticleList />
+            <button type="ghost" onClick={this.loadMore} disabled={!this.state.haveMore}>
+              {this.state.haveMore ? '点击加载更多...' : '没有更多了...'}
+            </button>
+          </div>
+          <div style={styles.side}>
+            <div style={{marginBottom: '30px'}}>
+              <Topics />
+            </div>
+            <EssenceBox />
+          </div>
+        </div>
+      : <div className='wapper1000'>
+          <div style={styles.main}>
+            <div style={styles.noArticle}>
+              {this.state.err}
+            </div>
+          </div>
+          <div style={styles.side}>
+            <div style={{marginBottom: '30px'}}>
+              <Topics />
+            </div>
+            <EssenceBox />
+>>>>>>> master
           </div>
         </div>
     )
   }
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 //读数据
 function mapStateToProps(store){
   return{

@@ -10,7 +10,7 @@ import Loading from './loading';
 
 const styles = {
   wapper: {
-    backgroundColor: '#f6f6f6',
+    backgroundColor: '#f9f9f9',
   }
 }
 
@@ -51,6 +51,7 @@ class home extends Component{
     getPlaygroundList('', 1, 1000, (err,data)=>{
       if(err){console.log(err)} else {
         data.map((item,ii)=>{
+          this.props.addAvailableCity(item.CityID);
           if(item.ActivityState.trim() == '已结束'){
             this.props.closeActivity(item.ActivityID)
           }
@@ -92,6 +93,10 @@ function mapDispatchToProps(dispatch){
     closeActivity: (id) => {dispatch({type:'ADD_CLOSED', id: id})},
     startLoading: () => {dispatch({type:'START_LOADING'})},
     stopLoading: () => {dispatch({type:'STOP_LOADING'})},
+<<<<<<< HEAD
+=======
+    addAvailableCity: (cityID) => {dispatch({type:'UPDATE_AVAILABLE_CITY', cityID: cityID })},
+>>>>>>> master
   }
 }
 
