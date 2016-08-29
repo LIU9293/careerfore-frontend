@@ -255,20 +255,8 @@ function loading ( state = false, action){
   }
 }
 
-<<<<<<< HEAD
-function loading ( state = false, action){
-  switch (action.type) {
-    case 'START_LOADING':
-      return true
-    case 'STOP_LOADING':
-      return false
-    default:
-      return state
-  }
-}
 
-=======
->>>>>>> master
+
 export default combineReducers({
   user,
   dianzan,
@@ -276,16 +264,13 @@ export default combineReducers({
   yijieshu,
   search,
   discoverListData,
-<<<<<<< HEAD
   commentOperate,
   editorOperate,
   loading,
   addCommentOperate,
-=======
   activityListData,
   commentOperate,
   editorOperate,
   loading,
   availableCities,
->>>>>>> master
 })

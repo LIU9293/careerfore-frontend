@@ -25,19 +25,10 @@ const styles = {
   CarouselWapper: {
     width: '100%',
     backgroundColor: '#3f3f3f',
-<<<<<<< HEAD
+
   }
 }
 
-class Discover extends Component{
-
-  constructor(props){
-    super(props);
-    this.editor = null;
-=======
->>>>>>> master
-  }
-}
 
 class Discover extends Component{
   render(){

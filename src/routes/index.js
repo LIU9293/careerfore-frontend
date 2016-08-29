@@ -18,10 +18,9 @@ import SubmitPosts from '../components/discover/SubmitPost';
 import Search from '../components/common/searchPage';
 import Essence from '../components/discover/essence';
 import DiscoverTopicList from '../components/discover/discoverTopicList';
-<<<<<<< HEAD
-=======
+
 import ActivityListByCity from '../components/activity/activityListByCity';
->>>>>>> master
+
 
 const Routes = ({ history }) =>
   <Router history={history}>

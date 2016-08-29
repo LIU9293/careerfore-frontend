@@ -93,10 +93,7 @@ function mapDispatchToProps(dispatch){
     closeActivity: (id) => {dispatch({type:'ADD_CLOSED', id: id})},
     startLoading: () => {dispatch({type:'START_LOADING'})},
     stopLoading: () => {dispatch({type:'STOP_LOADING'})},
-<<<<<<< HEAD
-=======
     addAvailableCity: (cityID) => {dispatch({type:'UPDATE_AVAILABLE_CITY', cityID: cityID })},
->>>>>>> master
   }
 }
 

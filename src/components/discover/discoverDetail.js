@@ -162,10 +162,8 @@ function mapDispatchToProps(dispatch){
     insertSecondLevelComment: (ID,commentData,postID) => {dispatch({type:'INSERT_SECOND_LEVEL_COMMENT', commentData: commentData, ID:ID, postID: postID})},
     startLoading: () => {dispatch({type:'START_LOADING'})},
     stopLoading: () => {dispatch({type:'STOP_LOADING'})},
-<<<<<<< HEAD
     UPDATE_QUEPARAM:(userName,objFatherid,objid,fatherName)=>{dispatch({type:'UPDATE_QUEPARAM',userName:userName,objFatherid:objFatherid,objid:objid,fatherName:fatherName})},
-=======
->>>>>>> master
+
   }
 }
 

@@ -1,17 +1,11 @@
-<<<<<<< HEAD
-import { getData, getDataBase64, postImage, uploadImageToQiniu, searchFound } from './basis';
-=======
+
 import { getData, getDataBase64, postImage, uploadImageToQiniu, searchFound, area } from './basis';
->>>>>>> master
 import { getPlaygroundList, getPlaygroundPost, getActivityCarousel, getActivityComment,
   getActivitySignUp, getSignUpResult, getUserActivities } from './activity';
 import { getCarousel, getDiscoverList, getDiscoverPost, postDiscoverArticle, getDiscoverPostComment,
   getDiscoverFilterList, getMyDiscoverFilterList, updateMyDiscoverFilterList, clickLove, addComment,
-<<<<<<< HEAD
   AddCTR, Collect, PostsChannel, essenceArticle, getPostsByChannel,deleteComment } from './discover';
-=======
-  AddCTR, Collect, PostsChannel, essenceArticle, getPostsByChannel } from './discover';
->>>>>>> master
+
 import { sendSMS, userRegister, userLogin, getUserInfo, getUserArticles, getUserCollection, postUserAvatar } from './user';
 import { secretaryMessage, activityMessage, unreadMessage, unreadMessageContent } from './message';
 
@@ -55,8 +49,6 @@ module.exports = {
   searchFound, //搜索发现文章 (keyword, pageNumber, perPageNumber, callback)
   essenceArticle, //精华
   getPostsByChannel, //根据类别筛选文章
-<<<<<<< HEAD
-=======
   area, //省市区三级查询, 没有输入参数直接callback
->>>>>>> master
+
 }
