@@ -112,7 +112,7 @@ class DiscoverDetail extends Component{
                         <span>{name} - {info.ChannelName} - {time}</span>
                     </div>
                 </div>
-                <div onClick = {this.chooseFid.bind(this,info.PostID)} className="pageContent" dangerouslySetInnerHTML = {{__html : info.Content || ''}}>
+                <div onClick = {this.chooseFid.bind(this,info.PostID)} id="content" className="pageContent" dangerouslySetInnerHTML = {{__html : info.Content || ''}}>
                 </div>
               </div>
               <div id="like" className="like">

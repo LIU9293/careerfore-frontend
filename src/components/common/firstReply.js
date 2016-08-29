@@ -25,10 +25,11 @@ class FirstReply extends Component {
     let reply1;
     let delete1;
     if(item.UserID !== this.props.userinfo.userid){
-      reply1 = (<Button type="primary" style={{marginRight:'1%'}} onClick = {this.back.bind(this,item.UserID,item.ID,item.UserNickName,item.UserNickName,item.UserID)}>评论</Button>);
+      reply1 = (<span type="primary" id = "deleteOrReply"
+      style={{marginRight:'1%'}} onClick = {this.back.bind(this,item.UserID,item.ID,item.UserNickName,item.UserNickName,item.UserID)} title = "点击回复评论">回复</span>);
     }
     else {
-      delete1 = (<Button type="primary" style={{marginRight:'1%'}} onClick = {this.deletecallback.bind(this,item.ID,1)}>删除</Button>)
+      delete1 = (<span type="primary" id = "deleteOrReply" style={{marginRight:'1%'}} onClick = {this.deletecallback.bind(this,item.ID,1)} title = "点击删除评论">删除</span>)
     }
     return(
       <div className = "single">
@@ -36,14 +37,12 @@ class FirstReply extends Component {
           <img src={item.HeadImg} onClick={()=>{browserHistory.push(`/my/${item.UserID}`);}}/>
           <label className = "spanintro" onClick={()=>{browserHistory.push(`/my/${item.UserID}`);}}>&nbsp;{item.UserNickName}&nbsp;</label>
           <label className = "spanintro" >{date}</label>
-            <Zan objid = {item.ID} isLiked = {item.IsLike === 1?true:false} baseNum = {item.PraiseNumbers} type={1}/>
         </div>
         <div className = "commentContent">{item.Content}</div>
         <div style={{textAlign:'right'}}>
           {reply1}
           {delete1}
         </div>
-        <hr />
       </div>
     )
   }
@@ -105,3 +104,19 @@ function mapDispatchToProps(dispatch){
 }
 
 module.exports = connect(mapStateToProps,mapDispatchToProps)(FirstReply)
+
+/*
+<div className = "single">
+  <div className = "commentBox">
+    <img src={item.HeadImg} onClick={()=>{browserHistory.push(`/my/${item.UserID}`);}}/>
+    <label className = "spanintro" onClick={()=>{browserHistory.push(`/my/${item.UserID}`);}}>&nbsp;{item.UserNickName}&nbsp;</label>
+    <label className = "spanintro" >{date}</label>
+  </div>
+  <div className = "commentContent">{item.Content}</div>
+  <div style={{textAlign:'right'}}>
+    <Zan objid = {item.ID} isLiked = {item.IsLike === 1?true:false} baseNum = {item.PraiseNumbers} type={1}/>
+    {reply1}
+    {delete1}
+  </div>
+</div>
+*/
