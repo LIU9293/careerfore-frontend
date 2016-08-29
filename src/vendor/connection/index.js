@@ -4,7 +4,8 @@ import { getPlaygroundList, getPlaygroundPost, getActivityCarousel, getActivityC
 import { getCarousel, getDiscoverList, getDiscoverPost, postDiscoverArticle, getDiscoverPostComment,
   getDiscoverFilterList, getMyDiscoverFilterList, updateMyDiscoverFilterList, clickLove, addComment,
   AddCTR, Collect, PostsChannel, essenceArticle, getPostsByChannel } from './discover';
-import { sendSMS, userRegister, userLogin, getUserInfo, getUserArticles, getUserCollection, postUserAvatar } from './user';
+import { sendSMS, userRegister, userLogin, getUserInfo, getUserArticles,
+  getUserCollection, postUserAvatar, updateUserNickName } from './user';
 import { secretaryMessage, activityMessage, unreadMessage, unreadMessageContent } from './message';
 
 module.exports = {
@@ -47,4 +48,5 @@ module.exports = {
   essenceArticle, //精华
   getPostsByChannel, //根据类别筛选文章
   area, //省市区三级查询, 没有输入参数直接callback
+  updateUserNickName, //更改用户昵称
 }

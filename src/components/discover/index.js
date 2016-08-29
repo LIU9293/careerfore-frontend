@@ -29,6 +29,24 @@ const styles = {
 }
 
 class Discover extends Component{
+
+  constructor(props){
+    super(props);
+  }
+
+  componentDidMount(){
+    window.addEventListener('scroll', function () {
+      var sidebar = document.getElementById('side');
+      if ( document.body.scrollTop > 470) {
+        sidebar.style.position = 'fixed';
+        sidebar.style.top = '30px';
+      } else {
+        sidebar.style.position = 'absolute';
+        sidebar.style.top = null;
+      }
+    })
+  }
+
   render(){
     return(
       <div>
@@ -39,7 +57,7 @@ class Discover extends Component{
           <div style={styles.main}>
             <DiscoverList NumPerPage={6} />
           </div>
-          <div style={styles.side}>
+          <div style={styles.side} id="side">
             <div style={{marginBottom: '30px'}}>
               <Topics />
             </div>

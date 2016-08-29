@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDom from "react-dom";
 import { connect } from 'react-redux';
-import { getUserInfo, uploadImageToQiniu, postUserAvatar } from '../../../vendor/connection';
+import { getUserInfo, uploadImageToQiniu, postUserAvatar, updateUserNickName } from '../../../vendor/connection';
 import { browserHistory } from 'react-router';
 import { Form, Input, Button, Checkbox, Icon, message, Modal, Slider } from 'antd';
 import AvatarEditor from "react-avatar-editor";
@@ -52,6 +52,7 @@ class Setting extends Component{
       userSign:null,
       userSignError:null,
     };
+    this.handleNickName = this.handleNickName.bind(this);
     this.handleAvatarChange = this.handleAvatarChange.bind(this);
     this.handleUploadAvatar = this.handleUploadAvatar.bind(this);
     this.handleModalCancel = this.handleModalCancel.bind(this);
@@ -80,7 +81,18 @@ class Setting extends Component{
       message.warning('请填写用户名');
       this.setState({nickNameError: '请填写用户名'})
     } else {
-      console.log(this.state.nickName)
+      updateUserNickName(this.props.userinfo.userid, this.state.nickName, (err,data)=>{
+        if(err){
+          console.log(err);
+          message.warning(err);
+        } else {
+          this.refs.nickName.innerHTML = this.state.nickName;
+          this.refs.nickName.style.display = 'inline';
+          this.refs.nickNameForm.style.display = 'none';
+          this.refs.nickNameFormButton.style.display = 'none';
+          message.success('昵称更新成功');
+        }
+      })
     }
   }
   showNickNameEditor(){
