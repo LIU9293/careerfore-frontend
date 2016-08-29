@@ -25,6 +25,7 @@ class DiscoverList extends Component{
 
   loadData(index){
     getDiscoverList(this.props.user.userid, index, this.props.NumPerPage, (err,data) => {
+
       if(err){
         console.log(err);
       } else {
@@ -45,7 +46,6 @@ class DiscoverList extends Component{
             id: item.PostsID,
           }
         });
-        console.log(data.PostsList.length,data.PostsList.length)
         if(data.PostsList.length < this.props.NumPerPage){
           this.setState({haveMore: false})
         }

@@ -128,6 +128,7 @@ i, cite, em, var, address, dfn {
   border: 1px solid #eee;
   border-radius: 5px;
   text-align: center;
+  background: #fff;
 }
 textarea{
   width: 100%;

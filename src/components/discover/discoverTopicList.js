@@ -54,6 +54,7 @@ class DiscoverTopicList extends Component{
     })
   }
 
+
   loadData(id, index){
     getPostsByChannel(id + ';', index, 10, (err,data) => {
       if(err){
@@ -102,7 +103,6 @@ class DiscoverTopicList extends Component{
   componentWillUnmount(){
     this.props.updateDiscoverListData([]);
   }
-
   componentWillReceiveProps(nextProps){
     if (nextProps.params.id !== this.props.params.id){
       this.props.updateDiscoverListData([]);
@@ -148,7 +148,6 @@ class DiscoverTopicList extends Component{
     )
   }
 }
-
 
 //读数据
 function mapStateToProps(store){

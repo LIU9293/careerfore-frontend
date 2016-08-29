@@ -189,6 +189,26 @@ export const addComment = (UserID,PostsID,ObjectFatherID,Comment,ObjectID,callba
     }
   })
 }
+
+
+export const deleteComment = (CommentID,UserID,callback)=>{
+  let queryObj = {
+    CommentID: CommentID,
+    UserID: UserID
+  };
+  getData("ZQ.APP.Found.DeleteComment",queryObj,(err,data)=>{
+    if(err){
+      callback(err);
+    }else {
+      if(data.ResultCode === 1){
+        callback(null, data);
+      }else {
+        callback(data.ResultMessage);
+      };
+    }
+  })
+}
+
 //增加帖子点击率
 export const AddCTR = (userid,postid,callback)=>{
   let queryObj = {
