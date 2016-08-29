@@ -99,7 +99,7 @@ class ActivityListByCity extends Component{
 
   render(){
     return(
-      <div style={styles.wapper}>
+      <div className="wapper1000">
         <div style={styles.main}>
           <ActivityList />
           <button type="ghost" onClick={this.loadMore} disabled={!this.state.haveMore}>
