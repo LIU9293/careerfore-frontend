@@ -16,10 +16,13 @@ import Simditor from '../components/discover/PostArticle';
 import Draft from '../components/common/draft';
 import SubmitPosts from '../components/discover/SubmitPost';
 import Search from '../components/common/searchPage';
+import Essence from '../components/discover/essence';
+import DiscoverTopicList from '../components/discover/discoverTopicList';
 
 const Routes = ({ history }) =>
   <Router history={history}>
     <Route path="/" component={APP}>
+      <IndexRoute component={Discover} />
       <Route path="/activity" component={Activity} />
       <Route path="/new" component={Simditor} />
       <Route path="/draft" component={Draft} />
@@ -27,11 +30,13 @@ const Routes = ({ history }) =>
       <Route path="/discover" component={Discover} />
       <Route path="/discover/new" component={NewArticle} />
       <Route path="/discover/:discoverID" component={DiscoverDetail} />
+      <Route path="/discover/topic/:id" component={DiscoverTopicList} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
       <Route path="/profile" component={MyHome} />
       <Route path="/submitpost" component = {SubmitPosts} />
       <Route path="/search" component={Search} />
+      <Route path="/a" component={Essence} />
     </Route>
     <Route path="*" component={NotFound} />
   </Router>;

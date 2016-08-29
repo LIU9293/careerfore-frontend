@@ -28,6 +28,10 @@ class DiscoverDetail extends Component{
     this.addComments = this.addComments.bind(this);
   }
 
+  componentWillMount(){
+    this.props.startLoading();
+  }
+
   componentDidMount(){
     this.loadData();
     this.addReadNum();
@@ -144,6 +148,7 @@ class DiscoverDetail extends Component{
         }else {
           console.log(data);
           this.setState({postData:data,collectNum:data.PostosInfo.CollectionNumbers});
+          this.props.stopLoading();
         }
     })
   }
@@ -267,6 +272,8 @@ function mapDispatchToProps(dispatch){
   return {
     insertTopLevelComment: (commentData,postID) => {dispatch({type:'INSERT_TOP_LEVEL_COMMENT', commentData: commentData, postID: postID})},
     insertSecondLevelComment: (ID,commentData,postID) => {dispatch({type:'INSERT_SECOND_LEVEL_COMMENT', commentData: commentData, ID:ID, postID: postID})},
+    startLoading: () => {dispatch({type:'START_LOADING'})},
+    stopLoading: () => {dispatch({type:'STOP_LOADING'})},
   }
 }
 

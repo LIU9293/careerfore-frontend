@@ -1,6 +1,9 @@
 import { getData, getDataBase64, postImage, uploadImageToQiniu, searchFound } from './basis';
-import { getPlaygroundList, getPlaygroundPost, getActivityCarousel, getActivityComment, getActivitySignUp, getSignUpResult, getUserActivities } from './activity';
-import { getCarousel, getDiscoverList, getDiscoverPost, postDiscoverArticle, getDiscoverPostComment, getDiscoverFilterList, getMyDiscoverFilterList, updateMyDiscoverFilterList,clickLove,addComment,AddCTR,Collect,PostsChannel} from './discover';
+import { getPlaygroundList, getPlaygroundPost, getActivityCarousel, getActivityComment,
+  getActivitySignUp, getSignUpResult, getUserActivities } from './activity';
+import { getCarousel, getDiscoverList, getDiscoverPost, postDiscoverArticle, getDiscoverPostComment,
+  getDiscoverFilterList, getMyDiscoverFilterList, updateMyDiscoverFilterList, clickLove, addComment,
+  AddCTR, Collect, PostsChannel, essenceArticle, getPostsByChannel } from './discover';
 import { sendSMS, userRegister, userLogin, getUserInfo, getUserArticles, getUserCollection, postUserAvatar } from './user';
 import { secretaryMessage, activityMessage, unreadMessage, unreadMessageContent } from './message';
 
@@ -41,4 +44,6 @@ module.exports = {
   getUserCollection, //获取用户的收藏 （userid, callback)
   postUserAvatar, //更新用户头像 (userid, useravatar, callback)
   searchFound, //搜索发现文章 (keyword, pageNumber, perPageNumber, callback)
+  essenceArticle, //精华
+  getPostsByChannel, //根据类别筛选文章
 }

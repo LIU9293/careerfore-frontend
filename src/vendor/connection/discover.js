@@ -247,3 +247,43 @@ export const PostsChannel = (userid,callback)=>{
     }
   })
 }
+
+//精华
+export const essenceArticle = (pageCurrent, pageCount, callback) => {
+  let queryObj = {
+    PageCurrent: pageCurrent,
+    PageCount: pageCount,
+  };
+  getData("ZQ.APP.Found.NicePostList",queryObj,(err,data)=>{
+    if(err){
+      callback(err);
+    }else {
+      if(data.ResultCode === 1)
+      {
+        callback(null, data);
+      }else {
+        callback(data.ResultMessage);
+      }
+    }
+  })
+}
+
+export const getPostsByChannel = (channels, pageCurrent, pageCount, callback ) => {
+  let queryObj = {
+    ChannelId: channels,
+    PageCurrent: pageCurrent,
+    PageCount: pageCount,
+  };
+  getData("ZQ.APP.Found.ByChannelGetPostList",queryObj,(err,data) => {
+    if(err){
+      callback(err);
+    }else {
+      if(data.ResultCode === 1)
+      {
+        callback(null, data);
+      }else {
+        callback(data.ResultMessage);
+      }
+    }
+  })
+}
