@@ -26,7 +26,7 @@ class SecondReply extends Component {
     let reply2;
     let delete2;
     if(item2.UserID !== this.props.userinfo.userid){
-      reply2 = (<span type="primary" style={{marginRight:'1%'}} id="deleteOrReply" 
+      reply2 = (<span type="primary" style={{marginRight:'1%'}} id="deleteOrReply"
       onClick = {this.back.bind(this,item2.UserID,firstObj,item2.UserNickName,item2.UserNickName,item2.UserID)}>回复</span>);
     }
     else
@@ -34,14 +34,13 @@ class SecondReply extends Component {
       delete2 = (<span type="primary" id="deleteOrReply" style={{marginRight:'1%'}} onClick = {this.deletecallback.bind(this,item2.ID,2)}>删除</span>)
     }
     let rep = "@" + "<label className='spanintro_sec'>{date2}</label>";
-    let com = "康师傅iu收到你复古红色岁好定ishiu的话速度和高富帅的你是死对方瑟瑟发抖呢吧ID回复iusad和i分i啊还是短发 ";
     return(
       <div className="single_sec" >
         <div className="commentBox_sec" style = {{fontSize:'14px'}}>
           <label className="spanintro_sec" onClick={()=>{browserHistory.push(`/my/${item2.UserID}`);}}>&nbsp;{item2.UserNickName}&nbsp;</label> :
           <label className="spanintro_sec">{"@"}</label>
           <label className="spanintro_sec">{item2.fatherName}</label>&nbsp;
-          {com}
+          {item2.Content}
           </div>
 
         <div style={{textAlign:'right', marginTop: '5px'}}>

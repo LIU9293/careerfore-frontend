@@ -137,3 +137,19 @@ textarea{
   border: none;
   font-size: 16px;
 }
+
+.pageContent{
+  line-height: 30px;
+  font-size: 17px;
+  max-width: 750px;
+  margin:auto;
+}
+.pageContent > p{
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.detailFoot{
+  max-width: 750px;
+  margin:auto;
+}
