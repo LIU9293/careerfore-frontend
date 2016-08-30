@@ -27,39 +27,37 @@ class Replys extends Component {
 
   moreComment(objid){
     let originParam = this.getParamByObjid(objid);
-    console.log(originParam)
     let newParam;
     if(originParam.showmore){
       //原来需要显示加载更多，更改状态之后，显示全部评论
       newParam = this.state.SecondCommentArray.map((item,index)=>{
-        // if(item.key === objid){
-        //   item.showmore = false;
-        //   item.loadcontent = ",点击隐藏评论";
-        // }
+        console.log(item.objid,objid)
+        if(item.objid === objid){
+          item.showmore = false;
+          item.loadcontent = ",收起评论";
+        }
         return item;
       })
     }else {
       newParam = this.state.SecondCommentArray.map((item,index)=>{
-        if(item.key === objid){
-          item.showmore = true
-          item.loadcontent = item.reallycontent
+        if(item.objid === objid){
+          item.showmore = true;
+          item.loadcontent = item.reallycontent;
         }
         return item;
       })
-
+    }
     this.setState({
       SecondCommentArray:newParam
     })
-  }
 }
   //根据对象id获取对象的配置
   //objid 指一级评论的id
-  //在this.state.SecondCommentArray  存储的形式是 :{key:objid,showmore:ture,loadcontent:"点击查看剩余6条评论",reallycontent:"点击查看剩余6条评论"}
+  //在this.state.SecondCommentArray  存储的形式是 :{objid:objid,showmore:ture,loadcontent:"点击查看剩余6条评论",reallycontent:"点击查看剩余6条评论"}
   getParamByObjid(objid){
     let paramReturn;
-    console.log(this.state.SecondCommentArray)
     this.state.SecondCommentArray.map((item,index)=>{
-      if(item.key === objid){
+      if(item.objid === objid){
         paramReturn = item
       }
     })
@@ -160,7 +158,7 @@ class Replys extends Component {
           var secondCommentCount = item.ChildList.length;
           if(secondCommentCount > this.MinCount){
             let paramOri = {
-              key:item.ID,
+              objid:item.ID,
               showmore:true,
               loadcontent:"还有" + (secondCommentCount - this.MinCount) + "条评论,点击查看",
               reallycontent:"还有" + (secondCommentCount - this.MinCount) + "条评论,点击查看"}
@@ -170,7 +168,6 @@ class Replys extends Component {
       this.setState({
         SecondCommentArray:paramArray
       })
-      console.log("jajajja",this.state.SecondCommentArray);
     }
 
   }
@@ -213,7 +210,6 @@ class Replys extends Component {
           //load second comment
           var secondCommentCount = item.ChildList.length;
           if(secondCommentCount > this.MinCount){
-            console.log(item.ID)
               let param = this.getParamByObjid(item.ID);
               if(param === undefined || param === null || param.showmore === true){//需要显示加载更多
                   for (var i = 0; i < this.MinCount; i++) {
@@ -227,11 +223,10 @@ class Replys extends Component {
                   comment.push({...second,key:Math.random()});
                 })
               }
-              console.log(param)
               if(param !== undefined && param !== null){
                 let more = <div style = {styles.loadmore} >
-                              <span>{param.loadcontent.split(',')[0] +", "}</span>
-                              <span onClick = {this.moreComment.bind(this,item.ID)}>{param.loadcontent.split(',')[1]}</span>
+                              <span>{param.loadcontent.split(',')[0]}</span>&nbsp;
+                              <span id = "loadMoreSpan" onClick = {this.moreComment.bind(this,item.ID)} style = {{cursor:'pointer',color:'#2db7f5'}}>{param.loadcontent.split(',')[1]}</span>
                             </div>
                 comment.push({...more,key:Math.random()});
               }
@@ -242,6 +237,8 @@ class Replys extends Component {
             comment.push({...second,key:Math.random()});
             })
           }
+          let h1 = <hr />;
+          comment.push({...h1,key:Math.random()});
         })
     }else {
       comment = (<div>暂无评论</div>);
@@ -250,6 +247,7 @@ class Replys extends Component {
       <div className = "detailFoot">
           <div className="allComment">
             <span>全部评论({this.props.commentNum})</span>
+            <hr />
           </div>
           {comment}
           {commentArea}
@@ -261,10 +259,16 @@ class Replys extends Component {
 
 const styles = {
   loadmore:{
-    textAlign:'left',
-    fontSize:'14px',
-    borderBottom:'1px solid #eee',
-    cursor:'pointer'
+    textAlign: 'left',
+    fontSize: '13px',
+    borderBottom: '1px solid rgb(238, 238, 238)',
+    width: '80%',
+    // border: '1px dashed #f0f0f0',
+    border: '1px dashed lightgray',
+    borderLeft: '3px solid lightgray',
+    marginLeft: '20%',
+    padding: '10px 0 10px 10px',
+    borderRight: 'none',
   }
 }
 
