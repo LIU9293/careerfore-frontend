@@ -7,7 +7,6 @@ import styles from './activity.css';
 import ActivityComment from './activityComment';
 import ActivityMapView from './mapview';
 import ActivityCarousels from './ActivityCarousel';
-import ActivitySignUps from './ActivityResult';
 import QueueAnim from 'rc-queue-anim';
 
 class ActivityPost extends Component{

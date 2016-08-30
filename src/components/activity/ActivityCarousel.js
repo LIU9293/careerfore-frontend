@@ -1,54 +1,60 @@
 import React, { Component } from 'react';
+import { Carousel } from 'antd';
 import { getActivityCarousel } from '../../vendor/connection';
-import { Row, Col, Icon ,Carousel} from 'antd';
-import { browserHistory } from 'react-router';
-import styles from './activity.css';
 
-class ActivityCarousels extends Component{
+
+// const styles = {
+//   wapper: {
+//     height: '400px',
+//     width: '1000px',
+//     margin: 'auto',
+//   },
+//   Carousel: {
+//     height: '100%',
+//     width: '100%',
+//   }
+// }
+
+class ActivityCarousel extends Component{
+
   constructor(props){
     super(props);
-    this.state = {
+    this.state={
       data:[]
     }
-}
+  }
+  componentDidMount(){
+     getActivityCarousel('',(err,data)=>{
+       if (err) {console.log(err)}else {
+         this.setState({
+           data:data.HomeFigList,
+         })
+       }
+     })
+   }
 
- componentDidMount(){
-  getActivityCarousel(this.props.areaID,(err,data)=>{
-    if (err) {
-      console.log(err)
-    }else {
-      console.log(data);
-      this.setState({
-        data:data.HomeFigList
-      })
-    }
-  })
-
- }
-
- render(){
-   if (this.state.data.length<=0) {
-     return(
-       <div></div>
-     )
-   }else{
-     let carousleList=this.state.data.map((item,ii)=>{
+  render(){
+    if (this.state.data.length<=0) {
       return(
-        <div className="picImg" key={ii} onClick={()=>{browserHistory.push(`/activity/${item.EventID}`)}}>
-        <div className="carouselImg">
-        <img src={item.PictureUrl}/>
-        </div>
-        <p>{item.Title}</p>
+        <div></div>
+      )
+    }else {
+      let myHomeFigList=this.state.data.map((item,ii)=>{
+        return(
+          <div style={{width: '1000px', height: '400px',
+           backgroundSize:  'cover',
+           backgroundPosition: 'center center',
+           backgroundImage: 'url('+item.PictureUrl+')'}} key={ii} />
+        )
+      })
+      return(
+        <div >
+          <Carousel autoplay >
+            {myHomeFigList}
+          </Carousel>
         </div>
       )
-     })
-     return(
-       <Carousel autoplay className="large" key={Math.random()}>
-       {carousleList}
-       </Carousel>
-     )
     }
- }
-
+  }
 }
- module.exports = ActivityCarousels
+module.exports = ActivityCarousel

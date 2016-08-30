@@ -6,6 +6,7 @@ import { browserHistory } from 'react-router';
 import { Form, Input, Button, Checkbox, Icon, message, Modal, Slider } from 'antd';
 import AvatarEditor from "react-avatar-editor";
 import style from './profileHomeComponents.css';
+import Cookies from 'js-cookie';
 
 const FormItem = Form.Item;
 
@@ -46,12 +47,18 @@ class Setting extends Component{
       ModalLoading: false,
       AvatarSliderValue: 1,
       userAvatar:null,
-      nickName: null,
+      nickName:null,
       nickNameError: null,
+      userSign:null,
+      userSignError:null,
     };
     this.handleAvatarChange = this.handleAvatarChange.bind(this);
     this.handleUploadAvatar = this.handleUploadAvatar.bind(this);
     this.handleModalCancel = this.handleModalCancel.bind(this);
+  }
+
+  componentWillMount(){
+    this.props.startLoading();
   }
 
   componentDidMount(){
@@ -62,6 +69,7 @@ class Setting extends Component{
           user: data
         })
       }
+      this.props.stopLoading()
     })
   }
 
@@ -79,6 +87,21 @@ class Setting extends Component{
     this.refs.nickName.style.display = 'none';
     this.refs.nickNameForm.style.display = 'inline';
     this.refs.nickNameFormButton.style.display = 'inline';
+  }
+  handleUserSign(e){
+    //如果不写preventDefault，页面可能会重新刷新
+    e.preventDefault();
+    if(!this.state.userSign){
+      message.warning('请填写自我介绍');
+      this.setState({nickNameError: '请填写自我介绍'})
+    } else {
+      console.log(this.state.userSign)
+    }
+  }
+  showUserSignEditor(){
+    this.refs.userSign.style.display = 'none';
+    this.refs.userSignForm.style.display = 'inline';
+    this.refs.userSignFormButton.style.display = 'inline';
   }
 
   handleUploadAvatar(){
@@ -103,13 +126,17 @@ class Setting extends Component{
           getUserInfo(this.props.userinfo.userid,(err,data)=>{
             if(err){console.log(err)} else {
               console.log(data);
+              let userData = {
+                avatar: data.ZUT_HEADIMG,
+                nickName: data.ZUT_NICKNAME,
+                phone: data.ZUT_PHONE
+              }
+              this.props.login(this.props.userinfo.userid, userData);
               this.setState({
                 user: data
               })
             }
           })
-          //刷新redux store, 让导航条上的头像更新
-          this.props.login(this.props.userinfo.userid)
         })
       }
     })
@@ -134,6 +161,11 @@ class Setting extends Component{
       ModalVisible: false,
       ModalLoading: false,
     })
+  }
+  logout(){
+    Cookies.remove('UserID');
+    this.props.logout();
+    browserHistory.push('/');
   }
 
   render(){
@@ -165,6 +197,23 @@ class Setting extends Component{
               </div>
             </FormItem>
             <div ref="nickNameFormButton" style={{display: 'none'}}>
+              <Button type="primary" htmlType="submit">确认</Button>
+            </div>
+          </Form>
+          <Form inline onSubmit={this.handleUserSign.bind(this)} style={{marginTop:'20px'}}>
+            <FormItem label="介绍你自己">
+              <div ref="userSign">
+                <p id="userSign" name="userSign" style={{display:'inline'}}>{des}</p>
+                <Icon type="edit" style={{marginLeft:'20px'}} onClick={this.showUserSignEditor.bind(this)} />
+              </div>
+              <div ref="userSignForm" style={{display: 'none'}}>
+                <Input
+                  placeholder={des}
+                  onChange={(e)=>{this.setState({userSign: e.target.value})}}
+                />
+              </div>
+            </FormItem>
+            <div ref="userSignFormButton" style={{display: 'none'}}>
               <Button type="primary" htmlType="submit">确认</Button>
             </div>
           </Form>
@@ -203,6 +252,9 @@ class Setting extends Component{
               </div>
             </Modal>
           </div>
+          <div style={{marginTop:'20px'}}>
+            <Button type="ghost" onClick={this.logout.bind(this)}>登出</Button>
+          </div>
         </div>
       )
     }
@@ -219,7 +271,10 @@ function mapStateToProps(store){
 }
 function mapDispatchToProps(dispatch){
   return {
-    login: (userid) => {dispatch({type:'LOG_IN', userid:userid})}
+    login: (userid,data) => {dispatch({type:'LOG_IN', userid:userid, userdata:data})} ,
+    logout: () => {dispatch({type:'LOG_OUT'})},
+    startLoading: () => {dispatch({type:'START_LOADING'})},
+    stopLoading: () => {dispatch({type:'STOP_LOADING'})},
   }
 }
 

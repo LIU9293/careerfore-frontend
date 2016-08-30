@@ -5,9 +5,14 @@ import Cookies from 'js-cookie';
 import { getUserInfo, getUserActivities, getPlaygroundList } from '../vendor/connection';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
+import Navbar from './common/navbar';
+import Loading from './loading';
 
-const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
+const styles = {
+  wapper: {
+    backgroundColor: '#f9f9f9',
+  }
+}
 
 class home extends Component{
 
@@ -18,24 +23,21 @@ class home extends Component{
     }
   }
 
-  componentDidMount(){
+  componentWillMount(){
     let userid = Cookies.get('UserID');
     if(userid !== undefined){
-      this.props.login(userid);
+      this.props.login(userid, {});
       getUserInfo(userid, (err,data) => {
         if(err){
           console.log(err);
         } else {
-          let avatar = data.ZUT_HEADIMG,
-              nickName = data.ZUT_NICKNAME,
-              phone = data.ZUT_PHONE;
-          this.setState({
-            rightMenuItem:  <div className="menuProfileArea">
-                              <a onClick={(e)=>{browserHistory.push('/my/'+ this.props.userinfo.userid)}}>
-                                <img src={avatar} className="menuProfileAvatar" />
-                              </a>
-                            </div>
-          });
+          console.log(data)
+          let userData = {
+            avatar: data.ZUT_HEADIMG,
+            nickName: data.ZUT_NICKNAME,
+            phone: data.ZUT_PHONE
+          }
+          this.props.login(userid, userData);
         }
       })
       getUserActivities(userid, (err,data) => {
@@ -49,6 +51,7 @@ class home extends Component{
     getPlaygroundList('', 1, 1000, (err,data)=>{
       if(err){console.log(err)} else {
         data.map((item,ii)=>{
+          this.props.addAvailableCity(item.CityID);
           if(item.ActivityState.trim() == '已结束'){
             this.props.closeActivity(item.ActivityID)
           }
@@ -57,63 +60,19 @@ class home extends Component{
     })
   }
 
-  componentWillReceiveProps(nextProps){
-    if(nextProps.userinfo.login == true){
-      let id = nextProps.userinfo.userid;
-      getUserInfo(id, (err,data) => {
-        if(err){
-          console.log(err);
-        } else {
-          let avatar = data.ZUT_HEADIMG,
-              nickName = data.ZUT_NICKNAME,
-              phone = data.ZUT_PHONE;
-          this.setState({
-            rightMenuItem:  <div className="menuProfileArea">
-                              <a onClick={(e)=>{browserHistory.push('/my/'+ this.props.userinfo.userid)}}>
-                                <img src={avatar} className="menuProfileAvatar" />
-                              </a>
-                            </div>
-          });
-        }
-      });
-    } else {
-      this.setState({
-        rightMenuItem: <a href="/login">登录</a>
-      })
-    }
-  }
-
-
   render(){
     return(
       <div>
-        <div className="navbar-container">
-          <Menu mode="horizontal" className="navbar">
-            <Menu.Item key="home">
-              <a href="/">主页</a>
-            </Menu.Item>
-            <Menu.Item key="activity">
-              <a href="/activity">活动</a>
-            </Menu.Item>
-            <SubMenu title={<span>发现</span>}>
-              <Menu.Item key="discover:1">
-                <a href="/discover">发现</a>
-              </Menu.Item>
-              <Menu.Item key="discover:2">选项2</Menu.Item>
-              <Menu.Item key="discover:3">选项3</Menu.Item>
-              <Menu.Item key="discover:4">选项4</Menu.Item>
-            </SubMenu>
-            <Menu.Item key="profile" style={{float: 'right'}}>
-              {this.state.rightMenuItem || ''}
-            </Menu.Item>
-          </Menu>
-        </div>
-        <div className="main" >
-          {this.props.children}
-        </div>
-        <div className="footer-container">
-          <div className="footer">
-            <h5 style={{textAlign:'center'}}>careerfore - the missing piece of higher education</h5>
+        <Loading />
+        <div style={{...styles.wapper, display: this.props.loading ? 'none' : 'block'}}>
+          <Navbar />
+          <div className="main" >
+            {this.props.children}
+          </div>
+          <div className="footer-container">
+            <div className="footer">
+              <h5 style={{textAlign:'center'}}>careerfore - the missing piece of higher education</h5>
+            </div>
           </div>
         </div>
       </div>
@@ -129,9 +88,12 @@ function mapStateToProps(store){
 }
 function mapDispatchToProps(dispatch){
   return {
-    login: (userid) => {dispatch({type:'LOG_IN', userid:userid})} ,
+    login: (userid,data) => {dispatch({type:'LOG_IN', userid:userid, userdata:data})} ,
     baoming: (id) => {dispatch({type:'JOIN_ACTIVITY', id: id})} ,
     closeActivity: (id) => {dispatch({type:'ADD_CLOSED', id: id})},
+    startLoading: () => {dispatch({type:'START_LOADING'})},
+    stopLoading: () => {dispatch({type:'STOP_LOADING'})},
+    addAvailableCity: (cityID) => {dispatch({type:'UPDATE_AVAILABLE_CITY', cityID: cityID })},
   }
 }
 

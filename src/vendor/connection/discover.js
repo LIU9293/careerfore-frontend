@@ -167,43 +167,141 @@ export const clickLove = (userID,objectID,state,callback)=>{
     }
   })
 }
-
-//获取频道查询帖子信息
-
-export const getpostlistbychannel = (channelid, pagecurrent, pagecount, callback ) => {
-  let queryObj={
-    ChannelId: channelid,
-    PageCurrent: pagecurrent,
-    PageCount: pagecount,
-  }
-
-  getData('ZQ.APP.Found.ByChannelGetPostList', queryObj, ( err, data ) => {
+//添加评论
+export const addComment = (UserID,PostsID,ObjectFatherID,Comment,ObjectID,callback)=>{
+  let queryObj = {
+    UserID: UserID,
+    PostID: PostsID,
+    ObjectFatherID:ObjectFatherID,
+    Comment:Comment,
+    ObjectID:ObjectID
+  };
+  getData("ZQ.APP.Found.PostComment",queryObj,(err,data)=>{
     if(err){
-      callback(err)
-    } else {
-      if (data.ResultCode === 1){
-        callback(null, data.PostsList);
-      } else {
+      callback(err);
+    }else {
+      console.log(data);
+      if(data.ResultCode === 1){
+        callback(null, data);
+      }else {
+        callback(data.ResultMessage);
+      };
+    }
+  })
+}
+
+
+export const deleteComment = (CommentID,UserID,callback)=>{
+  let queryObj = {
+    CommentID: CommentID,
+    UserID: UserID
+  };
+  getData("ZQ.APP.Found.DeleteComment",queryObj,(err,data)=>{
+    if(err){
+      callback(err);
+    }else {
+      if(data.ResultCode === 1){
+        callback(null, data);
+      }else {
+        callback(data.ResultMessage);
+      };
+    }
+  })
+}
+
+//增加帖子点击率
+export const AddCTR = (userid,postid,callback)=>{
+  let queryObj = {
+    UserID: userid,
+    PostsID: postid
+  };
+  getData("ZQ.APP.Found.AddCTR",queryObj,(err,data)=>{
+    if(err){
+      callback(err);
+    }else {
+      if(data.ResultCode === 1){
+        callback(null, data);
+      }else {
         callback(data.ResultMessage);
       }
     }
   })
 }
 
-//获取精华帖子信息
-
-export const getnicepostlist = ( pagecurrent, pagecount, callback ) => {
-  let queryObj={
-    PageCurrent: pagecurrent,
-    PageCount: pagecount,
-  }
-  getData('ZQ.APP.Found.NicePostList', queryObj, (err, data) => {
+//收藏
+export const Collect = (userid,objid,type,callback)=>{
+  let queryObj = {
+    UserID: userid,
+    ObjectID: objid,
+    type:type
+  };
+  getData("ZQ.APP.Found.Collect",queryObj,(err,data)=>{
     if(err){
-      callback(err)
-    } else {
-      if (data.ResultCode === 1){
+      callback(err);
+    }else {
+      if(data.ResultCode === 1)
+      {
         callback(null, data);
-      } else {
+      }else {
+        callback(data.ResultMessage);
+      }
+    }
+  })
+}
+
+//获取发帖的channel
+export const PostsChannel = (userid,callback)=>{
+  let queryObj = {
+    UserID: userid
+  };
+  getData("ZQ.APP.Found.PostsChannel",queryObj,(err,data)=>{
+    if(err){
+      callback(err);
+    }else {
+      if(data.ResultCode === 1)
+      {
+        callback(null, data);
+      }else {
+        callback(data.ResultMessage);
+      }
+    }
+  })
+}
+
+//精华
+export const essenceArticle = (pageCurrent, pageCount, callback) => {
+  let queryObj = {
+    PageCurrent: pageCurrent,
+    PageCount: pageCount,
+  };
+  getData("ZQ.APP.Found.NicePostList",queryObj,(err,data)=>{
+    if(err){
+      callback(err);
+    }else {
+      if(data.ResultCode === 1)
+      {
+        callback(null, data);
+      }else {
+        callback(data.ResultMessage);
+      }
+    }
+  })
+}
+
+export const getPostsByChannel = (channels, pageCurrent, pageCount, callback ) => {
+  let queryObj = {
+    ChannelId: channels,
+    PageCurrent: pageCurrent,
+    PageCount: pageCount,
+  };
+  getData("ZQ.APP.Found.ByChannelGetPostList",queryObj,(err,data) => {
+    if(err){
+      callback(err);
+    }else {
+      if(data.ResultCode === 1)
+      {
+        callback(null, data);
+      }else {
         callback(data.ResultMessage);
       }
     }

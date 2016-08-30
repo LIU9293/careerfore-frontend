@@ -12,24 +12,34 @@ import DiscoverDetail from '../components/discover/discoverDetail';
 import Login from '../components/profile/login';
 import Register from '../components/profile/register';
 import MyHome from '../components/profile/home';
-import ChannelList from '../components/common/channels';
-import Channel from '../components/discover/channel';
-import About from '../components/common/abouts';
+import Simditor from '../components/discover/PostArticle';
+import Draft from '../components/common/draft';
+import SubmitPosts from '../components/discover/SubmitPost';
+import Search from '../components/common/searchPage';
+import Essence from '../components/discover/essence';
+import DiscoverTopicList from '../components/discover/discoverTopicList';
+import ActivityListByCity from '../components/activity/activityListByCity';
+
 
 const Routes = ({ history }) =>
   <Router history={history}>
     <Route path="/" component={APP}>
+      <IndexRoute component={Discover} />
       <Route path="/activity" component={Activity} />
+      <Route path="/new" component={Simditor} />
+      <Route path="/draft" component={Draft} />
       <Route path="/activity/:activityID" component={ActivityDetail} />
+      <Route path="/activity/city/:cityID" component={ActivityListByCity} />
       <Route path="/discover" component={Discover} />
       <Route path="/discover/new" component={NewArticle} />
       <Route path="/discover/:discoverID" component={DiscoverDetail} />
+      <Route path="/discover/topic/:id" component={DiscoverTopicList} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
-      <Route path="/my/:UserID" component={MyHome} />
-      <Route path = "/channel" component={ChannelList}/>
-      <Route path = "/channel/:id" component={Channel}/>
-      <Route path = "/about" component={About}/>
+      <Route path="/profile" component={MyHome} />
+      <Route path="/submitpost" component = {SubmitPosts} />
+      <Route path="/search" component={Search} />
+      <Route path="/a" component={Essence} />
     </Route>
     <Route path="*" component={NotFound} />
   </Router>;

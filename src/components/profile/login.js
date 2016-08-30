@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
 import style from './index.css';
 import Cookies from 'js-cookie';
-import { userLogin, getUserActivities } from '../../vendor/connection';
+import { userLogin, getUserActivities, getUserInfo } from '../../vendor/connection';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 
@@ -40,9 +40,21 @@ class Login extends Component{
           } else {
             Cookies.set('UserID', UserID);
           }
-          this.props.login(UserID);
           console.log('已将用户ID存入cookie, cookie是：');
           console.log(Cookies.get('UserID'));
+          getUserInfo(UserID, (err,data) => {
+            if(err){
+              console.log(err);
+            } else {
+              console.log(data)
+              let userData = {
+                avatar: data.ZUT_HEADIMG,
+                nickName: data.ZUT_NICKNAME,
+                phone: data.ZUT_PHONE
+              }
+              this.props.login(UserID, userData);
+            }
+          })
           getUserActivities(UserID, (err,data) => {
             if(err){console.log(err)} else {
               data.UserActivityList.map((item,ii)=>{
@@ -96,7 +108,7 @@ function mapStateToProps(store){
 }
 function mapDispatchToProps(dispatch){
   return {
-    login: (userid) => {dispatch({type:'LOG_IN', userid:userid})} ,
+    login: (userid,userdata) => {dispatch({type:'LOG_IN', userid: userid, userdata: userdata})} ,
     baoming: (id) => {dispatch({type:'JOIN_ACTIVITY', id: id})} ,
   }
 }

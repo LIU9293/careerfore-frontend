@@ -35,6 +35,10 @@ class Collection extends Component {
     }
   }
 
+  componentWillMount(){
+    this.props.startLoading();
+  }
+
   componentDidMount(){
     getUserCollection(this.props.userinfo.userid, (err,data)=>{
       if(err){
@@ -48,13 +52,14 @@ class Collection extends Component {
           collectionData: { loaded: true, data: data.UserCollectList}
         });
       }
+      this.props.stopLoading();
     })
   }
 
   render(){
     if(this.state.collectionError){
       return(
-        <div>this.state.collectionError</div>
+        <div>{this.state.collectionError}</div>
       )
     } else if(this.state.collectionData.loaded){
 
@@ -105,5 +110,11 @@ function mapStateToProps(store){
     userinfo: store.user
   }
 }
+function mapDispatchToProps(dispatch){
+  return {
+    startLoading: () => {dispatch({type:'START_LOADING'})},
+    stopLoading: () => {dispatch({type:'STOP_LOADING'})},
+  }
+}
 
-module.exports = connect(mapStateToProps)(Collection)
+module.exports = connect(mapStateToProps,mapDispatchToProps)(Collection)

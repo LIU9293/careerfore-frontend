@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-
-
 class BlurImg extends Component{
 
   constructor(props){
