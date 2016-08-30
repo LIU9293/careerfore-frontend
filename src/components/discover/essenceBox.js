@@ -46,10 +46,10 @@ class EssenceBox extends Component{
     if (err) {
       console.log(err)
     }else {
-      let essencePostlist=data.NickPostList.map((item,ii) => {
-        let cover = 'http://imageservice.pine-soft.com/' + item.ZPT_COVER;
+      let essencePostlist=data.PostsList.map((item,ii) => {
+        let cover = item.PictureUrl;
         return (
-          <a key={ii} onClick={e=> browserHistory.push('/discover/'+item.ZPT_ID)}>
+          <a key={ii} onClick={e=> browserHistory.push('/discover/'+item.PostsID)}>
             <div style={styles.box}>
               <div style={{...styles.img, backgroundImage: 'url(' + cover + ')'}} />
             </div>

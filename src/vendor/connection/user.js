@@ -127,3 +127,21 @@ export const postUserAvatar = (userid, useravatar, callback) =>{
     }
   })
 }
+
+//更改用户昵称
+export const updateUserNickName = (userid, nickname, callback) =>{
+  let queryObj = {
+    UserID: userid,
+    NickName: nickname
+  };
+  console.log(queryObj);
+  getData('ZQ.APP.Mime.ModifyNickName', queryObj, (err, data) => {
+    if(err){callback(err)} else {
+      if (data.ResultCode === 1){
+        callback(null, data);
+      } else {
+        callback(data.ResultMessage);
+      }
+    }
+  })
+}

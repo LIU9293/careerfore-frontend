@@ -19,7 +19,6 @@ class ActivityComment extends Component{
       if (err){
           console.log(err)
       } else {
-        console.log(data);
         let commentNum=data.CommentNum;
         let activityList=data.CommentList.map((item,ii)=>{
           let UserID=item.UserID;

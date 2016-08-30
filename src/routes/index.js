@@ -26,7 +26,7 @@ const Routes = ({ history }) =>
     <Route path="/" component={APP}>
       <IndexRoute component={Discover} />
       <Route path="/activity" component={Activity} />
-      <Route path="/new" component={Simditor} />
+      <Route path="/new" component={SubmitPosts} />
       <Route path="/draft" component={Draft} />
       <Route path="/activity/:activityID" component={ActivityDetail} />
       <Route path="/activity/city/:cityID" component={ActivityListByCity} />

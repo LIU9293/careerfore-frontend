@@ -27,7 +27,6 @@ class DiscoverCarousel extends Component{
   componentDidMount(){
      getCarousel((err,data)=>{
        if (err) {console.log(err)}else {
-         console.log(data);
          this.setState({
            data:data.HomeFigList,
          })

@@ -227,6 +227,7 @@ function search( state = {key: '', page: 0, haveMore: false }, action ){
 //   top: Int, 是否置顶，同上
 //   recommand: Int, 是否推荐，同上
 //   id: 帖子ID
+//   commentNum: 评论数
 // }
 
 function discoverListData( state = {data: []}, action ){

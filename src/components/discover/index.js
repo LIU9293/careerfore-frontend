@@ -25,12 +25,16 @@ const styles = {
   CarouselWapper: {
     width: '100%',
     backgroundColor: '#3f3f3f',
-
   }
 }
 
 
 class Discover extends Component{
+
+  constructor(props){
+    super(props);
+  }
+
   render(){
     return(
       <div>
@@ -41,7 +45,7 @@ class Discover extends Component{
           <div style={styles.main}>
             <DiscoverList NumPerPage={6} />
           </div>
-          <div style={styles.side}>
+          <div style={styles.side} id="side">
             <div style={{marginBottom: '30px'}}>
               <Topics />
             </div>
