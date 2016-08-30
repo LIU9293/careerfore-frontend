@@ -4,7 +4,7 @@ import SimpEditor from './PostArticle';
 import { connect } from 'react-redux';
 import { Upload, message, Button, Icon} from 'antd';
 import style from './SubmitPost.css';
-import { PostsChannel,uploadImageToQiniu,postDiscoverArticle } from '../../vendor/connection';
+import { PostsChannel,uploadImageToQiniu,postDiscoverArticle ,postImage} from '../../vendor/connection';
 import { browserHistory } from 'react-router';
 import Cookies from 'js-cookie';
 
@@ -42,17 +42,29 @@ handleFile(e) {
     console.log(file);
     reader.readAsDataURL(file);
     reader.onload = function(img){
-        uploadImageToQiniu(img.currentTarget.result.split(',')[1],(err,data)=>{
-          console.log(err,data)
-          if(err){
+        postImage(img.currentTarget.result,(err,data)=>{
+          if(err)
+          {
             console.log(err);
           }else {
-            console.log(data);
+            // console.log(data)
             document.getElementById('previewDiv').style.display = "block";
             document.getElementById('close').style.display = "block";
-            document.getElementById('previewimg').src = data;
+            document.getElementById('previewimg').src = data.ImgName;
           }
         })
+
+        // uploadImageToQiniu(img.currentTarget.result.split(',')[1],(err,data)=>{
+        //   console.log(err,data)
+        //   if(err){
+        //     console.log(err);
+        //   }else {
+        //     console.log(data);
+        //     document.getElementById('previewDiv').style.display = "block";
+        //     document.getElementById('close').style.display = "block";
+        //     document.getElementById('previewimg').src = data;
+        //   }
+        // })
     }
   }
 
