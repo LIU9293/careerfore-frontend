@@ -58,7 +58,6 @@ class DiscoverList extends Component{
   componentWillMount(){
     this.props.startLoading();
   }
-
   componentDidMount(){
     this.loadData(1);
   }
@@ -66,7 +65,6 @@ class DiscoverList extends Component{
   componentWillUnmount(){
     this.props.updateDiscoverListData([]);
   }
-
   render(){
     return(
       <div>

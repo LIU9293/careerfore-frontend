@@ -28,7 +28,6 @@ const styles = {
     backgroundColor: '#3f3f3f',
   }
 }
-
 class Activity extends Component{
   render(){
     return(
