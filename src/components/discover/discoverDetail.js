@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { getDiscoverPost,addComment,AddCTR,Collect } from '../../vendor/connection/index';
-import { Row, Col ,Button} from 'antd';
+import { Row, Col ,Button,message} from 'antd';
 import Cookies from 'js-cookie';
 import { connect } from 'react-redux';
 import style from './discoverDetail.css';
@@ -8,6 +8,7 @@ import {millseconds2DateDiff} from '../../vendor/helper/timeTransfer';
 import DiscoverDetailFoot from './discoverDetailFoot';
 import SimpEditor from './PostArticle';
 import Zan from '../common/zan';
+import Collection from '../common/collect';
 
 class DiscoverDetail extends Component{
   constructor(props){
@@ -26,10 +27,6 @@ class DiscoverDetail extends Component{
     this.props.startLoading();
   }
 
-  componentWillMount(){
-    this.props.startLoading();
-  }
-
   componentDidMount(){
     this.loadData();
     this.addReadNum();
@@ -37,22 +34,14 @@ class DiscoverDetail extends Component{
 
   chooseFid(fid){
     this.props.UPDATE_QUEPARAM("","","","");
-    // console.log(this.refs.discoverDetailFoot);
-    // this.setState({objFatherid:"",objid:"",userName:""});
   }
 
   collecPost(objid){
     if(this.props.user.userid === undefined){
       alert("请登录");
     }else {
-      this.setState({collectNum:(this.state.collectNum ++)},()=>{console.log("****" + this.state.collectNum)})
-      Collect(this.props.user.userid,objid,0,(err,data)=>{
-        if(err){
-          console.log(err);
-        }else {
-          console.log(data);
-        }
-      })
+      this.setState({collectNum:(this.state.collectNum + 1)});
+      message.success('收藏成功');
     }
   }
 
@@ -64,10 +53,11 @@ class DiscoverDetail extends Component{
     }
     getDiscoverPost(this.props.params.discoverID,userid,(err,data)=>{
         if(err){
-          console.log(err);
         }else {
-          console.log(data);
+          console.log(data)
           this.setState({postData:data,collectNum:data.PostosInfo.CollectionNumbers});
+          this.props.UPDATE_LIKE(data.PostosInfo.PostID,data.IsLike,data.PostosInfo.LikeNum);
+          this.props.UPDATE_COLLECT(data.PostosInfo.PostID,data.IsCollect,data.PostosInfo.CollectionNumbers);
           this.props.stopLoading();
         }
     })
@@ -110,25 +100,25 @@ class DiscoverDetail extends Component{
                   <div className="userinfo">
                       <img className = "userphoto" src={info.UserHeadUrl}  />
                       <div className = "introduction">
-                          <span>{name} - {info.ChannelName} - {time}</span>
+                          <span>{name}&nbsp;&nbsp;·&nbsp;&nbsp; {info.ChannelName}&nbsp;&nbsp;·&nbsp;&nbsp;{time}</span>
                       </div>
                   </div>
                   <div onClick = {this.chooseFid.bind(this,info.PostID)} id="content" className="pageContent" dangerouslySetInnerHTML = {{__html : info.Content || ''}}>
                   </div>
                 </div>
-                <div id="like" className="like">
-                  <div className="Postlike">
-                      <span className="love">
-                        <Zan float = {fl} className ="love_icon" objid = {info.PostID} isLiked = {true} baseNum = {info.LikeNum} type={0}/>
+                <div id="like" className="like" style = {{maxWidth:'750px',margin:'0 auto',paddingBottom:'30px',marginTop: '30px'}}>
+                  <div >
+                      <Zan float = {""} objid = {info.PostID} type={0}/>
+                      &nbsp;&nbsp;
+                      <Collection float = {""} objid = {info.PostID} type={0}/>
+                      <span style = {{float:'right',fontSize: '14px',color: '#999'}}>
+                      阅读&nbsp;({info.ReadNum})
                       </span>
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                      <span className="collect" onClick = {this.collecPost.bind(this,info.PostID)}>
-                      <i className="collect_icon"></i>收藏·{this.state.collectNum}</span>
-                      &nbsp;&nbsp;&nbsp;&nbsp;阅读数·{info.ReadNum}
                   </div>
                 </div>
                 <DiscoverDetailFoot ref = "discoverDetailFoot" postid={this.props.params.discoverID} callback={this.getClickComment}/>
             </div>
+
           </div>
         )
         return(
@@ -159,8 +149,56 @@ function mapDispatchToProps(dispatch){
     startLoading: () => {dispatch({type:'START_LOADING'})},
     stopLoading: () => {dispatch({type:'STOP_LOADING'})},
     UPDATE_QUEPARAM:(userName,objFatherid,objid,fatherName)=>{dispatch({type:'UPDATE_QUEPARAM',userName:userName,objFatherid:objFatherid,objid:objid,fatherName:fatherName})},
-
+    UPDATE_LIKE:(objid,isliked,num)=>{dispatch({type:"UPDATE_LIKE",objid:objid,isliked:isliked,num:num})},
+    UPDATE_COLLECT:(objid,iscollect,num)=>{dispatch({type:"UPDATE_COLLECT",objid:objid,iscollect:iscollect,num:num})},
   }
 }
 
+const success = function () {
+  message.success('收藏成功');
+};
+
 module.exports = connect(mapStateToProps,mapDispatchToProps)(DiscoverDetail)
+
+// const styles = {
+//   cover:{
+//     display:'none',
+//     position: 'fixed',
+//     width: '100%',
+//     height: '100%',
+//     top: '0',
+//     left: '0',
+//     textAlign: 'center',
+//     background: 'rgba(0,0,0,.2)',
+//   },alert:{
+//     position: relative;
+// padding: 20px 50px;
+// background: rgba(0,0,0,.7);
+// line-height: 50px;
+// color: #fff;
+// font-size: 25px;
+// border-radius: 8px;
+// top: 40%;
+//   }
+// }
+//<i className="collect_icon"></i>收藏·{this.state.collectNum}
+/*
+<div style = {styles.cover} ref = "cover">
+  <span style = {styles.alert}>收藏成功</span>
+</div>
+*/
+
+/*
+<div id="like" className="like">
+  <div className="Postlike">
+      <span className="love">
+        <Zan float = {fl} className ="love_icon" objid = {info.PostID} isLiked = {true} baseNum = {info.LikeNum} type={0}/>
+      </span>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <span className="collect" onClick = {this.collecPost.bind(this,info.PostID)}>
+      <i className="collect_icon"></i>收藏·{this.state.collectNum}
+      </span>
+      &nbsp;&nbsp;&nbsp;&nbsp;阅读数·{info.ReadNum}
+  </div>
+</div>
+*/
