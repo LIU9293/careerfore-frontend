@@ -14,6 +14,16 @@ class DiscoverList extends Component{
     }
     this.loadMore = this.loadMore.bind(this);
     this.loadData = this.loadData.bind(this);
+    this.sticker = function(){
+      var sidebar = document.getElementById('side');
+      if ( document.body.scrollTop > 470) {
+        sidebar.style.position = 'fixed';
+        sidebar.style.top = '30px';
+      } else {
+        sidebar.style.position = 'absolute';
+        sidebar.style.top = null;
+      }
+    }
   }
 
   loadMore(){
@@ -24,7 +34,7 @@ class DiscoverList extends Component{
   }
 
   loadData(index){
-    getDiscoverList(this.props.user.userid, index, this.props.NumPerPage, (err,data) => {
+    getDiscoverList(this.props.user.userid || '', index, this.props.NumPerPage, (err,data) => {
       if(err){
         console.log(err);
       } else {
@@ -45,7 +55,6 @@ class DiscoverList extends Component{
             id: item.PostsID,
           }
         });
-        console.log(data.PostsList.length,data.PostsList.length)
         if(data.PostsList.length < this.props.NumPerPage){
           this.setState({haveMore: false})
         }
@@ -61,10 +70,12 @@ class DiscoverList extends Component{
 
   componentDidMount(){
     this.loadData(1);
+    window.addEventListener('scroll', this.sticker)
   }
 
   componentWillUnmount(){
     this.props.updateDiscoverListData([]);
+    window.removeEventListener('scroll', this.sticker)
   }
 
   render(){

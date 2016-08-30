@@ -189,6 +189,26 @@ export const addComment = (UserID,PostsID,ObjectFatherID,Comment,ObjectID,callba
     }
   })
 }
+
+
+export const deleteComment = (CommentID,UserID,callback)=>{
+  let queryObj = {
+    CommentID: CommentID,
+    UserID: UserID
+  };
+  getData("ZQ.APP.Found.DeleteComment",queryObj,(err,data)=>{
+    if(err){
+      callback(err);
+    }else {
+      if(data.ResultCode === 1){
+        callback(null, data);
+      }else {
+        callback(data.ResultMessage);
+      };
+    }
+  })
+}
+
 //增加帖子点击率
 export const AddCTR = (userid,postid,callback)=>{
   let queryObj = {
@@ -249,10 +269,10 @@ export const PostsChannel = (userid,callback)=>{
 }
 
 //精华
-export const essenceArticle = (pageCurrent, pageCount, callback) => {
+export const essenceArticle = (pageNumber, perPageNumber, callback) => {
   let queryObj = {
-    PageCurrent: pageCurrent,
-    PageCount: pageCount,
+    PageNumber: pageNumber,
+    PerPageNumber: perPageNumber,
   };
   getData("ZQ.APP.Found.NicePostList",queryObj,(err,data)=>{
     if(err){
@@ -268,11 +288,11 @@ export const essenceArticle = (pageCurrent, pageCount, callback) => {
   })
 }
 
-export const getPostsByChannel = (channels, pageCurrent, pageCount, callback ) => {
+export const getPostsByChannel = (channels, pageNumber, perPageNumber, callback ) => {
   let queryObj = {
     ChannelId: channels,
-    PageCurrent: pageCurrent,
-    PageCount: pageCount,
+    PageNumber: pageNumber,
+    PerPageNumber: perPageNumber,
   };
   getData("ZQ.APP.Found.ByChannelGetPostList",queryObj,(err,data) => {
     if(err){

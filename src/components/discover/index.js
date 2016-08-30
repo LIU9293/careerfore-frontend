@@ -28,23 +28,11 @@ const styles = {
   }
 }
 
+
 class Discover extends Component{
 
   constructor(props){
     super(props);
-  }
-
-  componentDidMount(){
-    window.addEventListener('scroll', function () {
-      var sidebar = document.getElementById('side');
-      if ( document.body.scrollTop > 470) {
-        sidebar.style.position = 'fixed';
-        sidebar.style.top = '30px';
-      } else {
-        sidebar.style.position = 'absolute';
-        sidebar.style.top = null;
-      }
-    })
   }
 
   render(){
