@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {Icon} from 'antd';
+import {Icon,message} from 'antd';
 import { clickLove} from '../../vendor/connection/index';
 import { browserHistory } from 'react-router';
 
@@ -10,11 +10,6 @@ class Zan extends Component {
     super(props);
   }
 
-  componentDidMount(){
-    if(this.props.isLiked == true){
-      this.props.zan(this.props.objid);
-    }
-  }
 
   loveClickHandler(id){
     if(this.props.userinfo.userid === null)
@@ -24,43 +19,28 @@ class Zan extends Component {
       this.props.zan(id);
       clickLove(this.props.userinfo.userid,this.props.objid,this.props.type,(err,data)=>{
         if(err){
-
+          message.error(err);
         }else {
-
+          message.success("操作成功");
         }
       })
     }
   }
   render(){
-    let fl 
-    if(this.props.float){
-      if(this.props.float !== ""){
-        fl = this.props.float;
-      }else {
-        fl = "";
-      }
-    }else {
-      fl = "right";
-    }
+    let fl =this.props.float !== null? this.props.float !== "" ? this.props.float: "" : "right";
+    let heart,num
     if(this.props.dianzan[this.props.objid]){
-      return(
-        <div style={{display:'inline',float:fl}} >
+      heart = this.props.dianzan[this.props.objid].isliked ? "heart" : "heart-o" ;
+      num = this.props.dianzan[this.props.objid].num;
+    }
+    return(
+      <div style={{display:'inline',float:fl}} >
         <span className="spanLove_sec" onClick={this.loveClickHandler.bind(this,this.props.objid)}>
-            <Icon style={{color:'red'}} type="heart" />&nbsp;
-          {this.props.baseNum + 1}
+            <Icon style={{color:'#f09999'}} type={heart || 'heart-o'} />&nbsp;{"喜欢"}&nbsp;
+          ({num || "0"})
         </span>
       </div>
     )
-    }else {
-      return(
-        <div style={{display:'inline',float:fl,marginRight:'1%'}} >
-          <span className="spanLove_sec" onClick={this.loveClickHandler.bind(this,this.props.objid)}>
-            <Icon type="heart-o" />&nbsp;
-            {this.props.baseNum }
-          </span>
-        </div>
-      )
-    }
   }
 }
 
@@ -74,11 +54,18 @@ function mapStateToProps(store){
 
 function mapDispatchToProps(dispatch){
   return {
-    zan :(commentID)=>{dispatch({
+    zan :(objid)=>{dispatch({
       type:"LIKE_TOGGLE",
-      commentID:commentID
+      objid:objid
     })}
   }
 }
+
+const success = function () {
+  message.success('收藏成功');
+};
+const error = function (err) {
+  message.error(err);
+};
 
 module.exports = connect(mapStateToProps,mapDispatchToProps)(Zan)
