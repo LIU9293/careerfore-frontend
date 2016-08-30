@@ -107,12 +107,13 @@ handleFile(e) {
   render(){
     let channelView;
     if(this.state.channelSelect){
-      let options =[];
+      let options ;
       let holder = "请选择频道";
-      options.push(<option value = {-1}>{holder}</option>);
-      this.state.channelSelect.map((item,index) =>{
-          options.push(<option value = {item.value}>{item.key}</option>)
+      options =  this.state.channelSelect.map((item,index) =>{
+      return (<option key ={index} value = {item.value}>{item.key}</option>);
       })
+      let item = <option key = {-1} value = {-1}>{holder}</option>;
+      options.splice(0, 0, item)
       channelView = <select id = "channel" className = "form-control">{options}</select>
     }
     return(
