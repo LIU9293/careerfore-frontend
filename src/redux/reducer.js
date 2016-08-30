@@ -30,14 +30,40 @@ function user(state = initUserState, action){
 //点赞Reducer存放了在APP生命周期中的点赞内容
 function dianzan(state = {}, action) {
   switch (action.type) {
+    case 'UPDATE_LIKE':
+      return {
+        ...state,
+        [action.objid]: {isliked: action.isliked, num: action.num}
+      }
     case 'LIKE_TOGGLE':
-      if(state[action.commentID] == true){
-        delete state[action.commentID];
-        return {...state}
-      } else {
-        return{
-          ...state,
-          [action.commentID]:true
+    // {00 :{likenum:0,isliked:t/f}}
+      return {
+        ...state,
+        [action.objid]: {
+          isliked: !state[action.objid].isliked,
+          num: state[action.objid].isliked ? (state[action.objid].num - 1 ) : (state[action.objid].num + 1 )
+        }
+      }
+    default:
+      return state
+  }
+}
+
+//收藏Reducer存放了在APP生命周期中的点赞内容
+function collect(state = {}, action) {
+  switch (action.type) {
+    case 'UPDATE_COLLECT':
+      return {
+        ...state,
+        [action.objid]: {iscollect: action.iscollect, num: action.num}
+      }
+    case 'COLLECT_TOGGLE':
+    // {00 :{collectnum:0,iscollect:t/f}}
+      return {
+        ...state,
+        [action.objid]: {
+          iscollect: !state[action.objid].iscollect,
+          num: state[action.objid].iscollect ? (state[action.objid].num - 1 ) : (state[action.objid].num + 1 )
         }
       }
     default:
@@ -274,4 +300,5 @@ export default combineReducers({
   editorOperate,
   loading,
   availableCities,
+  collect,
 })

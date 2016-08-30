@@ -95,6 +95,14 @@ class Replys extends Component {
     }
   }
 
+  addNewComment(){
+    if(this.props.user.userid === undefined || this.props.user.userid === null){
+      browserHistory.push(`/login`);
+    }else {
+      window.scrollBy(0,this.refs.commentarea.offsetTop);
+    }
+  }
+
   addComments(){
     if(this.props.user.userid === undefined){
       browserHistory.push(`/login`);
@@ -175,13 +183,13 @@ class Replys extends Component {
   render(){
     var commentArea;
     if(this.props.user.userid === undefined || this.props.user.userid === null){
-      commentArea = <div ref = "commentarea" style={{width:'100%',width: '100%',float:'left',marginTop: '20px'}} id="comment">
+      commentArea = <div ref = "commentarea" style={styles.commentArea} id="comment">
         <div className="left">
           <img src = "http://imageservice.pine-soft.com/logo.png" />
         </div>
         <div className = "right">
           <div className="border" style={{padding:"5%"}}>
-            <p style={{fontSize:'16px'}}>登陆职前就可以发表评论了...</p>
+            <p style={{fontSize:'15px'}}>登陆职前就可以发表评论了...</p>
             <Button type="primary" onClick={()=>{browserHistory.push(`/login`);}}>登陆</Button><Button type="primary" style={{marginLeft:'2%'}} onClick={()=>{browserHistory.push(`/register`);}}>注册</Button>
           </div>
           <Button type="primary" style={{float: 'right',marginTop: '10px'}} onClick={this.addComments}>评论</Button>
@@ -189,7 +197,7 @@ class Replys extends Component {
       </div>
     }
     else {
-      commentArea = <div ref = "commentarea" style={{width:'100%',width: '100%',float:'left',marginTop: '20px'}} id="comment">
+      commentArea = <div ref = "commentarea" style={styles.commentArea} id="comment">
         <div className="left">
           <img src = {this.props.user.userdata !== null ?this.props.user.userdata.avatar :"http://imageservice.pine-soft.com/logo.png"} />
         </div>
@@ -246,7 +254,8 @@ class Replys extends Component {
     return(
       <div className = "detailFoot">
           <div className="allComment">
-            <span>全部评论({this.props.commentNum})</span>
+            <span>{this.props.commentNum}条评论</span>
+            <span id = "addNewComment" ref = "addNewComment" onClick = {this.addNewComment.bind(this)}>添加新评论</span>
             <hr />
           </div>
           {comment}
@@ -262,13 +271,18 @@ const styles = {
     textAlign: 'left',
     fontSize: '13px',
     borderBottom: '1px solid rgb(238, 238, 238)',
-    width: '80%',
+    width: '94%',
     // border: '1px dashed #f0f0f0',
     border: '1px dashed lightgray',
     borderLeft: '3px solid lightgray',
-    marginLeft: '20%',
+    marginLeft: '6%',
     padding: '10px 0 10px 10px',
     borderRight: 'none',
+  },
+  commentArea:{
+    width:'100%',
+    overflow: 'hidden',
+    marginTop: '20px'
   }
 }
 

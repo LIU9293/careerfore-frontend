@@ -46,7 +46,6 @@ class EssenceBox extends Component{
     if (err) {
       console.log(err)
     }else {
-      console.log(data)
       let essencePostlist=data.PostsList.map((item,ii) => {
         let cover = item.PictureUrl;
         return (

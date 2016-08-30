@@ -55,6 +55,9 @@ class Navbar extends Component{
             <Menu.Item key="/search" style={{...style.menuItem, float:'right', borderBottom: 'none'}}>
               <Search />
             </Menu.Item>
+            <Menu.Item key="/new" style={{...style.menuItem, float:'right'}}>
+              发布新文章
+            </Menu.Item>
           </Menu>
         </div>
       )

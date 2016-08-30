@@ -36,7 +36,6 @@ class DiscoverDetailFoot extends Component {
           if(err){
             console.log(err);
           }else {
-            console.log(data);
             if(data.CommentList.length >= 0){
               this.setState({loadContent:"点击加载更多评论"});
               if(this.pageIndex === 1){

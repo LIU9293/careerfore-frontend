@@ -18,7 +18,6 @@ import SubmitPosts from '../components/discover/SubmitPost';
 import Search from '../components/common/searchPage';
 import Essence from '../components/discover/essence';
 import DiscoverTopicList from '../components/discover/discoverTopicList';
-
 import ActivityListByCity from '../components/activity/activityListByCity';
 
 
@@ -27,7 +26,7 @@ const Routes = ({ history }) =>
     <Route path="/" component={APP}>
       <IndexRoute component={Discover} />
       <Route path="/activity" component={Activity} />
-      <Route path="/new" component={Simditor} />
+      <Route path="/new" component={SubmitPosts} />
       <Route path="/draft" component={Draft} />
       <Route path="/activity/:activityID" component={ActivityDetail} />
       <Route path="/activity/city/:cityID" component={ActivityListByCity} />

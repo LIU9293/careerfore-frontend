@@ -1,4 +1,3 @@
-
 import { getData, getDataBase64, postImage, uploadImageToQiniu, searchFound, area } from './basis';
 import { getPlaygroundList, getPlaygroundPost, getActivityCarousel, getActivityComment,
   getActivitySignUp, getSignUpResult, getUserActivities } from './activity';
@@ -8,7 +7,6 @@ import { getCarousel, getDiscoverList, getDiscoverPost, postDiscoverArticle, get
 import { sendSMS, userRegister, userLogin, getUserInfo, getUserArticles,
   getUserCollection, postUserAvatar, updateUserNickName } from './user';
 import { secretaryMessage, activityMessage, unreadMessage, unreadMessageContent } from './message';
-
 module.exports = {
   getData, //抓数据基础接口，输入(FunctionRouteName,QueryObjectName,callback)
   getDataBase64, //抓base64转码过的数据

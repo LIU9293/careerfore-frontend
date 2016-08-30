@@ -67,7 +67,6 @@ class DiscoverList extends Component{
   componentWillMount(){
     this.props.startLoading();
   }
-
   componentDidMount(){
     this.loadData(1);
     window.addEventListener('scroll', this.sticker)
@@ -77,7 +76,6 @@ class DiscoverList extends Component{
     this.props.updateDiscoverListData([]);
     window.removeEventListener('scroll', this.sticker)
   }
-
   render(){
     return(
       <div>

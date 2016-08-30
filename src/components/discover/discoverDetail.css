@@ -77,7 +77,7 @@ a {
 }
 .introduction > span{
   font-size: 16px;
-  color: #000;
+  color: #999;
 }
 .pageContent{
   margin-left: 0;
@@ -121,7 +121,7 @@ i, cite, em, var, address, dfn {
 .right{
   margin-left: 3%;
   float: left;
-  width: 80%;
+  width: 85%;
 }
 .border{
   padding: 7px 14px;
