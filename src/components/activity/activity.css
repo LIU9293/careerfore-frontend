@@ -2,6 +2,7 @@
 .width1000{
   max-width: 1000px;
   margin:auto;
+
 }
 /* activity content*/
 .page{
@@ -75,11 +76,14 @@
   padding: 5px 15px 5px 15px;
 
 }
-.Txt>h3,p{
+.Txt>h3{
+  margin: 0px;
+}
+.Txt>p{
   margin: 0px;
 }
 .Txt>span{
-  font-size: 14px;
+  font-size: 13px;
 }
 .Txt>span>a{
   text-decoration: none;
@@ -95,6 +99,7 @@
 .carouselImg{
   width: 100%;
   height: 300px;
+  box-shadow:0px 0px 21px 0px rgba(19, 95, 158, 0.2);
 }
 .carouselImg img{
   width: 100%;
@@ -109,12 +114,32 @@ Row{
   padding:15px 20px;
   margin: 0;
 }
+.Pagecol{
+  margin: 20px 15px 0px 0px;
+  padding: 5px 10px 20px 10px;
+  box-shadow: 0 1px 7px #bcbcbc;
+  border-radius: 4px;
+  background-color: #ffffff;
+}
+.Pagecol p{
+  margin-left: 50px;
+}
+.ant-carousel .slick-slider{
+  padding: 0px !important;
+}
+.ant-collapse{
+  border: none !important;
+  background-color: #ffffff !important;
+}
 .Img{
   display: block;
-  max-height: 250px;
+  max-height: 370px;
   background-position: center;
   background-size: cover;
   overflow: hidden;
+  box-shadow: 0 1px 7px #bcbcbc;
+  margin-top: 15px;
+  border-radius: 4px;
 }
 .Img>img{
   width:calc(100%);
@@ -132,11 +157,10 @@ Row{
 .detail p{
   font-size:16px;
   line-height: 30px;
-  margin-left: 50px;
 }
 .detail h1{
-  text-align: right;
   padding-right: 80px;
+  padding-left: 40px;
 }
 .detail p span{
   font-size: 16px;
@@ -147,12 +171,31 @@ Row{
 }
 .button button{
   float: right;
-  margin-right: 80px;
+  margin-right: 60px;
 }
-.contentDt,
-.contentDt2{
-  padding-top: 60px;
+.contentDt{
+  margin: 20px 15px 0px 0px;
+  padding: 15px;
   position: relative;
+  box-shadow: 0 1px 7px #bcbcbc;
+  border-radius: 4px;
+  background-color: #ffffff;
+  padding: 8px;
+}
+.ant-collapse-content{
+  background-color: #ffffff !important;
+}
+.ant-collapse > .ant-collapse-item > .ant-collapse-header{
+  font-size: 18px !important;
+  font-weight: bold;
+}
+.contentDt2{
+  margin-top: 20px;
+  position: relative;
+  box-shadow: 0 1px 7px #bcbcbc;
+  border-radius: 4px;
+  background-color: #ffffff;
+  padding: 8px;
 }
 .contentDt2 p{
   margin-left: 0px;
@@ -160,9 +203,41 @@ Row{
 .carousle div{
   height:100%;
 }
+.carousle {
+  box-shadow: 0 1px 7px #bcbcbc;
+  border-radius: 4px;
+  background-color: #ffffff;
+  margin: 20px 0;
+}
+.carousel div p{
+  margin: 0px;
+}
 .carousle div img{
   width: 100%;
 }
+.Map{
+  margin-top: 20px;
+  position: relative;
+  box-shadow: 0 1px 7px #bcbcbc;
+  border-radius: 4px;
+  background-color: #ffffff;
+  padding: 8px;
+}
+.Calendar{
+  margin-top: 20px;
+  position: relative;
+  box-shadow: 0 1px 7px #bcbcbc;
+  border-radius: 4px;
+  background-color: #ffffff;
+  padding: 8px;
+}
+.ant-fullcalendar{
+  border: none !important;
+}
+.ant-fullcalendar-header{
+  text-align: center !important;
+}
+
 /*Acitivity Comment*/
 .comment{
   position: relative;

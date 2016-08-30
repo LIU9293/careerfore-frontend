@@ -18,7 +18,6 @@ import SubmitPosts from '../components/discover/SubmitPost';
 import Search from '../components/common/searchPage';
 import Essence from '../components/discover/essence';
 import DiscoverTopicList from '../components/discover/discoverTopicList';
-
 import ActivityListByCity from '../components/activity/activityListByCity';
 
 

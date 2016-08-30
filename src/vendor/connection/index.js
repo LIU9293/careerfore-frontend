@@ -1,14 +1,11 @@
-
 import { getData, getDataBase64, postImage, uploadImageToQiniu, searchFound, area } from './basis';
 import { getPlaygroundList, getPlaygroundPost, getActivityCarousel, getActivityComment,
   getActivitySignUp, getSignUpResult, getUserActivities } from './activity';
 import { getCarousel, getDiscoverList, getDiscoverPost, postDiscoverArticle, getDiscoverPostComment,
   getDiscoverFilterList, getMyDiscoverFilterList, updateMyDiscoverFilterList, clickLove, addComment,
   AddCTR, Collect, PostsChannel, essenceArticle, getPostsByChannel,deleteComment } from './discover';
-
 import { sendSMS, userRegister, userLogin, getUserInfo, getUserArticles, getUserCollection, postUserAvatar } from './user';
 import { secretaryMessage, activityMessage, unreadMessage, unreadMessageContent } from './message';
-
 module.exports = {
   getData, //抓数据基础接口，输入(FunctionRouteName,QueryObjectName,callback)
   getDataBase64, //抓base64转码过的数据
