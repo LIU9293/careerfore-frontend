@@ -1,0 +1,44 @@
+.collect {
+  background: url(./twitter_fave.png);
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+  display: inline-block;
+}
+.collect:focus{
+  background-position: -3519px 0;
+}
+
+@-webkit-keyframes collectBlast {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -3519px 0;
+  }
+}
+
+@keyframes collectBlast {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -3519px 0;
+  }
+}
+
+.collectAnimation {
+  display: inline-block;
+  -webkit-animation-name: collectBlast;
+  animation-name: collectBlast;
+  -webkit-animation-duration: .8s;
+  animation-duration: .8s;
+  -webkit-animation-iteration-count: 1;
+  animation-iteration-count: 1;
+  -webkit-animation-timing-function: steps(55);
+  animation-timing-function: steps(55);
+  background-position: right;
+}
