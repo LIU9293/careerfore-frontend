@@ -22,9 +22,6 @@ class DiscoverDetail extends Component{
     this.addReadNum = this.addReadNum.bind(this);
   }
 
-  componentWillMount(){
-    this.props.startLoading();
-  }
 
   componentWillMount(){
     this.props.startLoading();

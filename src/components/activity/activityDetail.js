@@ -23,7 +23,7 @@ class ActivityPost extends Component{
 
   componentDidMount(){
 
-    console.log(this.props.ChannelId);
+    // console.log(this.props.params.activityID);return;
 
     getPlaygroundPost(this.props.params.activityID, '',(err,data)=>{
       if(err){
@@ -60,7 +60,9 @@ class ActivityPost extends Component{
       };
     })
   }
-
+  bodyclick(){
+    this.props.UPDATE_QUEPARAM("","","","");
+  }
   joinActivity(){
     if(!this.props.userinfo.login){
       browserHistory.push('/login');
@@ -109,7 +111,7 @@ class ActivityPost extends Component{
               </div>
               <div className="detail">
                 <Col xs={16} sm={16} md={16} lg={16} >
-                <div className="Pagecol">
+                <div className="Pagecol" onClick={this.bodyclick.bind(this)}>
                   <h1>{this.state.activityData.title || ''}</h1>
                   <p><Icon type="clock-circle-o" /><span>{this.state.activityData.StartDate || ''} - {this.state.activityData.EndDate || ''}</span></p>
                   <p><Icon type="team" /><span>{this.state.activityData.PeopleNum || '0'}人(限{this.state.activityData.CheckPeopleNum || ''}人报名)</span></p>
@@ -128,14 +130,14 @@ class ActivityPost extends Component{
                   </Button>
                   </div>
                   </div>
-                  <div className="contentDt" style={{paddingRight:'10px'}}>
+                  <div className="contentDt" style={{paddingRight:'10px'}} onClick={this.bodyclick.bind(this)}>
                       <Collapse defaultActiveKey={['1']} onChange={callback}>
                           <Panel header="活动详情" key="1">
                             <div className="FontLg" dangerouslySetInnerHTML={{__html: this.state.activityData.content || ''}}/>
                           </Panel>
-                        </Collapse>
+                          <ActivityComment activityid={this.props.params.activityID} />
+                      </Collapse>
                   </div>
-                  <ActivityComment activityid={this.props.params.activityID} />
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8}>
                   <div className="contentDt2">
@@ -186,7 +188,8 @@ function mapStateToProps(store){
 }
 function mapDispatchToProps(dispatch){
   return {
-    baoming: (id) => {dispatch({type:'JOIN_ACTIVITY', id: id})}
+    baoming: (id) => {dispatch({type:'JOIN_ACTIVITY', id: id})},
+    UPDATE_QUEPARAM:(userName,objFatherid,objid,fatherName)=>{dispatch({type:'UPDATE_QUEPARAM',userName:userName,objFatherid:objFatherid,objid:objid,fatherName:fatherName})},
   }
 }
 

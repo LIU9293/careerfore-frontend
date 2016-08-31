@@ -1,6 +1,6 @@
 import { getData, getDataBase64, postImage, uploadImageToQiniu, searchFound, area } from './basis';
 import { getPlaygroundList, getPlaygroundPost, getActivityCarousel, getActivityComment,
-  getActivitySignUp, getSignUpResult, getUserActivities } from './activity';
+  getActivitySignUp, getSignUpResult, getUserActivities , PostActivityComment , DeleteActivityComment } from './activity';
 import { getCarousel, getDiscoverList, getDiscoverPost, postDiscoverArticle, getDiscoverPostComment,
   getDiscoverFilterList, getMyDiscoverFilterList, updateMyDiscoverFilterList, clickLove, addComment,
   AddCTR, Collect, PostsChannel, essenceArticle, getPostsByChannel,deleteComment } from './discover';
@@ -15,6 +15,8 @@ module.exports = {
   getPlaygroundList, //获取活动列表，输入(AreaID, pageCurrent, pageSize, callback)
   getPlaygroundPost, //获取活动详情，输入(id, userid, callback)
   getActivityComment,//获取活动评论列表，输入（eventid，userid，pageNum，callback）
+  PostActivityComment,//发表评论接口，输入(userid,activityid,fatheruserid,firsuserid,comment,callback)
+  DeleteActivityComment,//删除评论，输入(userid,commentid,callback)
   getCarousel, //获取发现轮播图，参数只有一个callback
   getSignUpResult,//获取活动报名结果，输入(userID,ActivityID,callback)
   getActivitySignUp,//获取活动报名，输入(userID,ActivityID,callback)

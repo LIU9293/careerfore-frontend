@@ -108,6 +108,7 @@ function commentOperate(state = {},action) {
 
 //添加评论请求数据的Reducer
 function addCommentOperate(state = {userName :"",objFatherid:"",objid:"",fatherName:""},action) {
+console.log(action.type,">>>",action.userName,">>>",action.objFatherid,">>>",action.objid,">>>",action.fatherName)
   switch (action.type) {
     case 'UPDATE_QUEPARAM':
       return{

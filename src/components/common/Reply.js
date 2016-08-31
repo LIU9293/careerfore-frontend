@@ -5,7 +5,7 @@ import { browserHistory } from 'react-router';
 import Zan from '../common/zan';
 import FirstReply from '../common/firstReply';
 import SecondReply from '../common/secondReply';
-import { addComment ,deleteComment} from '../../vendor/connection/index';
+import { addComment ,deleteComment,PostActivityComment,DeleteActivityComment} from '../../vendor/connection/index';
 
 class Replys extends Component {
   constructor(props) {
@@ -65,6 +65,7 @@ class Replys extends Component {
   }
 
   getClickComment(fatherid,objid,username,fatherName,uid){
+    console.log(fatherid,objid,username,fatherName,uid);
     if(this.props.user.userid === undefined || this.props.user.userid === null){
       browserHistory.push(`/login`);
     }else {
@@ -73,7 +74,8 @@ class Replys extends Component {
       }else {
         let reply = "回复:" + username;
         this.props.UPDATE_QUEPARAM(reply,fatherid,objid,fatherName);
-        window.scrollBy(0,this.refs.commentarea.offsetTop);
+        window.scrollBy(0,this.refs.commentarea.clientHeight);
+        console.log(this.refs.commentarea.clientHeight);
       }
     }
   }
@@ -86,12 +88,22 @@ class Replys extends Component {
     }
     //不是随机生成的ID
     if(commentid.split('.').length < 2){
-      deleteComment(commentid,this.props.user.userid,(err,data)=>{
-        if(err){console.log(err)}
-        else {
-          console.log(data)
-        }
-      })
+      if (this.props.sourceType === "activity") {
+        DeleteActivityComment(this.props.user.userid,commentid,(err,data) => {
+          if (err) {
+            console.log(err)
+          }else {
+            console.log(data)
+          }
+        })
+      }else {
+        deleteComment(commentid,this.props.user.userid,(err,data)=>{
+          if(err){console.log(err)}
+          else {
+            console.log(data)
+          }
+        })
+      }
     }
   }
 
@@ -103,50 +115,101 @@ class Replys extends Component {
       if(commentContent.replace(' ','').length === 0){
         console.log("请输入有效的评论");
       }else {
-        addComment(this.props.user.userid,this.props.postid,this.props.commentReq.objFatherid,commentContent,this.props.commentReq.objid,(err,data)=>{
-          if(err){
-            console.log(err);
-          } else {
-            if(this.props.commentReq.objFatherid==''){
-              this.props.insertTopLevelComment({
-                ChildList:[],
-                Content:commentContent,
-                HeadImg: this.props.user.userdata !== null ?this.props.user.userdata.avatar :"http://imageservice.pine-soft.com/logo.png",
-                ID: Math.random().toString(),
-                IsLike:0,
-                Level:1,
-                Phone:this.props.user.userdata !== null ?this.props.user.userdata.phone:"",
-                PostID:this.props.postid,
-                PraiseNumbers:0,
-                ReleaseTime:'/Date('+ new Date().getTime() + ')/',
-                ReplyNumbers:0,
-                ResultCode:0,
-                UserID:this.props.user.userid,
-                UserNickName:this.props.user.userdata.nickName,
-              },this.props.postid)
+        // console.log(this.props.user.userid,">>>>>",this.props.postid,">>>>>",this.props.commentReq.objFatherid,">>>>>",commentContent,">>>>>",this.props.commentReq.objid);return;
+        if(this.props.sourceType === "activity"){
+          //添加活动评论
+          //userid, activityid,fatheruserid,firsuserid,comment
+          PostActivityComment(this.props.user.userid,this.props.postid,this.props.commentReq.objFatherid,this.props.commentReq.objid,commentContent,(err,data)=>{
+            if(err){
+              console.log(err);
+            }else {
+              if(this.props.commentReq.objFatherid==''){
+                this.props.insertTopLevelComment({
+                  ChildList:[],
+                  Content:commentContent,
+                  HeadImg: this.props.user.userdata !== null ?this.props.user.userdata.avatar :"http://imageservice.pine-soft.com/logo.png",
+                  ID: Math.random().toString(),
+                  IsLike:0,
+                  Level:1,
+                  Phone:this.props.user.userdata !== null ?this.props.user.userdata.phone:"",
+                  PostID:this.props.postid,
+                  PraiseNumbers:0,
+                  ReleaseTime:'/Date('+ new Date().getTime() + ')/',
+                  ReplyNumbers:0,
+                  ResultCode:0,
+                  UserID:this.props.user.userid,
+                  UserNickName:this.props.user.userdata.nickName,
+                },this.props.postid)
+              }
+              else {
+                this.props.insertSecondLevelComment(this.props.commentReq.objid,{
+                  Content:commentContent,
+                  HeadImg: this.props.user.userdata !== null ?this.props.user.userdata.avatar :"http://imageservice.pine-soft.com/logo.png",
+                  ID: Math.random().toString(),
+                  IsLike:0,
+                  Level:2,
+                  Phone:this.props.user.userdata !== null ?this.props.user.userdata.phone:"",
+                  PostID:this.props.postid,
+                  PraiseNumbers:0,
+                  ReleaseTime:'/Date('+ new Date().getTime() + ')/',
+                  ReplyNumbers:0,
+                  ResultCode:0,
+                  UserID:this.props.user.userid,
+                  UserNickName:this.props.user.userdata.nickName,
+                  fatherID:this.props.commentReq.objid,
+                  fatherName:this.props.commentReq.fatherName
+                },this.props.postid)
+              }
             }
-            else {
-              this.props.insertSecondLevelComment(this.props.commentReq.objid,{
-                Content:commentContent,
-                HeadImg: this.props.user.userdata !== null ?this.props.user.userdata.avatar :"http://imageservice.pine-soft.com/logo.png",
-                ID: Math.random().toString(),
-                IsLike:0,
-                Level:2,
-                Phone:this.props.user.userdata !== null ?this.props.user.userdata.phone:"",
-                PostID:this.props.postid,
-                PraiseNumbers:0,
-                ReleaseTime:'/Date('+ new Date().getTime() + ')/',
-                ReplyNumbers:0,
-                ResultCode:0,
-                UserID:this.props.user.userid,
-                UserNickName:this.props.user.userdata.nickName,
-                fatherID:this.props.commentReq.objid,
-                fatherName:this.props.commentReq.fatherName
-              },this.props.postid)
+          })
+        }else {
+          //添加帖子评论
+          addComment(this.props.user.userid,this.props.postid,this.props.commentReq.objFatherid,commentContent,this.props.commentReq.objid,(err,data)=>{
+            if(err){
+              console.log(err);
+            } else {
+              if(this.props.commentReq.objFatherid==''){
+                this.props.insertTopLevelComment({
+                  ChildList:[],
+                  Content:commentContent,
+                  HeadImg: this.props.user.userdata !== null ?this.props.user.userdata.avatar :"http://imageservice.pine-soft.com/logo.png",
+                  ID: Math.random().toString(),
+                  IsLike:0,
+                  Level:1,
+                  Phone:this.props.user.userdata !== null ?this.props.user.userdata.phone:"",
+                  PostID:this.props.postid,
+                  PraiseNumbers:0,
+                  ReleaseTime:'/Date('+ new Date().getTime() + ')/',
+                  ReplyNumbers:0,
+                  ResultCode:0,
+                  UserID:this.props.user.userid,
+                  UserNickName:this.props.user.userdata.nickName,
+                },this.props.postid)
+              }
+              else {
+                this.props.insertSecondLevelComment(this.props.commentReq.objid,{
+                  Content:commentContent,
+                  HeadImg: this.props.user.userdata !== null ?this.props.user.userdata.avatar :"http://imageservice.pine-soft.com/logo.png",
+                  ID: Math.random().toString(),
+                  IsLike:0,
+                  Level:2,
+                  Phone:this.props.user.userdata !== null ?this.props.user.userdata.phone:"",
+                  PostID:this.props.postid,
+                  PraiseNumbers:0,
+                  ReleaseTime:'/Date('+ new Date().getTime() + ')/',
+                  ReplyNumbers:0,
+                  ResultCode:0,
+                  UserID:this.props.user.userid,
+                  UserNickName:this.props.user.userdata.nickName,
+                  fatherID:this.props.commentReq.objid,
+                  fatherName:this.props.commentReq.fatherName
+                },this.props.postid)
+              }
+
             }
-            this.refs.textArea.value = "";
-          }
-        })
+          })
+        }
+        this.refs.textArea.value = "";
       }
     }
   }
@@ -175,7 +238,7 @@ class Replys extends Component {
   render(){
     var commentArea;
     if(this.props.user.userid === undefined || this.props.user.userid === null){
-      commentArea = <div ref = "commentarea" style={{width:'100%',width: '100%',float:'left',marginTop: '20px'}} id="comment">
+      commentArea = <div ref = "commentarea" style={{width:'100%',float:'left',marginTop: '20px'}} id="comment">
         <div className="left">
           <img src = "http://imageservice.pine-soft.com/logo.png" />
         </div>
@@ -189,7 +252,7 @@ class Replys extends Component {
       </div>
     }
     else {
-      commentArea = <div ref = "commentarea" style={{width:'100%',width: '100%',float:'left',marginTop: '20px'}} id="comment">
+      commentArea = <div ref = "commentarea" style={{width:'100%',float:'left',marginTop: '20px'}} id="comment">
         <div className="left">
           <img src = {this.props.user.userdata !== null ?this.props.user.userdata.avatar :"http://imageservice.pine-soft.com/logo.png"} />
         </div>
