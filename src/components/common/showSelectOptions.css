@@ -1,0 +1,19 @@
+#fatherDiv{
+    float: left;
+    font-size: 15px;
+    z-index: 999;
+    background: #fff;
+    padding: 5px 10px;
+    border-radius: 7px;
+    border: 2px solid rgba(0,0,0,0.1);
+}
+#fatherDiv > .singleDiv{
+  cursor: pointer;
+  padding: 2px;
+}
+#fatherDiv > .singleSpanSelected{
+  color: orange;
+}
+#fatherDiv > .singleDiv:hover{
+  color: #2db7f5;
+}

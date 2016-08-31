@@ -43,7 +43,10 @@
   font-size: 16px;
   padding-left: 55px;
 }
-hr {
+
+.commentContent > hr,
+.detailFoot > hr,
+.allComment > hr {
   margin-bottom: 5px;
   padding: 0;
   border: 0;
@@ -51,6 +54,7 @@ hr {
   height: 1px;
   margin-top: 6px;
 }
+
 .spanLove{
   font-size: 16px;
   float: right;

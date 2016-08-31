@@ -71,6 +71,27 @@ function collect(state = {}, action) {
   }
 }
 
+function selectoption(state = {selectid : "-1",selectvalue : "请选择频道",display:"none"},action) {
+  switch (action.type) {
+    case 'UPDATE_SELECTOPTION':
+      return {
+        ...state,
+        selectid : action.selectid,
+        selectvalue : action.selectvalue,
+        display :action.display
+      }
+      case 'TOGGLE_SELECTOPTION':
+        return{
+          ...state,
+          selectid : state.selectid,
+          selectvalue : state.selectvalue,
+          display:state.display === "none" ?"" :"none",
+        }
+    default:
+      return state
+  }
+}
+
 //发帖的Reducer
 function editorOperate(state = {},action) {
   switch (action.type) {
@@ -301,4 +322,5 @@ export default combineReducers({
   loading,
   availableCities,
   collect,
+  selectoption,
 })

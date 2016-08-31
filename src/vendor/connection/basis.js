@@ -214,8 +214,6 @@ export const postImage = (base64, callback) => {
   getData('ZQ.APP.Found.ImgUplad', queryObj, (err, data) => {
     if(err){callback(err)} else {
       if (data.ResultCode === 1){
-        console.log('图片上传成功，返回的数据是：');
-        console.log(data);
         callback(null, data);
       } else {
         callback(data.ResultMessage);
