@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {Icon,message} from 'antd';
-import { clickLove} from '../../vendor/connection/index';
+import { clickLove} from '../../../vendor/connection/index';
 import { browserHistory } from 'react-router';
-
+import style from './zan.css';
 
 class Zan extends Component {
   constructor(props) {
     super(props);
   }
-
 
   loveClickHandler(id){
     if(this.props.userinfo.userid === null)
@@ -21,24 +20,24 @@ class Zan extends Component {
         if(err){
           message.error(err);
         }else {
-          message.success("操作成功");
+          //message.success("操作成功");
         }
       })
     }
   }
   render(){
     let fl =this.props.float !== null? this.props.float !== "" ? this.props.float: "" : "right";
-    let heart,num
+    let num,ClassName;
     if(this.props.dianzan[this.props.objid]){
-      heart = this.props.dianzan[this.props.objid].isliked ? "heart" : "heart-o" ;
       num = this.props.dianzan[this.props.objid].num;
+      ClassName = this.props.dianzan[this.props.objid].isliked == 0 ? "heart" : "heart heartAnimation";
     }
+    let height = this.props.height || '100px';
+    let width = this.props.width || '160px';
     return(
-      <div style={{display:'inline',float:fl}} >
-        <span className="spanLove_sec" onClick={this.loveClickHandler.bind(this,this.props.objid)}>
-            <Icon style={{color:'#f09999'}} type={heart || 'heart-o'} />&nbsp;{"喜欢"}&nbsp;
-          ({num || "0"})
-        </span>
+      <div style={{display:'inline-block',float:fl, height: height, width: width }} >
+        <div className={ClassName} style={{height: height, width: height}} ref="like" onClick={this.loveClickHandler.bind(this,this.props.objid)} />
+        <span style={{height:height, lineHeight: height, display: 'inline-block', position: 'absolute'}}>&nbsp;{"喜欢"}&nbsp; ({num || "0"})</span>
       </div>
     )
   }

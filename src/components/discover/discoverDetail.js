@@ -93,7 +93,7 @@ class DiscoverDetail extends Component{
         let fl = "left";
         let con = (
           <div>
-            <div className="box-content" style={{backgroundImage:bg,height:'400px'}}></div>
+            <div className="box-content" style={{backgroundImage:bg}}></div>
             <div className="content" style={{maxWidth:'1000px',margin:'auto'}}>
                 <h1 className="title">{info.PostsTitle}</h1>
                 <div className="postcontent">
@@ -110,8 +110,8 @@ class DiscoverDetail extends Component{
                   <div >
                       <Zan float = {""} objid = {info.PostID} type={0}/>
                       &nbsp;&nbsp;
-                      <Collection float = {""} objid = {info.PostID} type={0}/>
-                      <span style = {{float:'right',fontSize: '14px',color: '#999'}}>
+                      {/*<Collection float = {""} objid = {info.PostID} type={0}/>*/}
+                      <span style = {{float:'right',fontSize: '14px',color: '#999', lineHeight: '100px'}}>
                       阅读&nbsp;({info.ReadNum})
                       </span>
                   </div>

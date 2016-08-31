@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {Icon} from 'antd';
-import { Collect} from '../../vendor/connection/index';
+import { Icon } from 'antd';
+import { Collect} from '../../../vendor/connection/index';
 import { browserHistory } from 'react-router';
+import style from './collect.css';
 
 class Collection extends Component {
   constructor(props) {
@@ -15,13 +16,6 @@ class Collection extends Component {
       browserHistory.push(`/login`);
     }else {
       this.props.collectobj(id);
-      // clickLove(this.props.userinfo.userid,this.props.objid,this.props.type,(err,data)=>{
-      //   if(err){
-      //     message.error(err);
-      //   }else {
-      //     message.success('操作成功');
-      //   }
-      // })
     }
   }
 
@@ -29,15 +23,15 @@ class Collection extends Component {
     let fl =this.props.float !== null? this.props.float !== "" ? this.props.float: "" : "right";
     let collect,num
     if(this.props.collects[this.props.objid]){
-      collect = this.props.collects[this.props.objid].iscollect ? "star" : "star-o" ;
+      collect = this.props.collects[this.props.objid].iscollect == 0 ? "collect" : "collect collectAnimation" ;
       num = this.props.collects[this.props.objid].num;
     }
+    let height = this.props.height || '100px';
+    let width = this.props.width || '160px';
     return(
-      <div style={{display:'inline',float:fl}} >
-        <span className="spanLove_sec" onClick={this.collectClickHandler.bind(this,this.props.objid)}>
-            <Icon style={{color:'#f2bc39'}} type={collect || 'star-o'} />&nbsp;{"收藏"}&nbsp;
-          ({num || "0"})
-        </span>
+      <div style={{ display:'inline-block',float:fl, height: height, width: width }} >
+        <div className={collect} style={{height: height, width: height}} ref="collect" onClick={this.collectClickHandler.bind(this,this.props.objid)} />
+        <span style={{height:height, lineHeight: height, display: 'inline-block', position: 'absolute'}}>&nbsp;{"收藏"}&nbsp; ({num || "0"})</span>
       </div>
     )
   }
