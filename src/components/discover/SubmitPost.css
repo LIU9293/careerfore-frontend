@@ -3,13 +3,20 @@
   margin: auto;
 }
 .posttitle{
-    font-size: 16px;
+  font-size: 19px;
+  margin-left: 1%;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+  width: 75%;
+  text-indent: 10px;
+  text-align: center;
+  background: transparent;
+}
+.titleAlert{
+    color: #999;
+    font-size: 15px;
     margin-left: 1%;
-    border-radius: 5px;
-    outline: none;
-    border: 1px solid #ccc;
-    width: 50%;
-    text-indent: 10px;
 }
 .submittitle{
   text-align: left;
@@ -43,30 +50,34 @@
 .inputWapper:hover{
   border: 1px solid #57c5f7;
 }
-.inputButton{
-  position: absolute;
+
+.uploadcoverDiv{
+  height: 300px;
+  background-size: cover;
+  background-image: url(http://imageservice.pine-soft.com/FC48B4E80ABD407BB7BE5560210836C4.jpg);
+}
+.showcoverDiv{
+  height: 300px;
+  background-size: contain;;
+  text-align: right;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.inputButtons{
   width: 100%;
   height: 100%;
-  font-size: 100px;
-  right: 0;
-  top: 0;
+  cursor: pointer;
   opacity: 0;
 }
-.form-control {
-    width: 50%;
-    height: 34px;
-    margin-left: 1%;
-    padding: 6px 12px;
-    background-color: #fff;
-    border: 1px solid #c2cad8;
-    border-radius: 4px;
-    outline: none;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-    -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-    font-size: 14px;
-    line-height: 1.42857;
-    color: #555;
+
+.fixstyle{
+  position: absolute;;
+  top: 120px;
+  z-index: 99;
+  margin-left: 20px;
+}
+.posttitleDiv{
+  padding-left: 150px;
+  margin-top: -28px;
 }

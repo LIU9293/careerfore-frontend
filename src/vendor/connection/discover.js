@@ -84,7 +84,8 @@ export const getDiscoverPostComment = (userid,postsId,pageNum,callback) => {
   let queryObj = {
     UserID: userid,
     PostsId: postsId,
-    PageNum: pageNum
+    PageNum: pageNum,
+    PageSize: 10
   };
   getData('ZQ.APP.Found.CommentInfo', queryObj, (err, data) => {
     if(err){
