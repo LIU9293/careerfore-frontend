@@ -77,6 +77,47 @@ export const getActivityComment = (eventid, userid, pageNum, callback) => {
   })
 }
 
+//添加活动评论
+export const addActivityComment = (UserID,ActivityID,FatherUserID,FirsUserID,Comment,callback)=>{
+  let queryObj={
+    UserID:UserID,
+    ActivityID:ActivityID,
+    FatherUserID:FatherUserID,
+    FirsUserID:FirsUserID,
+    Comment:Comment
+  };
+  getData('ZQ.APP.ActivityManage.ActivityComment',queryObj,(err,data)=>{
+    if(err){
+      callback(err)
+    }else {
+      if(data.ResultCode===1){
+        callback(null,data);
+      }else{
+        callback(data.ResultMessage);
+      }
+    }
+  })
+}
+
+//删除活动评论
+export const deleteActivityComment =(userid, commentid, callback) => {
+  let queryObj = {
+    UserID:userid,
+    CommentID:commentid
+  }
+  getData('ZQ.APP.ActivityManage.DeleteComment',queryObj,(err,data) => {
+    if (err) {
+      callback(err)
+    }else {
+      if(data.ResultCode===1){
+        callback(null,data);
+      }else {
+        callback(data.ResultMessage);
+      }
+    }
+  })
+}
+
 //获取活动报名
 export const getActivitySignUp = (userid, activityid, isneedaudit, paytype, payaccount, orderno, callback) => {
   let queryObj={

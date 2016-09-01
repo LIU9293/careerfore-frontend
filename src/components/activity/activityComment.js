@@ -4,65 +4,88 @@ import { Row, Col, Icon } from 'antd';
 import styles from './activity.css';
 import {millseconds2DateDiff} from '../../vendor/helper/timeTransfer';
 import Zan from '../common/zan';
+import Replys from '../common/Reply';
+import { connect } from 'react-redux';
 
 class ActivityComment extends Component{
 
   constructor(props){
     super(props);
     this.state = {
-      data: null
+      data: null,
+      loadContent:"点击加载更多评论",
     }
+    this.commentNum = 0;
+    this.canFresh = true;
+    this.pageIndex = 1;
+    this.loadComment = this.loadComment.bind(this);
   }
 
   componentDidMount(){
-    getActivityComment(this.props.activityID,'', 1, (err,data)=>{
-      if (err){
-          console.log(err)
-      } else {
-        let commentNum=data.CommentNum;
-        let activityList=data.CommentList.map((item,ii)=>{
-          let UserID=item.UserID;
-          let Content=item.Content;
-          let EventID=item.EventID;
-          let HeadImg=item.HeadImg;
-          let ID=item.ID;
-          let Level=item.Level;
-          let Phone=item.Phone;
-          let raiseNumbers=item.raiseNumbers;
-          let ReleaseTime=item.ReleaseTime;
-          let ReplyNumbers=item.ReplyNumbers;
-          let UserNickName=item.UserNickName;
-          let Time=millseconds2DateDiff(ReleaseTime);
-          return(
-              <div key={Math.random()}>
-                <div className="commentBox">
-                  <img src={HeadImg}/>&nbsp;&nbsp;&nbsp;&nbsp;
-                  {UserNickName}&nbsp;&nbsp;&nbsp;&nbsp;{Time}
-                  <span style={{fontSize:'10px'}}><Icon type="heart-o" />&nbsp;{raiseNumbers}</span>
-                </div>
-                <div className="commentContent">
-                  {Content}
-                </div>
-                <hr/>
-              </div>
-          )
-        });
-       this.setState({
-         data:activityList
-       })
-      }
-    })
+    this.loadComment();
   }
+
+
+  loadComment() {
+      if(this.canFresh){
+        this.canFresh = false;
+        this.setState({loadContent:"正在请求数据"});
+        getActivityComment(this.props.activityid,this.props.userinfo.userid,this.pageIndex,(err,data)=>{
+          this.canFresh = true;
+          if(err){
+            console.log(err);
+          }else {
+            console.log(data);
+            if(data.CommentList.length >= 0){
+              this.setState({loadContent:"点击加载更多评论"});
+              if(this.pageIndex === 1){
+                this.commentNum += data.CommentNum;
+                this.setState({data:data.CommentList},()=>{
+                  this.props.commentOperate(this.props.activityid,this.state.data);
+                });
+              } else {
+                this.commentNum += data.CommentNum;
+                this.setState({
+                  data:this.state.data.concat(data.CommentList)
+                },()=>{
+                  this.props.commentOperate(this.props.activityid,this.state.data);
+                })
+              }
+              this.pageIndex ++;
+            }else {
+              this.setState({loadContent:"暂无更多评论"});
+            }
+          }
+        })
+      }
+  }
+
 
   render(){
     return(
       <div className="comment">
-          <p className="globalComment">｜全部评论</p>
-          {this.state.data}
+        <Replys commentNum = {this.commentNum} postid = {this.props.activityid} sourceType = {"activity"}/>
+        <div style={{textAlign:'center'}}>
+          <span onClick={this.loadComment}>{this.state.loadContent}</span>
+        </div>
       </div>
 
     )
   }
 }
 
-module.exports = ActivityComment
+
+function mapStateToProps(store){
+  return {
+    userinfo: store.user,
+    commentLists:store.commentOperate
+  }
+}
+
+function mapDispatchToProps(dispatch){
+  return {
+    commentOperate:(postid,newcommentlist)=>{dispatch({type:'UPDATE_COMMENT',commentData:newcommentlist,postID:postid})}
+  }
+}
+
+module.exports = connect(mapStateToProps,mapDispatchToProps)(ActivityComment)
