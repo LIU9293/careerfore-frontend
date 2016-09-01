@@ -5,7 +5,7 @@ import { getCarousel, getDiscoverList, getDiscoverPost, postDiscoverArticle, get
   getDiscoverFilterList, getMyDiscoverFilterList, updateMyDiscoverFilterList, clickLove, addComment,
   AddCTR, Collect, PostsChannel, essenceArticle, getPostsByChannel,deleteComment } from './discover';
 import { sendSMS, userRegister, userLogin, getUserInfo, getUserArticles,
-  getUserCollection, postUserAvatar, updateUserNickName } from './user';
+  getUserCollection, postUserAvatar, updateUserNickName ,SetUserDes} from './user';
 import { secretaryMessage, activityMessage, unreadMessage, unreadMessageContent } from './message';
 module.exports = {
   getData, //抓数据基础接口，输入(FunctionRouteName,QueryObjectName,callback)
@@ -51,4 +51,5 @@ module.exports = {
   updateUserNickName, //更改用户昵称
   addActivityComment, //添加活动评论
   deleteActivityComment, //删除活动评论
+  SetUserDes, //修改个性签名
 }

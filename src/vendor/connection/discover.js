@@ -191,7 +191,7 @@ export const addComment = (UserID,PostsID,ObjectFatherID,Comment,ObjectID,callba
   })
 }
 
-
+//删除评论
 export const deleteComment = (CommentID,UserID,callback)=>{
   let queryObj = {
     CommentID: CommentID,

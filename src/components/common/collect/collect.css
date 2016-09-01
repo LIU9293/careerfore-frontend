@@ -1,5 +1,5 @@
 .collect {
-  background: url(./twitter_fave.png);
+  background: url(http://imageservice.pine-soft.com/209879E1C9FD4335881312F432EC6407.jpg);
   background-position: 0 0;
   background-repeat: no-repeat;
   background-size: cover;
@@ -9,24 +9,24 @@
   display: inline-block;
 }
 .collect:focus{
-  background-position: -3519px 0;
+  background-position: -right;
 }
 
 @-webkit-keyframes collectBlast {
   0% {
-    background-position: 0 0;
+    background-position: left;
   }
   100% {
-    background-position: -3519px 0;
+    background-position: -right;
   }
 }
 
 @keyframes collectBlast {
   0% {
-    background-position: 0 0;
+    background-position: left;
   }
   100% {
-    background-position: -3519px 0;
+    background-position: right;
   }
 }
 
@@ -38,7 +38,7 @@
   animation-duration: .8s;
   -webkit-animation-iteration-count: 1;
   animation-iteration-count: 1;
-  -webkit-animation-timing-function: steps(55);
-  animation-timing-function: steps(55);
+  -webkit-animation-timing-function: steps(49);
+  animation-timing-function: steps(49);
   background-position: right;
 }

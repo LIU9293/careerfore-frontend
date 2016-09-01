@@ -21,6 +21,12 @@ class ActivityPost extends Component{
     this.joinActivity = this.joinActivity.bind(this);
   }
 
+  componentWillMount(){
+      var _html = document.getElementsByName('head').innerHTML;
+      _html += "<script type=\"text/javascript\" src=\"http://api.map.baidu.com/api?v=2.0&ak=OB04FIH80Fcl6SpTZcqZF7BqAhYl6wa8\"></script>";
+      document.getElementsByName('head').innerHTML = _html;
+  }
+
   componentDidMount(){
 
     // console.log(this.props.ChannelId);
