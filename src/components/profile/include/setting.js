@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDom from "react-dom";
 import { connect } from 'react-redux';
-import { getUserInfo, uploadImageToQiniu, postUserAvatar, updateUserNickName } from '../../../vendor/connection';
+import { getUserInfo, uploadImageToQiniu, postUserAvatar, updateUserNickName ,SetUserDes} from '../../../vendor/connection';
 import { browserHistory } from 'react-router';
 import { Form, Input, Button, Checkbox, Icon, message, Modal, Slider } from 'antd';
 import AvatarEditor from "react-avatar-editor";
@@ -51,11 +51,17 @@ class Setting extends Component{
       nickNameError: null,
       userSign:null,
       userSignError:null,
+      editingName: false,
     };
     this.handleNickName = this.handleNickName.bind(this);
+    this.handleUserSign = this.handleUserSign.bind(this);
     this.handleAvatarChange = this.handleAvatarChange.bind(this);
     this.handleUploadAvatar = this.handleUploadAvatar.bind(this);
     this.handleModalCancel = this.handleModalCancel.bind(this);
+    this.showNickNameEditor = this.showNickNameEditor.bind(this);
+    this.hideNickNameEditor = this.hideNickNameEditor.bind(this);
+    this.hideUserSignEditor = this.hideUserSignEditor.bind(this);
+    this.showUserSignEditor = this.showUserSignEditor.bind(this);
   }
 
   componentWillMount(){
@@ -82,24 +88,32 @@ class Setting extends Component{
       this.setState({nickNameError: '请填写用户名'})
     } else {
       updateUserNickName(this.props.userinfo.userid, this.state.nickName, (err,data)=>{
+        this.setState({
+          editingName: false
+        })
         if(err){
           console.log(err);
           message.warning(err);
         } else {
-          this.refs.nickName.innerHTML = this.state.nickName;
-          this.refs.nickName.style.display = 'inline';
-          this.refs.nickNameForm.style.display = 'none';
-          this.refs.nickNameFormButton.style.display = 'none';
+          this.props.login(this.props.userinfo.userid, {...this.props.userinfo.userdata, nickName: this.state.nickName})
+          this.hideNickNameEditor();
           message.success('昵称更新成功');
         }
       })
     }
   }
   showNickNameEditor(){
-    this.refs.nickName.style.display = 'none';
-    this.refs.nickNameForm.style.display = 'inline';
-    this.refs.nickNameFormButton.style.display = 'inline';
+    this.setState({
+      editingName: true
+    })
   }
+
+  hideNickNameEditor(){
+    this.refs.nickName.style.display = 'inline';
+    this.refs.nickNameForm.style.display = 'none';
+    this.refs.nickNameFormButton.style.display = 'none';
+  }
+
   handleUserSign(e){
     //如果不写preventDefault，页面可能会重新刷新
     e.preventDefault();
@@ -107,6 +121,15 @@ class Setting extends Component{
       message.warning('请填写自我介绍');
       this.setState({nickNameError: '请填写自我介绍'})
     } else {
+      SetUserDes(this.props.userinfo.userid, this.state.userSign, (err,data)=>{
+        if(err){
+          message.warning(err);
+        } else {
+          this.props.login(this.props.userinfo.userid, {...this.props.userinfo.userdata, userDesc: this.state.userSign})
+          this.hideUserSignEditor();
+          message.success('更新成功');
+        }
+      })
       console.log(this.state.userSign)
     }
   }
@@ -114,6 +137,13 @@ class Setting extends Component{
     this.refs.userSign.style.display = 'none';
     this.refs.userSignForm.style.display = 'inline';
     this.refs.userSignFormButton.style.display = 'inline';
+    document.getElementById('desInput').focus();
+  }
+
+  hideUserSignEditor(){
+    this.refs.userSign.style.display = 'inline';
+    this.refs.userSignForm.style.display = 'none';
+    this.refs.userSignFormButton.style.display = 'none';
   }
 
   handleUploadAvatar(){
@@ -197,29 +227,31 @@ class Setting extends Component{
           <hr style={{marginBottom:'30px', marginTop:'30px'}}/>
           <Form inline onSubmit={this.handleNickName.bind(this)}>
             <FormItem label="昵称">
-              <div ref="nickName">
-                <p id="nickName" name="nickName" style={{display:'inline'}}>{nickName}</p>
-                <Icon type="edit" style={{marginLeft:'20px'}} onClick={this.showNickNameEditor.bind(this)} />
+              <div ref="nickName" style={{display: this.state.editingName ? 'none' : 'inline'}}>
+                <p id="nickName" name="nickName" style={{display:'inline'}}>{this.props.userinfo.userdata.nickName}</p>
+                <Icon type="edit" style={{marginLeft:'20px'}} onClick={this.showNickNameEditor} />
               </div>
-              <div ref="nickNameForm" style={{display: 'none'}}>
+              <div ref="nickNameForm" style={{display: this.state.editingName ? 'inline' : 'none'}}>
                 <Input
+                  id="NickInput"
                   placeholder={nickName}
                   onChange={(e)=>{this.setState({nickName: e.target.value})}}
                 />
               </div>
             </FormItem>
-            <div ref="nickNameFormButton" style={{display: 'none'}}>
+            <div ref="nickNameFormButton" style={{display: this.state.editingName ? 'inline' : 'none'}}>
               <Button type="primary" htmlType="submit">确认</Button>
             </div>
           </Form>
-          <Form inline onSubmit={this.handleUserSign.bind(this)} style={{marginTop:'20px'}}>
+          <Form inline onSubmit={this.handleUserSign} style={{marginTop:'20px'}}>
             <FormItem label="介绍你自己">
               <div ref="userSign">
-                <p id="userSign" name="userSign" style={{display:'inline'}}>{des}</p>
-                <Icon type="edit" style={{marginLeft:'20px'}} onClick={this.showUserSignEditor.bind(this)} />
+                <p id="userSign" name="userSign" style={{display:'inline'}}>{this.props.userinfo.userdata.userDesc}</p>
+                <Icon type="edit" style={{marginLeft:'20px'}} onClick={this.showUserSignEditor} />
               </div>
               <div ref="userSignForm" style={{display: 'none'}}>
                 <Input
+                  id="desInput"
                   placeholder={des}
                   onChange={(e)=>{this.setState({userSign: e.target.value})}}
                 />

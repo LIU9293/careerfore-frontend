@@ -20,7 +20,7 @@ class Zan extends Component {
         if(err){
           message.error(err);
         }else {
-          //message.success("操作成功");
+          message.success("操作成功");
         }
       })
     }
@@ -37,7 +37,7 @@ class Zan extends Component {
     return(
       <div style={{display:'inline-block',float:fl, height: height, width: width }} >
         <div className={ClassName} style={{height: height, width: height}} ref="like" onClick={this.loveClickHandler.bind(this,this.props.objid)} />
-        <span style={{height:height, lineHeight: height, display: 'inline-block', position: 'absolute'}}>&nbsp;{"喜欢"}&nbsp; ({num || "0"})</span>
+        <span style={{height:height, lineHeight: height, display: 'inline-block', position: 'absolute',fontSize:'16px',marginLeft:'-22px'}}>&nbsp;{"喜欢"}&nbsp; ({num || "0"})</span>
       </div>
     )
   }

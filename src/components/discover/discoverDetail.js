@@ -110,7 +110,7 @@ class DiscoverDetail extends Component{
                   <div >
                       <Zan float = {""} objid = {info.PostID} type={0}/>
                       &nbsp;&nbsp;
-                      {/*<Collection float = {""} objid = {info.PostID} type={0}/>*/}
+                      <Collection float = {""} objid = {info.PostID} type={0}/>
                       <span style = {{float:'right',fontSize: '14px',color: '#999', lineHeight: '100px'}}>
                       阅读&nbsp;({info.ReadNum})
                       </span>

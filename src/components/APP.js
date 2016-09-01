@@ -35,7 +35,8 @@ class home extends Component{
           let userData = {
             avatar: data.ZUT_HEADIMG,
             nickName: data.ZUT_NICKNAME,
-            phone: data.ZUT_PHONE
+            phone: data.ZUT_PHONE,
+            userDesc : data.UserDes
           }
           this.props.login(userid, userData);
         }
