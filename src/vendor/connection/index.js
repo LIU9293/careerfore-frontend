@@ -1,6 +1,6 @@
 import { getData, getDataBase64, postImage, uploadImageToQiniu, searchFound, area } from './basis';
 import { getPlaygroundList, getPlaygroundPost, getActivityCarousel, getActivityComment,
-  getActivitySignUp, getSignUpResult, getUserActivities } from './activity';
+  getActivitySignUp, getSignUpResult, getUserActivities,addActivityComment,deleteActivityComment } from './activity';
 import { getCarousel, getDiscoverList, getDiscoverPost, postDiscoverArticle, getDiscoverPostComment,
   getDiscoverFilterList, getMyDiscoverFilterList, updateMyDiscoverFilterList, clickLove, addComment,
   AddCTR, Collect, PostsChannel, essenceArticle, getPostsByChannel,deleteComment } from './discover';
@@ -49,4 +49,6 @@ module.exports = {
   getPostsByChannel, //根据类别筛选文章
   area, //省市区三级查询, 没有输入参数直接callback
   updateUserNickName, //更改用户昵称
+  addActivityComment, //添加活动评论
+  deleteActivityComment, //删除活动评论
 }

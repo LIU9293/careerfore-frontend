@@ -23,7 +23,7 @@ class ActivityPost extends Component{
 
   componentDidMount(){
 
-    console.log(this.props.ChannelId);
+    // console.log(this.props.ChannelId);
 
     getPlaygroundPost(this.props.params.activityID, '',(err,data)=>{
       if(err){
@@ -134,8 +134,9 @@ class ActivityPost extends Component{
                             <div className="FontLg" dangerouslySetInnerHTML={{__html: this.state.activityData.content || ''}}/>
                           </Panel>
                         </Collapse>
+                        <ActivityComment activityid={this.props.params.activityID} />
                   </div>
-                  <ActivityComment activityid={this.props.params.activityID} />
+
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8}>
                   <div className="contentDt2">
