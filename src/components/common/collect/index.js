@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Icon } from 'antd';
+import { Icon,message } from 'antd';
 import { Collect} from '../../../vendor/connection/index';
 import { browserHistory } from 'react-router';
 import style from './collect.css';
@@ -20,7 +20,7 @@ class Collection extends Component {
         if(err){
           message.error(err);
         }else {
-          message.success('收藏成功');
+          message.success('操作成功');
         }
       })
     }

@@ -20,7 +20,7 @@ class Zan extends Component {
         if(err){
           message.error(err);
         }else {
-          //message.success("操作成功");
+          message.success("操作成功");
         }
       })
     }
