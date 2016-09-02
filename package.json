@@ -51,7 +51,6 @@
     "eslint-config-airbnb": "6.x",
     "eslint-plugin-react": "4.x",
     "glob": "^7.0.3",
-    "pre-commit": "1.x"
   },
   "scripts": {
     "build": "atool-build",
