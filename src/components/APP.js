@@ -7,10 +7,12 @@ import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import Navbar from './common/navbar';
 import Loading from './loading';
+import Footer from './common/footer';
 
 const styles = {
   wapper: {
     backgroundColor: '#f9f9f9',
+    paddingBottom: '50px'
   }
 }
 
@@ -70,12 +72,8 @@ class home extends Component{
           <div className="main" >
             {this.props.children}
           </div>
-          <div className="footer-container">
-            <div className="footer">
-              <h5 style={{textAlign:'center'}}>careerfore - the missing piece of higher education</h5>
-            </div>
-          </div>
         </div>
+        <Footer />
       </div>
     )
   }

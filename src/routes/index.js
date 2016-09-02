@@ -7,7 +7,6 @@ import NotFound from '../components/404/NotFound';
 import Activity from '../components/activity/';
 import ActivityDetail from '../components/activity/activityDetail';
 import Discover from '../components/discover/';
-import NewArticle from '../components/discover/newArticle';
 import DiscoverDetail from '../components/discover/discoverDetail';
 import Login from '../components/profile/login';
 import Register from '../components/profile/register';
@@ -31,7 +30,6 @@ const Routes = ({ history }) =>
       <Route path="/activity/:activityID" component={ActivityDetail} />
       <Route path="/activity/city/:cityID" component={ActivityListByCity} />
       <Route path="/discover" component={Discover} />
-      <Route path="/discover/new" component={NewArticle} />
       <Route path="/discover/:discoverID" component={DiscoverDetail} />
       <Route path="/discover/topic/:id" component={DiscoverTopicList} />
       <Route path="/login" component={Login} />
