@@ -23,7 +23,7 @@
     "react-redux": "^4.4.5",
     "react-router": "^2.0.1",
     "redux": "^3.5.2",
-    "simditor-custom-img": "0.0.3",
+    "simditor-custom-img": "0.0.4",
     "simple-hotkeys": "^1.0.3",
     "simple-module": "^3.0.3",
     "simple-uploader": "^3.0.0",
