@@ -4,6 +4,7 @@ import DiscoverList from './discoverList';
 import SimpEditor from './PostArticle';
 import EssenceBox from './essenceBox';
 import Topics from '../common/topics';
+import style from './index.css';
 
 const styles = {
   wapper:{

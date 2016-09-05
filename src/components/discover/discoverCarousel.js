@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { getCarousel } from '../../vendor/connection';
 import style from 'animate.css';
+import { browserHistory } from 'react-router';
 
 const styles = {
   wapper: {
@@ -64,6 +65,10 @@ class DiscoverCarousel extends Component{
      })
    }
 
+   componentWillUnmount(){
+     clearInterval(this.t);
+   }
+
    move(thisSlide){
      var nextSlide;
      if(thisSlide == this.state.data.length - 1){
@@ -78,7 +83,7 @@ class DiscoverCarousel extends Component{
        })
      }
      this.refs[thisSlide].className = "fadeOut animated";
-     this.refs[nextSlide].className = "fadeIn animated";
+     this.refs[nextSlide].className = "fadeIn animated z100";
      this.refs['bottom'+thisSlide].className = 'notCurrent';
      this.refs['bottom'+nextSlide].className = '';
    }
@@ -87,7 +92,7 @@ class DiscoverCarousel extends Component{
      clearInterval(this.t);
      this.refs[this.state.currentSilde].className = "fadeOut animated";
      this.refs['bottom' + this.state.currentSilde].className = "notCurrent";
-     this.refs[index].className = "fadeIn animated";
+     this.refs[index].className = "fadeIn animated z100";
      this.refs['bottom' + index].className = '';
      this.setState({
        currentSilde: index
@@ -103,25 +108,26 @@ class DiscoverCarousel extends Component{
         <div></div>
       )
     } else {
-
       let myHomeFigList=this.state.data.map((item,ii)=>{
         if(ii !== 0){
           return(
-            <div
-              style={{...styles.slider, backgroundImage: 'url('+item.PictureUrl+')'}}
-              key={ii}
-              ref={ii}
-              className = "fadeOut animated"
-            />
+            <a key={ii} onClick = {e => browserHistory.push('/discover/'+item.PostsID)}>
+              <div
+                style={{...styles.slider, backgroundImage: 'url('+item.PictureUrl+')'}}
+                ref={ii}
+                className = "fadeOut animated"
+              />
+            </a>
           )
         } else {
           return(
-            <div
-              style={{...styles.slider, backgroundImage: 'url('+item.PictureUrl+')'}}
-              key={ii}
-              ref={ii}
-              className = "fadeIn animated"
-            />
+            <a key={ii} onClick = {e => browserHistory.push('/discover/'+item.PostsID)} >
+              <div
+                style={{...styles.slider, backgroundImage: 'url('+item.PictureUrl+')'}}
+                ref={ii}
+                className = "fadeIn animated z100"
+              />
+            </a>
           )
         }
       })
