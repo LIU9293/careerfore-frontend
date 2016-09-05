@@ -45,11 +45,13 @@ class Discover extends Component{
           <div style={styles.main}>
             <DiscoverList NumPerPage={6} />
           </div>
-          <div style={styles.side} id="side">
+          <div style={styles.side} >
             <div style={{marginBottom: '30px'}}>
               <Topics />
             </div>
-            <EssenceBox />
+            <div id="sideFix">
+              <EssenceBox />
+            </div>
           </div>
         </div>
       </div>

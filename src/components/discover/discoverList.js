@@ -15,13 +15,15 @@ class DiscoverList extends Component{
     this.loadMore = this.loadMore.bind(this);
     this.loadData = this.loadData.bind(this);
     this.sticker = function(){
-      var sidebar = document.getElementById('side');
-      if ( document.body.scrollTop > 470) {
+      var sidebar = document.getElementById('sideFix');
+      if ( document.body.scrollTop > 800) {
         sidebar.style.position = 'fixed';
         sidebar.style.top = '30px';
+        sidebar.style.marginLeft = '30px';
       } else {
-        sidebar.style.position = 'absolute';
+        sidebar.style.position = 'relative';
         sidebar.style.top = null;
+        sidebar.style.marginLeft = null;
       }
     }
   }
