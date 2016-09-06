@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Row, Col, Icon, Button, Carousel, Collapse, Calendar, BackTop, Spin, Tooltip, message,Modal } from 'antd';
 import { getPlaygroundPost, getActivitySignUp, getSignUpResult } from '../../vendor/connection';
 import { connect } from 'react-redux';
-
+import $ from 'jquery';
+import styless from './NotifyCss.css';
 
 class Notify extends Component {
   constructor(props) {
@@ -11,7 +12,6 @@ class Notify extends Component {
       activityData: null,
     }
   }
-//http://localhost:8989/alipay/create_direct_pay_by_user/return_url?body=%E6%94%AF%E4%BB%98%E6%B5%8B%E8%AF%95%E6%B4%BB%E5%8A%A8%E6%94%AF%E4%BB%98%E8%B4%B9%E7%94%A8|c18a74cc44d94da6a7e11013536f3613&buyer_email=994098443%40qq.com&buyer_id=2088802950967453&exterface=create_direct_pay_by_user&is_success=T&notify_id=RqPnCoPT3K9%252Fvwbh3InWfVSBsIeEU4ggbk5naoZcRNhBmB5gE%252B0PzNs9LIm2WD9xwe8%252F&notify_time=2016-09-06+13%3A13%3A46&notify_type=trade_status_sync&out_trade_no=1473138801285&payment_type=1&seller_email=hi%40careerfore.com&seller_id=2088421277567494&subject=%E6%94%AF%E4%BB%98%E6%B5%8B%E8%AF%95%E6%B4%BB%E5%8A%A8%E6%94%AF%E4%BB%98%E8%B4%B9%E7%94%A8%7Cc18a74cc44d94da6a7e11013536f3613&total_fee=0.01&trade_no=2016090621001004450299831591&trade_status=TRADE_SUCCESS&sign=d27cca9e0a2408531791c7f957ae7a83&sign_type=MD5
   componentWillMount(){
     let query = decodeURI(window.location.search.substr(1));
     let queryArr = query.split('&');
@@ -20,8 +20,6 @@ class Notify extends Component {
       let t = item.split('=');
       obj[t[0]] = t[1];
     })
-    console.log(obj)
-    return;
     if(obj["is_success"]==="T"){
       //支付成功后的回调页面
       let acitvityId = obj["body"].split('|')[1];console.log(acitvityId)
@@ -62,12 +60,14 @@ class Notify extends Component {
           getSignUpResult(this.props.userinfo.userid, acitvityId, (err, data) => {
             if(err){console.log(err)} else {
               if(data.Type == 1){
+                this.showZHang();
                 this.success("提示","您已经报名了");
               } else {
                 getActivitySignUp(this.props.userinfo.userid, acitvityId, this.state.activityData.IsAudit, 1,obj["total_fee"], obj["out_trade_no"], (err, data) => {
                   if(err){
                     message.error(err);
                   } else {
+                    this.showZHang();
                     this.success("支付结果","您已成功支付"+this.state.activityData.Fee+"元");
                   }
                 })
@@ -76,12 +76,17 @@ class Notify extends Component {
           })
         };
       })
-
-
     }
     else {
         message.error("页面参数错误");
     }
+  }
+
+  showZHang(){
+    setTimeout(()=>{
+      $("#zhang").css("display","");
+      $("#zhang").addClass("run");
+    },2000)
 
   }
 
@@ -90,7 +95,7 @@ class Notify extends Component {
       title: title,
       content: content,
     });
-    setTimeout(() => modal.destroy(), 3000);
+    setTimeout(() => modal.destroy(), 2000);
   }
 
   render(){
@@ -115,7 +120,7 @@ class Notify extends Component {
             <Col xs={24}>
               <div className="detail">
                 <Col xs={16} sm={16} md={16} lg={16} >
-                <div className="Pagecol">
+                <div className="Pagecol" style={{position:'relative'}}>
                   <h1>{this.state.activityData.title || ''}</h1>
                   <p><Icon type="clock-circle-o" /><span>{this.state.activityData.StartDate || ''} - {this.state.activityData.EndDate || ''}</span></p>
                   <p><Icon type="team" /><span>{this.state.activityData.PeopleNum || '0'}人(限{this.state.activityData.CheckPeopleNum || ''}人报名)</span></p>
@@ -123,19 +128,20 @@ class Notify extends Component {
                   <p><Icon type="pay-circle-o" /><span>{Fee}</span></p>
                   <p><Icon type="tags-o" /><span style={{fontSize:'15px'}}>Careerfore活动俱乐部承办</span><Icon style={{marginLeft:'10px'}} type="phone" /><span style={{fontSize:'15px'}}>025-6667974 (详情咨询)</span></p>
                   <div className="button">
-                  <Tooltip title="如需申请退款请于活动开始前24小时外申请。申请方式：登陆careerfore官网—发送电子邮件给我们审核并给予退款。【careerfore】将统一收取原票价的10%作为退票手续费，请知悉。">
-                    <span style={{paddingLeft:'50px'}}><Icon type="exclamation-circle-o" />&nbsp;&nbsp;缴费说明</span>
-                  </Tooltip>
-                  <Button type="ghost" size="large"><Icon type="share-alt" />我要分享</Button>
-                  <Button type="ghost" size="large"><Icon type="heart-o" />喜欢{this.state.activityData.LikeCount}</Button>
+                    <Tooltip title="如需申请退款请于活动开始前24小时外申请。申请方式：登陆careerfore官网—发送电子邮件给我们审核并给予退款。【careerfore】将统一收取原票价的10%作为退票手续费，请知悉。">
+                      <span style={{paddingLeft:'50px'}}><Icon type="exclamation-circle-o" />&nbsp;&nbsp;缴费说明</span>
+                    </Tooltip>
+                    <Button type="ghost" size="large"><Icon type="share-alt" />我要分享</Button>
+                    <Button type="ghost" size="large"><Icon type="heart-o" />喜欢{this.state.activityData.LikeCount}</Button>
                   </div>
-                  </div>
-                  <div className="contentDt" style={{paddingRight:'10px'}}>
-                      <Collapse defaultActiveKey={['1']} onChange={callback}>
-                          <Panel header="活动详情" key="1">
-                            <div className="FontLg" dangerouslySetInnerHTML={{__html: this.state.activityData.content || ''}}/>
-                          </Panel>
-                        </Collapse>
+                  <img id = "zhang" className ="shakestart" src = "http://imageservice.pine-soft.com/16864B19887142E595939EC7015C05C6.jpg" style = {styles.zhang}/>
+                </div>
+                <div className="contentDt" style={{paddingRight:'10px'}}>
+                    <Collapse defaultActiveKey={['1']} onChange={callback}>
+                        <Panel header="活动详情" key="1">
+                          <div className="FontLg" dangerouslySetInnerHTML={{__html: this.state.activityData.content || ''}}/>
+                        </Panel>
+                      </Collapse>
                   </div>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8}>
@@ -168,6 +174,16 @@ class Notify extends Component {
   }
 }
 
+const styles = {
+  zhang:{
+    borderRadius:'50%',
+    width: '100px',
+    position: 'absolute',
+    top: '40px',
+    right: '40px',
+    display:'none'
+  }
+}
 
 function mapStateToProps(store){
   return {
