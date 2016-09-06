@@ -17,7 +17,7 @@ import Search from '../components/common/searchPage';
 import Essence from '../components/discover/essence';
 import DiscoverTopicList from '../components/discover/discoverTopicList';
 import ActivityListByCity from '../components/activity/activityListByCity';
-
+import Notify from '../components/activity/notifyAlipay';
 
 const Routes = ({ history }) =>
   <Router history={history}>
@@ -36,6 +36,7 @@ const Routes = ({ history }) =>
       <Route path="/submitpost" component = {SubmitPosts} />
       <Route path="/search" component={Search} />
       <Route path="/a" component={Essence} />
+      <Route path="/alipay/create_direct_pay_by_user/return_url" component = {Notify}/>
     </Route>
     <Route path="*" component={NotFound} />
   </Router>;

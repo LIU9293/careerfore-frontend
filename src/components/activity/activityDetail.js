@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getPlaygroundPost, getActivitySignUp, getSignUpResult } from '../../vendor/connection';
+import { getPlaygroundPost, getActivitySignUp, getSignUpResult,returnReqString } from '../../vendor/connection';
 import { Row, Col, Icon, Button, Carousel, Collapse, Calendar, BackTop, Spin, Tooltip, message } from 'antd';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
@@ -34,6 +34,7 @@ class ActivityPost extends Component{
       if(err){
         console.log(err);
       } else {
+        console.log(data)
         let image = data.Activity.ActivityPictureUrl;
         let content = data.Activity.ActivityContent;
         let title = data.Activity.ActivityTitle;
@@ -46,6 +47,7 @@ class ActivityPost extends Component{
         let Latitude=data.Activity.ActivityLatitude;
         let Longitude=data.Activity.ActivityLongitude;
         let LikeCount=data.Activity.ActivityLikeCount;
+        let IsAudit = data.Activity.IsAudit;
         this.setState({
           activityData:{
             image: image,
@@ -59,7 +61,8 @@ class ActivityPost extends Component{
             Fee: Fee,
             Latitude: Latitude,
             Longitude: Longitude,
-            LikeCount: LikeCount
+            LikeCount: LikeCount,
+            IsAudit:IsAudit
           }
         })
       };
@@ -70,23 +73,34 @@ class ActivityPost extends Component{
     if(!this.props.userinfo.login){
       browserHistory.push('/login');
     } else {
-      getActivitySignUp(this.props.userinfo.userid, this.props.params.activityID, 0, 0, '', '', (err, data) => {
-        if(err){
-          console.log(err);
-          this.setState({joinActivityError: err});
-        } else {
-          getSignUpResult(this.props.userinfo.userid, this.props.params.activityID, (err, data) => {
-            if(err){console.log(err)} else {
-              if(data.Type == 1){
-                this.props.baoming(this.props.params.activityID);
-                message.success('活动报名成功');
-              } else {
-                message.warning('活动报名失败');
-              }
+      if(this.state.activityData.Fee > 0){
+        let DDBH = new Date().getTime()+'';
+        returnReqString(DDBH,this.state.activityData.title+"支付费用|"+this.props.params.activityID,this.state.activityData.Fee,this.state.activityData.title+"支付费用","http://www.careerfore.com",(res)=>{
+          var a = res;
+          document.getElementById('form').innerHTML = a;
+          setTimeout(()=>{
+            document.getElementById('alipaysubmit').submit();
+          },500)
+        })
+      }else {
+          getActivitySignUp(this.props.userinfo.userid, this.props.params.activityID, this.state.activityData.IsAudit, 0, '', '', (err, data) => {
+            if(err){
+              console.log(err);
+              this.setState({joinActivityError: err});
+            } else {
+              getSignUpResult(this.props.userinfo.userid, this.props.params.activityID, (err, data) => {
+                if(err){console.log(err)} else {
+                  if(data.Type == 1){
+                    this.props.baoming(this.props.params.activityID);
+                    message.success('活动报名成功');
+                  } else {
+                    message.warning('活动报名失败');
+                  }
+                }
+              })
             }
           })
-        }
-      })
+      }
     }
   }
 
@@ -107,6 +121,7 @@ class ActivityPost extends Component{
       }
       return(
         <div className="width1000" >
+          <div id = 'form' style = {{display:'none'}} />
           <Row>
             <Col xs={24}>
               <div className="Img">
