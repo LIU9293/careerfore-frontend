@@ -1,4 +1,4 @@
-import { getData, getDataBase64, postImage, uploadImageToQiniu, searchFound, area } from './basis';
+import { getData, getDataBase64, postImage, uploadImageToQiniu, searchFound, area ,returnReqString} from './basis';
 import { getPlaygroundList, getPlaygroundPost, getActivityCarousel, getActivityComment,
   getActivitySignUp, getSignUpResult, getUserActivities,addActivityComment,deleteActivityComment } from './activity';
 import { getCarousel, getDiscoverList, getDiscoverPost, postDiscoverArticle, getDiscoverPostComment,
@@ -52,4 +52,5 @@ module.exports = {
   addActivityComment, //添加活动评论
   deleteActivityComment, //删除活动评论
   SetUserDes, //修改个性签名
+  returnReqString,//支付宝sign
 }
