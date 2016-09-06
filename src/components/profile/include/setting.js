@@ -7,11 +7,6 @@ import { Form, Input, Button, Checkbox, Icon, message, Modal, Slider,Tabs } from
 import AvatarEditor from "react-avatar-editor";
 import style from './profileHomeComponents.css';
 import Cookies from 'js-cookie';
-<<<<<<< HEAD
-// import BaseInfo from './settingParam/baseinfo';
-
-=======
->>>>>>> master
 
 const FormItem = Form.Item;
 
