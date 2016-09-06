@@ -3,7 +3,18 @@ import { Row, Col, Icon, Button, Carousel, Collapse, Calendar, BackTop, Spin, To
 import { getPlaygroundPost, getActivitySignUp, getSignUpResult } from '../../vendor/connection';
 import { connect } from 'react-redux';
 import $ from 'jquery';
-import styless from './NotifyCss.css';
+import './NotifyCss.css';
+
+const styles = {
+  zhang:{
+    borderRadius:'50%',
+    width: '100px',
+    position: 'absolute',
+    top: '40px',
+    right: '40px',
+    display:'none'
+  }
+}
 
 class Notify extends Component {
   constructor(props) {
@@ -174,16 +185,6 @@ class Notify extends Component {
   }
 }
 
-const styles = {
-  zhang:{
-    borderRadius:'50%',
-    width: '100px',
-    position: 'absolute',
-    top: '40px',
-    right: '40px',
-    display:'none'
-  }
-}
 
 function mapStateToProps(store){
   return {
@@ -199,9 +200,3 @@ function mapDispatchToProps(dispatch){
 }
 
 module.exports = connect(mapStateToProps,mapDispatchToProps)(Notify)
-
-function getQueryString(name) {
-  var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-  var r = window.location.search.substr(1).match(reg);
-  if (r != null) return unescape(r[2]); return null;
-}
