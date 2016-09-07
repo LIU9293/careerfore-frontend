@@ -75,7 +75,7 @@ class ActivityPost extends Component{
     } else {
       if(this.state.activityData.Fee > 0){
         let DDBH = new Date().getTime()+'';
-        returnReqString(DDBH,this.state.activityData.title+"支付费用|"+this.props.params.activityID,this.state.activityData.Fee,this.state.activityData.title+"支付费用","http://www.careerfore.com",(res)=>{
+        returnReqString(DDBH,this.state.activityData.title+"支付费用",this.state.activityData.Fee,this.state.activityData.title+"支付费用|"+this.props.params.activityID,"http://www.careerfore.com",(res)=>{
           var a = res;
           document.getElementById('form').innerHTML = a;
           setTimeout(()=>{
