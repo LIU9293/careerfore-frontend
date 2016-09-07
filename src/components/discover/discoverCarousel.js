@@ -135,8 +135,11 @@ class DiscoverCarousel extends Component{
      });
      let currentImage = this.refs[index].style.backgroundImage;
      this.setState({bgImage: currentImage});
-     document.getElementById('bg').className = '';
-     document.getElementById('bg').className = 'bg';
+     if(document.getElementById('bg').className == 'bgIn'){
+       document.getElementById('bg').className = 'bgOut';
+     } else {
+       document.getElementById('bg').className = 'bgIn';
+     }
      this.t = setInterval(()=>{
        this.move(this.state.currentSilde)
      },5000)
