@@ -15,7 +15,7 @@ const styles = {
     display:'none'
   }
 }
-
+//支付成功后的回调页面
 class Notify extends Component {
   constructor(props) {
     super(props);

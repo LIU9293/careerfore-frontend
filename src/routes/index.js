@@ -17,7 +17,7 @@ import Search from '../components/common/searchPage';
 import Essence from '../components/discover/essence';
 import DiscoverTopicList from '../components/discover/discoverTopicList';
 import ActivityListByCity from '../components/activity/activityListByCity';
-import Notify from '../components/activity/notifyAlipay';
+import Notify from '../components/activity/notifyAliPay';
 
 const Routes = ({ history }) =>
   <Router history={history}>
