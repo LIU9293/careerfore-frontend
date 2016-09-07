@@ -37,7 +37,7 @@ class SecondReply extends Component {
     return(
       <div className="single_sec" >
         <div className="commentBox_sec" style = {{fontSize:'14px'}}>
-          <label className="spanintro_sec" onClick={()=>{browserHistory.push(`/my/${item2.UserID}`);}}>&nbsp;{item2.UserNickName}&nbsp;</label> :&nbsp;
+          <label className="spanintro_sec" onClick={()=>{browserHistory.push(`/user/${item2.UserID}`);}}>&nbsp;{item2.UserNickName}&nbsp;</label> :&nbsp;
           <label className="spanintro_sec">{"@"}</label>
           <label className="spanintro_sec">{item2.fatherName}</label>&nbsp;
           {item2.Content}

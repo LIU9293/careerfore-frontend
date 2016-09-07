@@ -34,8 +34,8 @@ class FirstReply extends Component {
     return(
       <div className = "single">
         <div className = "commentBox">
-          <img src={item.HeadImg} onClick={()=>{browserHistory.push(`/my/${item.UserID}`);}}/>
-          <label className = "spanintro" onClick={()=>{browserHistory.push(`/my/${item.UserID}`);}}>&nbsp;{item.UserNickName}&nbsp;</label>
+          <img src={item.HeadImg} onClick={()=>{browserHistory.push(`/user/${item.UserID}`);}}/>
+          <label className = "spanintro" onClick={()=>{browserHistory.push(`/user/${item.UserID}`);}}>&nbsp;{item.UserNickName}&nbsp;</label>
           <label className = "spanintro" >{date}</label>
         </div>
         <div className = "commentContent">{item.Content}</div>
