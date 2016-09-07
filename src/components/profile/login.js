@@ -92,7 +92,7 @@ class Login extends Component{
             <h5 style={{color:'#e33', marginBottom: '20px'}}>{this.state.error || ''}</h5>
             <Button type="primary" htmlType="submit">登录</Button>
           </Form>
-          <h5 style={{marginTop: '20px'}}>还没有帐号？去<a href={'/register'}>注册</a></h5>
+          <h5 style={{marginTop: '20px'}}>还没有帐号？去<a onClick={e => browserHistory.push('/register')}>注册</a></h5>
         </div>
       </div>
     );

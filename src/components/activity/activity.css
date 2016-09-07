@@ -356,3 +356,69 @@ Row{
 .load{
   text-align: center;
 }
+
+
+/**/
+/*Activity Share*/
+#redessociales {
+  width: 64px;
+  height: 64px;
+  border-radius: 75px;
+  border: 5px solid #fff;
+  background: url(http://4.bp.blogspot.com/-gKMIOgeaEBY/UWHsOA382oI/AAAAAAAABpI/5GdyRTAeKII/s1600/share_core_square.jpg)
+}
+
+.smedia {
+  position: absolute;
+-webkit-transition: left 0.5s cubic-bezier(0.1,0.8,0.9,1), opacity 1s linear;
+-moz-transition: left 0.5s cubic-bezier(0.1,0.8,0.9,1),opacity 1s linear;
+-o-transition: left 0.5s cubic-bezier(0.1,0.8,0.9,1), opacity 1s linear;
+  display: inline;
+  opacity: 0;
+  width: 46px;
+  height: 46px;
+  z-index: 100;
+  margin:10px 0px 0px 20px;
+  text-indent: -9999px;
+  background: no-repeat;
+  left:3px;
+}
+
+#redessociales:hover .smedia {
+  opacity: 1;
+  transform: translate(0px,0);
+  -webkit-transform: translate(0px,0);
+  -o-transform: translate(0px,0);
+  -moz-transform: translate(0px,0);
+  margin:10px 0px 0px 20px;
+  position: absolute;
+}
+#redessociales:hover .smedia:nth-child(1) {
+  position: absolute;
+  left:65px;
+}
+
+#redessociales:hover .smedia:nth-child(2) {
+  position: absolute;
+  left:110px;
+}
+#redessociales:hover .smedia:nth-child(3) {
+  position: absolute;
+  left:155px;
+}
+#redessociales:hover .smedia:nth-child(4) {
+  position: absolute;
+  left:200px;
+}
+#redessociales:hover .smedia:nth-child(5) {
+  position: absolute;
+  left:245px;
+}
+
+#redessociales:hover .smedia:nth-child(6) {
+  position: absolute;
+  left:290px;
+}
+.smedia:hover {
+    background-position: 0 -46px;
+}

@@ -28,7 +28,7 @@ class DiscoverList extends Component{
     this.loadData = this.loadData.bind(this);
     this.sticker = function(){
       var sidebar = document.getElementById('sideFix');
-      if ( document.body.scrollTop > 800) {
+      if ( document.body.scrollTop > 980) {
         sidebar.style.position = 'fixed';
         sidebar.style.top = '30px';
         sidebar.style.marginLeft = '30px';

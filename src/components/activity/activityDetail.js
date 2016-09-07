@@ -20,22 +20,11 @@ class ActivityPost extends Component{
     this.joinActivity = this.joinActivity.bind(this);
   }
 
-  componentWillMount(){
-      var _html = document.getElementsByName('head').innerHTML;
-      _html += "<script type=\"text/javascript\" src=\"http://api.map.baidu.com/api?v=2.0&ak=OB04FIH80Fcl6SpTZcqZF7BqAhYl6wa8\"></script>";
-      _html += "<script type=\"text/javascript\" src=\"http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion="+~(-new Date()/36e5)+"\"></script>";
-      document.getElementsByName('head').innerHTML = _html;
-  }
-
   componentDidMount(){
-
-    // console.log(this.props.ChannelId);
-
     getPlaygroundPost(this.props.params.activityID, '',(err,data)=>{
       if(err){
-        console.log(err);
+        console.log(err)
       } else {
-        console.log(data)
         let image = data.Activity.ActivityPictureUrl;
         let content = data.Activity.ActivityContent;
         let title = data.Activity.ActivityTitle;
@@ -49,6 +38,8 @@ class ActivityPost extends Component{
         let Longitude=data.Activity.ActivityLongitude;
         let LikeCount=data.Activity.ActivityLikeCount;
         let IsAudit = data.Activity.IsAudit;
+
+
         this.setState({
           activityData:{
             image: image,
@@ -158,6 +149,18 @@ class ActivityPost extends Component{
                     {this.props.joinedActivity[this.props.params.activityID] || this.props.closedActivity[this.props.params.activityID] || '我要报名'}
                   </Button>
                   </div>
+                  <div id="redessociales">
+                         <div className="bdsharebuttonbox" data-tag="share_1">
+                             <a className="smedia bds_weixin" data-cmd="weixin"></a>
+                             <a className="smedia bds_tsina" data-cmd="tsina"></a>
+                             <a className="smedia bds_tqq" data-cmd="tqq"></a>
+                             <a className="smedia bds_qzone" data-cmd="qzone"></a>
+                             <a className="smedia bds_linkedin" data-cmd="linkedin"></a>
+                             <a className="smedia bds_renren" data-cmd="renren"></a>
+                             <a className="smedia bds_tieba" data-cmd="tieba"></a>
+                         </div>
+                     </div>
+
                   </div>
                   <div className="contentDt" style={{paddingRight:'10px'}}>
                       <Collapse defaultActiveKey={['1']} onChange={callback}>
@@ -194,6 +197,8 @@ class ActivityPost extends Component{
               </div>
             </Col>
           </Row>
+
+
           <BackTop style={{ bottom: 100 }}>
             <div className="upScroll">UP</div>
           </BackTop>

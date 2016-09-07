@@ -42,9 +42,6 @@ class Navbar extends Component{
             <Menu.Item key="/activity" style={style.menuItem}>
               活动
             </Menu.Item>
-            <Menu.Item key="/discover" style={style.menuItem}>
-              发现
-            </Menu.Item>
             <Menu.Item key="/profile"  style={{...style.menuItem, float:'right',}}>
               <div className="menuProfileArea">
                 <a>
