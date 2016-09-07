@@ -64,6 +64,17 @@ const styles = {
     height: '600px',
     width: '100%',
   },
+  title:{
+    padding: '10px',
+    position: 'absolute',
+    bottom: '0px',
+    left: '0px',
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    fontSize: '30px',
+    color: '#ccc',
+    width: '1000px',
+    textAlign: 'center',
+  }
 }
 
 class DiscoverCarousel extends Component{
@@ -159,7 +170,9 @@ class DiscoverCarousel extends Component{
                 style={{...styles.slider, backgroundImage: 'url('+item.PictureUrl+')'}}
                 ref={ii}
                 className = "fadeOut animated"
-              />
+              >
+                <div style={styles.title}>{item.Title}</div>
+              </div>
             </a>
           )
         } else {
@@ -169,7 +182,9 @@ class DiscoverCarousel extends Component{
                 style={{...styles.slider, backgroundImage: 'url('+item.PictureUrl+')'}}
                 ref={ii}
                 className = "fadeIn animated z100"
-              />
+              >
+                <div style={styles.title}>{item.Title}</div>
+              </div>
             </a>
           )
         }

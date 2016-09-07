@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Router, Route, IndexRoute, Link } from 'react-router';
+import { Router, Route, IndexRoute } from 'react-router';
 import APP from '../components/APP';
 import NotFound from '../components/404/NotFound';
 
@@ -36,7 +36,7 @@ const Routes = ({ history }) =>
       <Route path="/submitpost" component = {SubmitPosts} />
       <Route path="/search" component={Search} />
       <Route path="/a" component={Essence} />
-      <Route path="/alipay/create_direct_pay_by_user/return_url" component = {Notify}/>
+      <Route path="/alipay/create_direct_pay_by_user/return_url" component = {Notify} />
     </Route>
     <Route path="*" component={NotFound} />
   </Router>;
