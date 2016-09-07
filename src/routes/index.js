@@ -18,7 +18,6 @@ import Essence from '../components/discover/essence';
 import DiscoverTopicList from '../components/discover/discoverTopicList';
 import ActivityListByCity from '../components/activity/activityListByCity';
 
-
 const Routes = ({ history }) =>
   <Router history={history}>
     <Route path="/" component={APP}>
@@ -35,7 +34,6 @@ const Routes = ({ history }) =>
       <Route path="/profile" component={MyHome} />
       <Route path="/submitpost" component = {SubmitPosts} />
       <Route path="/search" component={Search} />
-      <Route path="/a" component={Essence} />
     </Route>
     <Route path="*" component={NotFound} />
   </Router>;

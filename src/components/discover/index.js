@@ -25,10 +25,10 @@ const styles = {
   },
   CarouselWapper: {
     width: '100%',
-    backgroundColor: '#3f3f3f',
+    backgroundColor: 'tranparent',
+    overflow: 'hidden'
   }
 }
-
 
 class Discover extends Component{
 

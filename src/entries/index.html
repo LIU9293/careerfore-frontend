@@ -29,6 +29,34 @@
 .z100{
   z-index: 100;
 }
+.bgIn{
+  animation: scaleIn 3.5s linear ;
+  -webkit-animation: scaleIn 3.5s linear ;
+  animation-fill-mode: forwards;
+  -webkit-animation-fill-mode: forwards;
+}
+.bgOut{
+  animation: scaleOut 3.5s linear ;
+  -webkit-animation: scaleOut 3.5s linear ;
+  animation-fill-mode: forwards;
+  -webkit-animation-fill-mode: forwards;
+}
+@-webkit-keyframes scaleIn {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+@-webkit-keyframes scaleOut {
+  from {
+    transform: scale(1.08);
+  }
+  to {
+    transform: scale(1);
+  }
+}
 </style>
 </body>
 <script src="http://localhost:8989/common.js"></script>

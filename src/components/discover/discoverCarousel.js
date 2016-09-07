@@ -4,11 +4,30 @@ import style from 'animate.css';
 import { browserHistory } from 'react-router';
 
 const styles = {
+  bigWapper:{
+    width: '100%',
+    height: '600px',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center center',
+    overflow: 'hidden',
+    position: 'relative',
+  },
+  bg:{
+    position: 'absolute',
+    zIndex: '0',
+    height: '600px',
+    width: '100%',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center center',
+    filter: 'blur(10px)',
+    transition: 'all 1s ease'
+  },
   wapper: {
     height: '600px',
     width: '1000px',
     margin: 'auto',
     overflow: 'hidden',
+    zIndex: '2',
   },
   wapperInner: {
     height: '450px',
@@ -17,10 +36,11 @@ const styles = {
   },
   bottom:{
     height: '148px',
-    width: '100%',
     marginTop: '1px',
     marginBottom: '1px',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    position: 'absolute',
+    zIndex: '999',
   },
   chooser:{
     display: 'inline-block',
@@ -36,6 +56,14 @@ const styles = {
     backgroundPosition: 'center center',
     position: 'absolute'
   },
+  bgFilter:{
+    backgroundColor: '#000',
+    opacity: '0.7',
+    position: 'absolute',
+    zIndex: '1',
+    height: '600px',
+    width: '100%',
+  },
 }
 
 class DiscoverCarousel extends Component{
@@ -45,6 +73,7 @@ class DiscoverCarousel extends Component{
     this.state={
       data: null,
       currentSilde: 0,
+      bgImage: '',
     }
     this.move = this.move.bind(this);
     this.goToSilde = this.goToSilde.bind(this);
@@ -86,6 +115,13 @@ class DiscoverCarousel extends Component{
      this.refs[nextSlide].className = "fadeIn animated z100";
      this.refs['bottom'+thisSlide].className = 'notCurrent';
      this.refs['bottom'+nextSlide].className = '';
+     let currentImage = this.refs[nextSlide].style.backgroundImage;
+     this.setState({bgImage: currentImage})
+     if(document.getElementById('bg').className == 'bgIn'){
+       document.getElementById('bg').className = 'bgOut';
+     } else {
+       document.getElementById('bg').className = 'bgIn';
+     }
    }
 
    goToSilde(index){
@@ -97,6 +133,10 @@ class DiscoverCarousel extends Component{
      this.setState({
        currentSilde: index
      });
+     let currentImage = this.refs[index].style.backgroundImage;
+     this.setState({bgImage: currentImage});
+     document.getElementById('bg').className = '';
+     document.getElementById('bg').className = 'bg';
      this.t = setInterval(()=>{
        this.move(this.state.currentSilde)
      },5000)
@@ -131,7 +171,6 @@ class DiscoverCarousel extends Component{
           )
         }
       })
-
       let bottomImage = this.state.data.map((item, ii)=>{
         let width = 1000/this.state.data.length + 'px';
         if(ii==0){
@@ -160,14 +199,18 @@ class DiscoverCarousel extends Component{
           )
         }
       })
-
+      let bg = <div id='bg' className='bgIn' style={{...styles.bg, backgroundImage: ((this.state.bgImage == '') ? 'url('+this.state.data[0].PictureUrl+')' : this.state.bgImage)}} />
       return(
-        <div style={styles.wapper}>
-          <div style={styles.wapperInner}>
-            {myHomeFigList}
-          </div>
-          <div style={styles.bottom}>
-            {bottomImage}
+        <div style={styles.bigWapper}>
+          {bg}
+          <div style={styles.bgFilter} />
+          <div style={styles.wapper}>
+            <div style={styles.wapperInner}>
+              {myHomeFigList}
+            </div>
+            <div style={styles.bottom}>
+              {bottomImage}
+            </div>
           </div>
         </div>
       )
