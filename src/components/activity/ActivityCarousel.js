@@ -3,17 +3,17 @@ import { Carousel } from 'antd';
 import { getActivityCarousel } from '../../vendor/connection';
 
 
-// const styles = {
-//   wapper: {
-//     height: '400px',
-//     width: '1000px',
-//     margin: 'auto',
-//   },
-//   Carousel: {
-//     height: '100%',
-//     width: '100%',
-//   }
-// }
+const styles = {
+  wapper: {
+    height: '400px',
+    width: '1000px',
+    margin: 'auto',
+  },
+  Carousel: {
+    height: '100%',
+    width: '100%',
+  }
+}
 
 class ActivityCarousel extends Component{
 
@@ -48,7 +48,7 @@ class ActivityCarousel extends Component{
         )
       })
       return(
-        <div >
+        <div style={styles.wapper}>
           <Carousel autoplay >
             {myHomeFigList}
           </Carousel>

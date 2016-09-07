@@ -7,6 +7,14 @@ import Zan from '../common/zan';
 import Replys from '../common/Reply';
 import { connect } from 'react-redux';
 
+
+const css = {
+  divbox:{
+    cursor:'pointer',
+    textAlign:'center',
+  }
+}
+
 class ActivityComment extends Component{
 
   constructor(props){
@@ -65,7 +73,7 @@ class ActivityComment extends Component{
     return(
       <div className="comment">
         <Replys commentNum = {this.commentNum} postid = {this.props.activityid} sourceType = {"activity"}/>
-        <div style={{textAlign:'center'}}>
+        <div style={css.divbox}>
           <span onClick={this.loadComment}>{this.state.loadContent}</span>
         </div>
       </div>

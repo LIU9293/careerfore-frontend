@@ -6,7 +6,7 @@ import { browserHistory } from 'react-router';
 import styles from './activity.css';
 import ActivityComment from './activityComment';
 import ActivityMapView from './mapview';
-import ActivityCarousels from './ActivityCarousel';
+
 
 class ActivityPost extends Component{
 
@@ -23,6 +23,7 @@ class ActivityPost extends Component{
   componentWillMount(){
       var _html = document.getElementsByName('head').innerHTML;
       _html += "<script type=\"text/javascript\" src=\"http://api.map.baidu.com/api?v=2.0&ak=OB04FIH80Fcl6SpTZcqZF7BqAhYl6wa8\"></script>";
+      _html += "<script type=\"text/javascript\" src=\"http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion="+~(-new Date()/36e5)+"\"></script>";
       document.getElementsByName('head').innerHTML = _html;
   }
 
@@ -140,7 +141,17 @@ class ActivityPost extends Component{
                   <Tooltip title="如需申请退款请于活动开始前24小时外申请。申请方式：登陆careerfore官网—发送电子邮件给我们审核并给予退款。【careerfore】将统一收取原票价的10%作为退票手续费，请知悉。">
                     <span style={{paddingLeft:'50px'}}><Icon type="exclamation-circle-o" />&nbsp;&nbsp;缴费说明</span>
                   </Tooltip>
-                  <Button type="ghost" size="large"><Icon type="share-alt" />我要分享</Button>
+                  <div id="redessociales">
+                  <div className="bdsharebuttonbox" data-tag="share_1">
+                      <a className="smedia bds_weixin" data-cmd="weixin"></a>
+                      <a className="smedia bds_tsina" data-cmd="tsina"></a>
+                      <a className="smedia bds_tqq" data-cmd="tqq"></a>
+                      <a className="smedia bds_qzone" data-cmd="qzone"></a>
+                      <a className="smedia bds_linkedin" data-cmd="linkedin"></a>
+                      <a className="smedia bds_renren" data-cmd="renren"></a>
+                      <a className="smedia bds_tieba" data-cmd="tieba"></a>
+                  </div>
+                  </div>
                   <Button type="ghost" size="large"><Icon type="heart-o" />喜欢{this.state.activityData.LikeCount}</Button>
                   <Button type="primary" size="large"
                     disabled={this.props.joinedActivity[this.props.params.activityID] || this.props.closedActivity[this.props.params.activityID] || false } onClick={this.joinActivity} >
@@ -165,9 +176,9 @@ class ActivityPost extends Component{
                          沙龙讲座与交流，参访顶尖券商企业，实地考察体验优质高等职业生涯。
                       </p>
                   </div>
-                  <div className="carousle">
+                  {/*<div className="carousle">
                     <ActivityCarousels arerid={this.props.areaID} />
-                  </div>
+                  </div>*/}
                   <div className="Map">
                   <h2>活动地点</h2><hr/>
                   <p>{this.state.activityData.Address}</p>

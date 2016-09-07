@@ -4,6 +4,18 @@ import { getDiscoverList } from '../../vendor/connection';
 import ArticleList from '../common/articleList';
 import { millseconds2DateDiff } from '../../vendor/helper/timeTransfer';
 
+const styles = {
+  btn:{
+    width: '100%',
+    boxShadow: 'rgb(188, 188, 188) 0px 1px 6px',
+    padding: '5px',
+    backgroundColor: '#fff',
+    border: 'none',
+    borderRadius: '4px',
+    cursor:'pointer',
+  }
+}
+
 class DiscoverList extends Component{
 
   constructor(props){
@@ -82,9 +94,11 @@ class DiscoverList extends Component{
     return(
       <div>
         <ArticleList />
-        <button type="ghost" onClick={this.loadMore} disabled={!this.state.haveMore}>
+        <div style={{textAlign:'center'}}>
+        <button style={styles.btn} type="ghost" onClick={this.loadMore} disabled={!this.state.haveMore} >
           {this.state.haveMore ? '点击加载更多...' : '没有更多了...'}
         </button>
+        </div>
       </div>
     )
   }

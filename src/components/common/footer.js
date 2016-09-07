@@ -4,20 +4,27 @@ import { Row, Col } from 'antd';
 
 const styles = {
   wapper: {
-    backgroundColor: '#5f5f5f',
-    color: 'white',
+    width:'1000px',
+    backgroundColor: 'white',
+    color: '#999',
+    margin:'auto',
   },
   container: {
-    maxWidth: '750px',
     margin: 'auto',
-    paddingTop: '50px',
-    paddingBottom: '50px',
+    paddingBottom: '66px',
+    paddingTop:'66px',
   },
-  cell: {
-    textAlign: 'center',
-    fontSize: '15px',
-    height: '40px',
-    lineHeight: '40px',
+  about:{
+    marginTop: '15px',
+    fontSize:'14px',
+    textAlign:'right',
+    lineHeight: '30px',
+    paddingBottom:'10px',
+  },
+  copy:{
+    fontSize:'14px',
+    color:'#999',
+    textAlign:'right',
   }
 }
 
@@ -27,28 +34,16 @@ class Footer extends Component{
       <div style={styles.wapper}>
         <div style={styles.container}>
           <Row>
-            <Col style={styles.cell} xs={24} md={4}>
-              <a style={{color:'#fff'}} onClick={()=> browerHistory.push('/')}>关于</a>
+            <Col style={styles.cell} xs={16} md={16}>
+              <img src="https://oa932w8s4.qnssl.com/%E7%BB%84-1@2x.png"/>
             </Col>
-            <Col style={styles.cell} xs={24} md={4}>
-              <a style={{color:'#fff'}} onClick={()=> browerHistory.push('/')}>招聘</a>
-            </Col>
-            <Col style={styles.cell} xs={24} md={4}>
-              <a style={{color:'#fff'}} onClick={()=> browerHistory.push('/')}>故事</a>
-            </Col>
-            <Col style={styles.cell} xs={24} md={4}>
-              <a style={{color:'#fff'}} onClick={()=> browerHistory.push('/')}>微信</a>
-            </Col>
-            <Col style={styles.cell} xs={24} md={4}>
-              <a style={{color:'#fff'}} onClick={()=> browerHistory.push('/')}>☹️</a>
-            </Col>
-            <Col style={styles.cell} xs={24} md={4}>
-              <a style={{color:'#fff'}} onClick={()=> browerHistory.push('/')}>开源</a>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={24} style={{textAlign: 'center', marginTop:'50px', marginBottom: '30px'}}>
-              南京职行网络科技有限公司 © 2016
+            <Col xs={8} md={8} style={{textAlign:'right'}}>
+            <div style={styles.about}>
+              <a style={{color:'#999'}} href="/about">关于职前   </a>
+              <a style={{color:'#999'}}>·</a>
+              <a style={{color:'#999'}} href="/join">加入我们   </a>
+            </div>
+            <a style={styles.copy}>南京职行网络科技有限公司 © 2016</a>
             </Col>
           </Row>
         </div>
