@@ -249,6 +249,8 @@ function search( state = {key: '', page: 0, haveMore: false }, action ){
 //   recommand: Int, 是否推荐，同上
 //   id: 帖子ID
 //   commentNum: 评论数
+//   type: 文章类别 1长文 2链接
+//   content: 内容
 // }
 
 function discoverListData( state = {data: []}, action ){

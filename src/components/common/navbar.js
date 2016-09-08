@@ -159,6 +159,9 @@ class Navbar extends Component{
             <Menu.Item key="/new" style={{...styles.menuItem, float:'right'}}>
               发布新文章
             </Menu.Item>
+            <Menu.Item key="/newlink" style={{...styles.menuItem, float:'right'}}>
+              发布新链接
+            </Menu.Item>
           </Menu>
           <div style={{maxWidth: '1000px', position: 'relative', margin: 'auto'}}>
             <div style={{...styles.newsBox, display: this.state.showMessage ? 'block' : 'none' }} id="newsBox" >

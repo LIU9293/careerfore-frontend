@@ -14,11 +14,12 @@ export const getCarousel = (callback) => {
 }
 
 //发现首页获取帖子列表
-export const getDiscoverList = (userID, pageNumber, perPageNumber, callback) => {
+export const getDiscoverList = (userID, pageNumber, perPageNumber, type, callback) => {
   let queryObj = {
     userID: userID,
     PageNumber: pageNumber,
     PerPageNumber: perPageNumber,
+    Type: type,
   }
   getDataBase64('ZQ.APP.Found.GetPostsList', queryObj, (err, data)=>{
     if (err) {
@@ -53,7 +54,7 @@ export const getDiscoverPost = (postID, userID, callback) => {
 }
 
 //发布发现帖子
-export const postDiscoverArticle = (userid, title, cover, category, HTMLcontent, type, coverSRC, postid, callback) => {
+export const postDiscoverArticle = (userid, title, cover, category, HTMLcontent, posttype, coverSRC, postid, type, callback) => {
   let queryObj = {
     UserId: userid,
     PostsTitle: title,
@@ -63,7 +64,7 @@ export const postDiscoverArticle = (userid, title, cover, category, HTMLcontent,
     PostType: type,
     PostFrontCoverSrc: coverSRC,
     PostsId: postid,
-    Type : 2
+    Type : type,
   }
   getData('ZQ.APP.Found.Posts', queryObj, (err, data) => {
     if(err){
@@ -289,11 +290,12 @@ export const essenceArticle = (pageNumber, perPageNumber, callback) => {
   })
 }
 
-export const getPostsByChannel = (channels, pageNumber, perPageNumber, callback ) => {
+export const getPostsByChannel = (channels, pageNumber, perPageNumber, type, callback ) => {
   let queryObj = {
     ChannelId: channels,
     PageNumber: pageNumber,
     PerPageNumber: perPageNumber,
+    Type: type,
   };
   getData("ZQ.APP.Found.ByChannelGetPostList",queryObj,(err,data) => {
     if(err){
