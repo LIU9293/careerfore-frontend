@@ -179,16 +179,16 @@ class Navbar extends Component{
       return(
         <div className="navbar-container">
           <Menu mode="horizontal" className="navbar" onClick={this.handleClick.bind(this)}>
-            <Menu.Item key="/" style={style.menuItem}>
+            <Menu.Item key="/" style={styles.menuItem}>
               主页
             </Menu.Item>
-            <Menu.Item key="/activity" style={style.menuItem}>
+            <Menu.Item key="/activity" style={styles.menuItem}>
               活动
             </Menu.Item>
-            <Menu.Item key="/login" style={{...style.menuItem, float:'right'}}>
+            <Menu.Item key="/login" style={{...styles.menuItem, float:'right'}}>
               登录
             </Menu.Item>
-            <Menu.Item key="/search" style={{...style.menuItem, float:'right', borderBottom: 'none'}}>
+            <Menu.Item key="/search" style={{...styles.menuItem, float:'right', borderBottom: 'none'}}>
               <Search />
             </Menu.Item>
           </Menu>
