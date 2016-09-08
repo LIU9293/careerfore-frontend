@@ -151,7 +151,6 @@ class Setting extends Component{
   handleModalCancel(){
     this.setState({
       userimgState: false,
-      ModalLoading: false
     })
   }
 
@@ -194,7 +193,6 @@ class Setting extends Component{
   }
 
   handleFile(e){
-    console.log(e.target)
     var reader = new FileReader();
     var file = e.target.files[0];
     if (!file) {
@@ -216,7 +214,6 @@ class Setting extends Component{
         <div style={styles.divCover}>
           <h2 style = {styles.divH2}>个人资料</h2>
             <div style = {styles.contents}>
-
               <div style = {styles.divSingle}>
                 <div style = {styles.spanDiv}>头像</div>
                   <div style = {{marginLeft: '22%', marginTop: '-23px'}}>
@@ -228,31 +225,31 @@ class Setting extends Component{
                       <Modal ref="modal"
                         visible={this.state.userimgState}
                         title="上传头像"
-
+                        onCancel={this.handleModalCancel.bind(this)}
                         footer={[
-                          <Button key="back" type="ghost" size="large" onClick={this.handleModalCancel}>返 回</Button>,
+                          <Button key="back" type="ghost" size="large" onClick={this.handleModalCancel.bind(this)}>返 回</Button>,
                           <Button key="submit" type="primary" size="large" loading={this.state.ModalLoading} onClick={this.handleUploadAvatar.bind(this)}>
                             提 交
                           </Button>,
                         ]}
                       >
-                      <AvatarEditor
-                        image={this.state.userimg}
-                        width={200}
-                        height={200}
-                        style={{margin:'auto', display:'block'}}
-                        border={0}
-                        ref="editor"
-                        borderRadius={100}
-                        color={[255, 255, 255, 0.6]} // RGBA
-                        scale={this.state.AvatarSliderValue}
-                      />
-                      <div style={{margin:'20px 50px 0 50px'}}>
-                        <Slider defaultValue={1} min={1} max={2} step={0.01}
-                          onChange={(value)=>{this.setState({AvatarSliderValue:value})}}
-                          tipFormatter={null}
-                        />
-                      </div>
+                          <AvatarEditor
+                            image={this.state.userimg}
+                            width={200}
+                            height={200}
+                            style={{margin:'auto', display:'block'}}
+                            border={0}
+                            ref="editor"
+                            borderRadius={100}
+                            color={[255, 255, 255, 0.6]} // RGBA
+                            scale={this.state.AvatarSliderValue}
+                          />
+                          <div style={{margin:'20px 50px 0 50px'}}>
+                            <Slider defaultValue={1} min={1} max={2} step={0.01}
+                              onChange={(value)=>{this.setState({AvatarSliderValue:value})}}
+                              tipFormatter={null}
+                            />
+                          </div>
                       </Modal>
                     </div>
                   </div>
