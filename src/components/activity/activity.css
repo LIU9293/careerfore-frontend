@@ -170,8 +170,7 @@ Row{
   margin-top: 20px;
 }
 .button button{
-  float: right;
-  margin-right: 60px;
+  margin-left: 60px;
 }
 .contentDt{
   margin: 20px 15px 0px 0px;
@@ -277,6 +276,10 @@ Row{
 .comment>.globalComment{
   font-size: 20px;
 }
+
+/*Activity Share*/
+
+
 /*Up Scroll*/
 .upScroll{
    height: 40px;

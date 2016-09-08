@@ -201,13 +201,13 @@
 }
 .simditor .simditor-body {
   padding: 22px 15px 40px;
-  min-height: 300px;
+  min-height: 500px;
   outline: none;
   cursor: text;
   position: relative;
   z-index: 1;
   background: transparent;
-  height: 300px;
+  height: 500px;
   overflow-y: auto;
 }
 .simditor .simditor-body a.selected {

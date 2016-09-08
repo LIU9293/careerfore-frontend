@@ -30,16 +30,63 @@ function user(state = initUserState, action){
 //点赞Reducer存放了在APP生命周期中的点赞内容
 function dianzan(state = {}, action) {
   switch (action.type) {
+    case 'UPDATE_LIKE':
+      return {
+        ...state,
+        [action.objid]: {isliked: action.isliked, num: action.num}
+      }
     case 'LIKE_TOGGLE':
-      if(state[action.commentID] == true){
-        delete state[action.commentID];
-        return {...state}
-      } else {
-        return{
-          ...state,
-          [action.commentID]:true
+    // {00 :{likenum:0,isliked:t/f}}
+      return {
+        ...state,
+        [action.objid]: {
+          isliked: !state[action.objid].isliked,
+          num: state[action.objid].isliked ? (state[action.objid].num - 1 ) : (state[action.objid].num + 1 )
         }
       }
+    default:
+      return state
+  }
+}
+
+//收藏Reducer存放了在APP生命周期中的点赞内容
+function collect(state = {}, action) {
+  switch (action.type) {
+    case 'UPDATE_COLLECT':
+      return {
+        ...state,
+        [action.objid]: {iscollect: action.iscollect, num: action.num}
+      }
+    case 'COLLECT_TOGGLE':
+    // {00 :{collectnum:0,iscollect:t/f}}
+      return {
+        ...state,
+        [action.objid]: {
+          iscollect: !state[action.objid].iscollect,
+          num: state[action.objid].iscollect ? (state[action.objid].num - 1 ) : (state[action.objid].num + 1 )
+        }
+      }
+    default:
+      return state
+  }
+}
+
+function selectoption(state = {selectid : "-1",selectvalue : "请选择频道",display:"none"},action) {
+  switch (action.type) {
+    case 'UPDATE_SELECTOPTION':
+      return {
+        ...state,
+        selectid : action.selectid,
+        selectvalue : action.selectvalue,
+        display :action.display
+      }
+      case 'TOGGLE_SELECTOPTION':
+        return{
+          ...state,
+          selectid : state.selectid,
+          selectvalue : state.selectvalue,
+          display:state.display === "none" ?"" :"none",
+        }
     default:
       return state
   }
@@ -108,7 +155,6 @@ function commentOperate(state = {},action) {
 
 //添加评论请求数据的Reducer
 function addCommentOperate(state = {userName :"",objFatherid:"",objid:"",fatherName:""},action) {
-console.log(action.type,">>>",action.userName,">>>",action.objFatherid,">>>",action.objid,">>>",action.fatherName)
   switch (action.type) {
     case 'UPDATE_QUEPARAM':
       return{
@@ -170,7 +216,6 @@ function availableCities( state = {}, action){
 function search( state = {key: '', page: 0, haveMore: false }, action ){
   switch (action.type) {
     case 'UPDATE_SEARCH_KEY':
-      console.log(action)
       return {
         ...state,
         key: action.key
@@ -202,6 +247,7 @@ function search( state = {key: '', page: 0, haveMore: false }, action ){
 //   top: Int, 是否置顶，同上
 //   recommand: Int, 是否推荐，同上
 //   id: 帖子ID
+//   commentNum: 评论数
 // }
 
 function discoverListData( state = {data: []}, action ){
@@ -274,4 +320,6 @@ export default combineReducers({
   editorOperate,
   loading,
   availableCities,
+  collect,
+  selectoption,
 })

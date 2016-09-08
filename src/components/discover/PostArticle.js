@@ -22,24 +22,31 @@ class SimpEditor extends Component {
         leaveConfirm: '正在上传文件中，如果离开页面将自动取消。',
       },
       uploadImage: (base64,callback) => {
-        console.log(base64)
+        this.props.startLoading();
         uploadImageToQiniu(base64.split(',')[1],(err,data)=>{
+            this.props.stopLoading();
           if(err){
-            console.log(err);
             callback(err);
           } else {
-            callback(null,data)
+            callback(null,data);
+            setTimeout(()=>{
+              let commentContent = this.editor.getValue();
+              Cookies.set('commentContent', commentContent, { expires: 7 });
+              this.props.UPDATE(this.props.userinfo.userid,commentContent);
+            },500)
           }
         })
       },
     });
 
-    this.editor.on('valuechanged ',(e)=>{
+    this.editor.on('valuechanged',()=>{
       let commentContent = this.editor.getValue();
       Cookies.set('commentContent', commentContent, { expires: 7 });
       this.props.UPDATE(this.props.userinfo.userid,commentContent);
-    });
+    })
+
     if(Cookies.get('commentContent')){
+      console.log(Cookies.get('commentContent'))
       this.editor.setValue(Cookies.get('commentContent'));
     }
   }
@@ -68,6 +75,8 @@ function mapStateToProps(store){
 function mapDispatchToProps(dispatch){
   return {
     UPDATE: (userid,editorcomment) => {dispatch({type:'UPDATE_EDITOR', userid:userid, editorcomment:editorcomment})},
+    startLoading: () => {dispatch({type:'START_LOADING'})},
+    stopLoading: () => {dispatch({type:'STOP_LOADING'})},
   }
 }
 

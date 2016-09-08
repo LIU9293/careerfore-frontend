@@ -77,23 +77,23 @@ export const getActivityComment = (eventid, userid, pageNum, callback) => {
   })
 }
 
-//发表评论接口
-export const PostActivityComment = (userid, activityid,fatheruserid,firsuserid,comment,callback) =>{
-  let queryObj = {
-    UserID:userid,
-    ActivityID:activityid,
-    FatherUserID:fatheruserid,
-    FirsUserID:firsuserid,
-    Comment:comment
+
+//添加活动评论
+export const addActivityComment = (UserID,ActivityID,FatherUserID,FirsUserID,Comment,callback)=>{
+  let queryObj={
+    UserID:UserID,
+    ActivityID:ActivityID,
+    FatherUserID:FatherUserID,
+    FirsUserID:FirsUserID,
+    Comment:Comment
   };
-  console.log(queryObj)
-  getData("ZQ.APP.ActivityManage.ActivityComment",queryObj,(err,data) => {
-    if (err) {
-      callback(err);
+  getData('ZQ.APP.ActivityManage.ActivityComment',queryObj,(err,data)=>{
+    if(err){
+      callback(err)
     }else {
-      if (data.ResultCode===1) {
-        callback(null,data)
-      }else {
+      if(data.ResultCode===1){
+        callback(null,data);
+      }else{
         callback(data.ResultMessage);
       }
     }
@@ -101,19 +101,20 @@ export const PostActivityComment = (userid, activityid,fatheruserid,firsuserid,c
 }
 
 //删除活动评论
-export const DeleteActivityComment = (userid, commentid,callback) => {
-  let queryObj ={
+
+export const deleteActivityComment =(userid, commentid, callback) => {
+  let queryObj = {
     UserID:userid,
     CommentID:commentid
-  };
-  getData("ZQ.APP.ActivityManage.DeleteComment", queryObj ,(err,data) => {
+  }
+  getData('ZQ.APP.ActivityManage.DeleteComment',queryObj,(err,data) => {
     if (err) {
       callback(err)
     }else {
-      if (data.ResultCode===1) {
+      if(data.ResultCode===1){
         callback(null,data);
       }else {
-        callback(data.ResultMessage)
+        callback(data.ResultMessage);
       }
     }
   })

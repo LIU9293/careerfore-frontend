@@ -111,8 +111,8 @@ class ArticleList extends Component{
                   { item.essence == 0 ? null : essence }
                 </div>
                 <div style={{display:'inline-block', float:'right'}}>
-                  <Icon type="eye-o" />
-                  <span>       {item.viewNum}</span>
+                  <Icon type="heart" />
+                  <span>       {item.likeNum}</span>
                 </div>
               </div>
             </div>
@@ -146,8 +146,8 @@ class ArticleList extends Component{
                   { item.essence == 0 ? null : essence }
                 </div>
                 <div style={{display:'inline-block', float:'right'}}>
-                  <Icon type="eye-o" />
-                  <span>       {item.viewNum}</span>
+                  <Icon type="heart" />
+                  <span>       {item.likeNum}</span>
                 </div>
               </div>
             </div>

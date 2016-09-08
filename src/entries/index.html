@@ -3,18 +3,84 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=OB04FIH80Fcl6SpTZcqZF7BqAhYl6wa8"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="更专业、更新鲜的职业教育资讯，更懂大学生的职业规划平台">
+    <meta name="keywords" content="职业 资讯 大学生 求职">
+    <title>职前 careerfore</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
     <link rel="stylesheet" type="text/css" href="http://localhost:8989/index.css"/>
-    <!-- <link rel="stylesheet" type="text/css" href="http://localhost:8989/src/components/discover/wangEditor.css"/> -->
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=OB04FIH80Fcl6SpTZcqZF7BqAhYl6wa8"></script>
+    <script type="text/javascript" src="http://bdimg.share.baidu.com/static/api/js/share.js">
+    // window._bd_share_config = {
+    //   common : {
+    //     bdText : 'hahahaha',
+    //     bdDesc : 'oooooo',
+    //     bdUrl : '自定义分享url地址',
+    //     bdPic : '自定义分享图片'
+    //   }
+    // }
+  </script>
     <!--[if lt IE 10]>
     <script src="https://as.alipayobjects.com/g/component/??console-polyfill/0.2.2/index.js,es5-shim/4.5.7/es5-shim.min.js,es5-shim/4.5.7/es5-sham.min.js,html5shiv/3.7.2/html5shiv.min.js,media-match/2.0.2/media.match.min.js"></script>
     <![endif]-->
 </head>
 <body>
-<div id="root"></div>
+<div id="root">
+</div>
 <style>
 .ant-carousel .slick-dots{
   bottom:50px;
+}
+.notCurrent > .blackFilter{
+  background-color: #000;
+  opacity: 0.6;
+  position: absolute;
+}
+.current > .blackFilter{
+  display: none
+}
+.main{
+  min-height: 800px;
+}
+.z100{
+  z-index: 100;
+}
+.bgIn{
+  animation: scaleIn 3.5s linear ;
+  -webkit-animation: scaleIn 3.5s linear ;
+  animation-fill-mode: forwards;
+  -webkit-animation-fill-mode: forwards;
+}
+.bgOut{
+  animation: scaleOut 3.5s linear ;
+  -webkit-animation: scaleOut 3.5s linear ;
+  animation-fill-mode: forwards;
+  -webkit-animation-fill-mode: forwards;
+}
+@-webkit-keyframes scaleIn {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+@-webkit-keyframes scaleOut {
+  from {
+    transform: scale(1.08);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+.simditor .simditor-body img{
+  width: 100%;
+}
+.simditor .simditor-popover{
+  display: none;
 }
 </style>
 </body>

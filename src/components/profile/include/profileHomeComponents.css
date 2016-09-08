@@ -39,3 +39,10 @@
   top: 0;
   opacity: 0;
 }
+.inputArea{
+  border-radius: 5px;
+  border-color: 1px solid
+}
+.inputArea:hover{
+  border:
+}

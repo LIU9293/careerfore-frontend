@@ -5,7 +5,7 @@ import { browserHistory } from 'react-router';
 import Zan from '../common/zan';
 import FirstReply from '../common/firstReply';
 import SecondReply from '../common/secondReply';
-import { addComment ,deleteComment,PostActivityComment,DeleteActivityComment} from '../../vendor/connection/index';
+import { addComment ,deleteComment,addActivityComment,deleteActivityComment} from '../../vendor/connection/index';
 
 class Replys extends Component {
   constructor(props) {
@@ -86,24 +86,23 @@ class Replys extends Component {
     }else {
       this.props.DELETE_SECOND_COMMENT(this.props.postid,commentid);
     }
-    //不是随机生成的ID
-    if(commentid.split('.').length < 2){
-      if (this.props.sourceType === "activity") {
-        DeleteActivityComment(this.props.user.userid,commentid,(err,data) => {
-          if (err) {
-            console.log(err)
-          }else {
-            console.log(data)
-          }
-        })
-      }else {
-        deleteComment(commentid,this.props.user.userid,(err,data)=>{
+    if(this.props.sourceType === "activity"){
+      if(commentid.split('.').length === 1){
+        deleteActivityComment(this.props.user.userid,commentid,(err,data)=>{
           if(err){console.log(err)}
           else {
             console.log(data)
           }
         })
       }
+    }
+  }
+
+  addNewComment(){
+    if(this.props.user.userid === undefined || this.props.user.userid === null){
+      browserHistory.push(`/login`);
+    }else {
+      window.scrollBy(0,this.refs.commentarea.offsetTop);
     }
   }
 
@@ -115,59 +114,58 @@ class Replys extends Component {
       if(commentContent.replace(' ','').length === 0){
         console.log("请输入有效的评论");
       }else {
-        // console.log(this.props.user.userid,">>>>>",this.props.postid,">>>>>",this.props.commentReq.objFatherid,">>>>>",commentContent,">>>>>",this.props.commentReq.objid);return;
         if(this.props.sourceType === "activity"){
-          //添加活动评论
-          //userid, activityid,fatheruserid,firsuserid,comment
-          PostActivityComment(this.props.user.userid,this.props.postid,this.props.commentReq.objFatherid,this.props.commentReq.objid,commentContent,(err,data)=>{
-            if(err){
-              console.log(err);
-            }else {
-              if(this.props.commentReq.objFatherid==''){
-                this.props.insertTopLevelComment({
-                  ChildList:[],
-                  Content:commentContent,
-                  HeadImg: this.props.user.userdata !== null ?this.props.user.userdata.avatar :"http://imageservice.pine-soft.com/logo.png",
-                  ID: Math.random().toString(),
-                  IsLike:0,
-                  Level:1,
-                  Phone:this.props.user.userdata !== null ?this.props.user.userdata.phone:"",
-                  PostID:this.props.postid,
-                  PraiseNumbers:0,
-                  ReleaseTime:'/Date('+ new Date().getTime() + ')/',
-                  ReplyNumbers:0,
-                  ResultCode:0,
-                  UserID:this.props.user.userid,
-                  UserNickName:this.props.user.userdata.nickName,
-                },this.props.postid)
-              }
-              else {
-                this.props.insertSecondLevelComment(this.props.commentReq.objid,{
-                  Content:commentContent,
-                  HeadImg: this.props.user.userdata !== null ?this.props.user.userdata.avatar :"http://imageservice.pine-soft.com/logo.png",
-                  ID: Math.random().toString(),
-                  IsLike:0,
-                  Level:2,
-                  Phone:this.props.user.userdata !== null ?this.props.user.userdata.phone:"",
-                  PostID:this.props.postid,
-                  PraiseNumbers:0,
-                  ReleaseTime:'/Date('+ new Date().getTime() + ')/',
-                  ReplyNumbers:0,
-                  ResultCode:0,
-                  UserID:this.props.user.userid,
-                  UserNickName:this.props.user.userdata.nickName,
-                  fatherID:this.props.commentReq.objid,
-                  fatherName:this.props.commentReq.fatherName
-                },this.props.postid)
-              }
-            }
+          addActivityComment(this.props.user.userid,this.props.postid,this.props.commentReq.objFatherid,this.props.commentReq.objid,commentContent,(err,data)=>{
+                if(err){
+                  console.log(err);
+                }else {
+                  console.log(data);
+                  if(this.props.commentReq.objFatherid==''){
+                    this.props.insertTopLevelComment({
+                      ChildList:[],
+                      Content:commentContent,
+                      HeadImg: this.props.user.userdata !== null ?this.props.user.userdata.avatar :"http://imageservice.pine-soft.com/logo.png",
+                      ID: Math.random().toString(),
+                      IsLike:0,
+                      Level:1,
+                      Phone:this.props.user.userdata !== null ?this.props.user.userdata.phone:"",
+                      PostID:this.props.postid,
+                      PraiseNumbers:0,
+                      ReleaseTime:'/Date('+ new Date().getTime() + ')/',
+                      ReplyNumbers:0,
+                      ResultCode:0,
+                      UserID:this.props.user.userid,
+                      UserNickName:this.props.user.userdata.nickName,
+                    },this.props.postid)
+                  }
+                  else {
+                    this.props.insertSecondLevelComment(this.props.commentReq.objid,{
+                      Content:commentContent,
+                      HeadImg: this.props.user.userdata !== null ?this.props.user.userdata.avatar :"http://imageservice.pine-soft.com/logo.png",
+                      ID: Math.random().toString(),
+                      IsLike:0,
+                      Level:2,
+                      Phone:this.props.user.userdata !== null ?this.props.user.userdata.phone:"",
+                      PostID:this.props.postid,
+                      PraiseNumbers:0,
+                      ReleaseTime:'/Date('+ new Date().getTime() + ')/',
+                      ReplyNumbers:0,
+                      ResultCode:0,
+                      UserID:this.props.user.userid,
+                      UserNickName:this.props.user.userdata.nickName,
+                      fatherID:this.props.commentReq.objid,
+                      fatherName:this.props.commentReq.fatherName
+                    },this.props.postid)
+                  }
+                  this.refs.textArea.value = "";
+                }
           })
         }else {
-          //添加帖子评论
           addComment(this.props.user.userid,this.props.postid,this.props.commentReq.objFatherid,commentContent,this.props.commentReq.objid,(err,data)=>{
             if(err){
               console.log(err);
             } else {
+              console.log(data);
               if(this.props.commentReq.objFatherid==''){
                 this.props.insertTopLevelComment({
                   ChildList:[],
@@ -205,14 +203,14 @@ class Replys extends Component {
                   fatherName:this.props.commentReq.fatherName
                 },this.props.postid)
               }
-
+              this.refs.textArea.value = "";
             }
           })
         }
-        this.refs.textArea.value = "";
       }
     }
   }
+
 
   componentWillReceiveProps(nextProps){
     if(nextProps.commentLists[this.props.postid]){
@@ -238,13 +236,13 @@ class Replys extends Component {
   render(){
     var commentArea;
     if(this.props.user.userid === undefined || this.props.user.userid === null){
-      commentArea = <div ref = "commentarea" style={{width:'100%',float:'left',marginTop: '20px'}} id="comment">
+      commentArea = <div ref = "commentarea" style={styles.commentArea} id="comment">
         <div className="left">
           <img src = "http://imageservice.pine-soft.com/logo.png" />
         </div>
         <div className = "right">
           <div className="border" style={{padding:"5%"}}>
-            <p style={{fontSize:'16px'}}>登陆职前就可以发表评论了...</p>
+            <p style={{fontSize:'15px'}}>登陆职前就可以发表评论了...</p>
             <Button type="primary" onClick={()=>{browserHistory.push(`/login`);}}>登陆</Button><Button type="primary" style={{marginLeft:'2%'}} onClick={()=>{browserHistory.push(`/register`);}}>注册</Button>
           </div>
           <Button type="primary" style={{float: 'right',marginTop: '10px'}} onClick={this.addComments}>评论</Button>
@@ -252,7 +250,7 @@ class Replys extends Component {
       </div>
     }
     else {
-      commentArea = <div ref = "commentarea" style={{width:'100%',float:'left',marginTop: '20px'}} id="comment">
+      commentArea = <div ref = "commentarea" style={styles.commentArea} id="comment">
         <div className="left">
           <img src = {this.props.user.userdata !== null ?this.props.user.userdata.avatar :"http://imageservice.pine-soft.com/logo.png"} />
         </div>
@@ -309,7 +307,8 @@ class Replys extends Component {
     return(
       <div className = "detailFoot">
           <div className="allComment">
-            <span>全部评论({this.props.commentNum})</span>
+            <span>{this.props.commentNum}条评论</span>
+            <span id = "addNewComment" ref = "addNewComment" onClick = {this.addNewComment.bind(this)}>添加新评论</span>
             <hr />
           </div>
           {comment}
@@ -325,13 +324,18 @@ const styles = {
     textAlign: 'left',
     fontSize: '13px',
     borderBottom: '1px solid rgb(238, 238, 238)',
-    width: '80%',
+    width: '94%',
     // border: '1px dashed #f0f0f0',
     border: '1px dashed lightgray',
     borderLeft: '3px solid lightgray',
-    marginLeft: '20%',
+    marginLeft: '6%',
     padding: '10px 0 10px 10px',
     borderRight: 'none',
+  },
+  commentArea:{
+    width:'100%',
+    overflow: 'hidden',
+    marginTop: '20px'
   }
 }
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { getDiscoverPost,addComment,AddCTR,Collect } from '../../vendor/connection/index';
-import { Row, Col ,Button} from 'antd';
+import { Row, Col ,Button,message,BackTop } from 'antd';
 import Cookies from 'js-cookie';
 import { connect } from 'react-redux';
 import style from './discoverDetail.css';
@@ -8,6 +8,20 @@ import {millseconds2DateDiff} from '../../vendor/helper/timeTransfer';
 import DiscoverDetailFoot from './discoverDetailFoot';
 import SimpEditor from './PostArticle';
 import Zan from '../common/zan';
+import Collection from '../common/collect';
+
+const styles = {
+  upScroll:{
+    height: '40px',
+    width: '40px',
+    lineHeight: '40px',
+    borderRadius: 4,
+    backgroundColor: '#57c5f7',
+    color: '#fff',
+    textAlign: 'center',
+    fontSize: '20px',
+  }
+}
 
 class DiscoverDetail extends Component{
   constructor(props){
@@ -23,10 +37,6 @@ class DiscoverDetail extends Component{
   }
 
 
-  componentWillMount(){
-    this.props.startLoading();
-  }
-
   componentDidMount(){
     this.loadData();
     this.addReadNum();
@@ -34,22 +44,14 @@ class DiscoverDetail extends Component{
 
   chooseFid(fid){
     this.props.UPDATE_QUEPARAM("","","","");
-    // console.log(this.refs.discoverDetailFoot);
-    // this.setState({objFatherid:"",objid:"",userName:""});
   }
 
   collecPost(objid){
     if(this.props.user.userid === undefined){
       alert("请登录");
     }else {
-      this.setState({collectNum:(this.state.collectNum ++)},()=>{console.log("****" + this.state.collectNum)})
-      Collect(this.props.user.userid,objid,0,(err,data)=>{
-        if(err){
-          console.log(err);
-        }else {
-          console.log(data);
-        }
-      })
+      this.setState({collectNum:(this.state.collectNum + 1)});
+      message.success('收藏成功');
     }
   }
 
@@ -61,10 +63,11 @@ class DiscoverDetail extends Component{
     }
     getDiscoverPost(this.props.params.discoverID,userid,(err,data)=>{
         if(err){
-          console.log(err);
         }else {
-          console.log(data);
+          console.log(data)
           this.setState({postData:data,collectNum:data.PostosInfo.CollectionNumbers});
+          this.props.UPDATE_LIKE(data.PostosInfo.PostID,data.IsLike,data.PostosInfo.LikeNum);
+          this.props.UPDATE_COLLECT(data.PostosInfo.PostID,data.IsCollect,data.PostosInfo.CollectionNumbers);
           this.props.stopLoading();
         }
     })
@@ -100,37 +103,40 @@ class DiscoverDetail extends Component{
         let fl = "left";
         let con = (
           <div>
-            <div className="box-content" style={{backgroundImage:bg,height:'400px'}}></div>
+            <div className="box-content" style={{backgroundImage:bg}}></div>
             <div className="content" style={{maxWidth:'1000px',margin:'auto'}}>
                 <h1 className="title">{info.PostsTitle}</h1>
                 <div className="postcontent">
                   <div className="userinfo">
                       <img className = "userphoto" src={info.UserHeadUrl}  />
                       <div className = "introduction">
-                          <span>{name} - {info.ChannelName} - {time}</span>
+                          <span>{name}&nbsp;&nbsp;·&nbsp;&nbsp; {info.ChannelName}&nbsp;&nbsp;·&nbsp;&nbsp;{time}</span>
                       </div>
                   </div>
                   <div onClick = {this.chooseFid.bind(this,info.PostID)} id="content" className="pageContent" dangerouslySetInnerHTML = {{__html : info.Content || ''}}>
                   </div>
                 </div>
-                <div id="like" className="like">
-                  <div className="Postlike">
-                      <span className="love">
-                        <Zan float = {fl} className ="love_icon" objid = {info.PostID} isLiked = {true} baseNum = {info.LikeNum} type={0}/>
+                <div id="like" className="like" style = {{maxWidth:'750px',margin:'0 auto',paddingBottom:'30px',marginTop: '30px'}}>
+                  <div >
+                      <Zan float = {""} objid = {info.PostID} type={0}/>
+                      &nbsp;&nbsp;
+                      <Collection float = {""} objid = {info.PostID} type={0}/>
+                      <span style = {{float:'right',fontSize: '14px',color: '#999', lineHeight: '100px'}}>
+                      阅读&nbsp;({info.ReadNum})
                       </span>
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                      <span className="collect" onClick = {this.collecPost.bind(this,info.PostID)}>
-                      <i className="collect_icon"></i>收藏·{this.state.collectNum}</span>
-                      &nbsp;&nbsp;&nbsp;&nbsp;阅读数·{info.ReadNum}
                   </div>
                 </div>
                 <DiscoverDetailFoot ref = "discoverDetailFoot" postid={this.props.params.discoverID} callback={this.getClickComment}/>
             </div>
+
           </div>
         )
         return(
           <div>
             {con}
+            <BackTop style={{ bottom: 100 }}>
+              <div className="upScroll">UP</div>
+            </BackTop>
           </div>
         )
       }
@@ -156,8 +162,13 @@ function mapDispatchToProps(dispatch){
     startLoading: () => {dispatch({type:'START_LOADING'})},
     stopLoading: () => {dispatch({type:'STOP_LOADING'})},
     UPDATE_QUEPARAM:(userName,objFatherid,objid,fatherName)=>{dispatch({type:'UPDATE_QUEPARAM',userName:userName,objFatherid:objFatherid,objid:objid,fatherName:fatherName})},
-
+    UPDATE_LIKE:(objid,isliked,num)=>{dispatch({type:"UPDATE_LIKE",objid:objid,isliked:isliked,num:num})},
+    UPDATE_COLLECT:(objid,iscollect,num)=>{dispatch({type:"UPDATE_COLLECT",objid:objid,iscollect:iscollect,num:num})},
   }
 }
+
+const success = function () {
+  message.success('收藏成功');
+};
 
 module.exports = connect(mapStateToProps,mapDispatchToProps)(DiscoverDetail)

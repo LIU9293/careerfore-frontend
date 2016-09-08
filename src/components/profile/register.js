@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
 import style from './index.css';
-import { sendSMS, userRegister } from '../../vendor/connection';
+import { sendSMS, userRegister, updateUserNickName, getUserInfo } from '../../vendor/connection';
 import Cookies from 'js-cookie';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 
 const FormItem = Form.Item;
 
@@ -15,8 +16,8 @@ class Register extends Component{
       mobile:null,
       vaildCode:null,
       password:null,
-      errorMobile: null,
-      errorRegister: null,
+      username: null,
+      error: null,
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this._sendSMS = this._sendSMS.bind(this);
@@ -47,23 +48,42 @@ class Register extends Component{
   handleSubmit(e){
     e.preventDefault();
     if(!this.state.mobile){
-      this.setState({errorRegister: '请输入手机号'});
+      this.setState({error: '请输入手机号'});
     } else if (!this.state.vaildCode){
-      this.setState({errorRegister: '请输入验证码'});
+      this.setState({error: '请输入验证码'});
     } else if (!this.state.password){
-      this.setState({errorRegister: '请输入密码'});
+      this.setState({error: '请输入密码'});
+    } else if (!this.state.username){
+      this.setState({error: '请输入昵称'});
     } else {
       userRegister(this.state.mobile, this.state.vaildCode, this.state.password, '', '', (err,data)=>{
         if(err){
           console.log(err);
-          this.setState({errorRegister: err});
+          this.setState({error: err});
         } else {
-          this.setState({errorRegister: null});
+          this.setState({error: null});
           let UserID = data.UserId;
-          Cookies.set('UserID', UserID, { expires: 7 });
-          this.props.login(UserID);
-          console.log('用户注册成功，并且已将用户ID存入cookie, cookie是：');
-          console.log(Cookies.get('UserID'));
+          updateUserNickName(UserID, this.state.username, (err, data)=>{
+            if(err){
+              console.log(err);
+            } else {
+              getUserInfo(UserID, (err,data) => {
+                if(err){
+                  console.log(err);
+                } else {
+                  console.log(data)
+                  let userData = {
+                    avatar: data.ZUT_HEADIMG,
+                    nickName: data.ZUT_NICKNAME,
+                    phone: data.ZUT_PHONE
+                  }
+                  this.props.login(UserID, userData);
+                  Cookies.set('UserID', UserID, { expires: 7 });
+                  browserHistory.push('/');
+                }
+              })
+            }
+          })
         }
       })
     }
@@ -81,7 +101,6 @@ class Register extends Component{
               />
               <Button type="ghost" style={{float:'right'}} htmlType="button" onClick={this._sendSMS}>发送验证码</Button>
             </FormItem>
-            <h5 style={{color:'#e33', marginBottom: '20px', marginTop: '-20px'}}>{this.state.errorMobile || ''}</h5>
             <FormItem label="验证码">
               <Input type="password" placeholder="验证码" style={{display:"inline-block",width:"100px"}}
                 onChange={(e)=>{this.setState({vaildCode: e.target.value})}}
@@ -92,6 +111,12 @@ class Register extends Component{
                 onChange={(e)=>{this.setState({password: e.target.value})}}
               />
             </FormItem>
+            <FormItem label="昵称">
+              <Input type="text" placeholder="请输入昵称"
+                onChange={(e)=>{this.setState({username: e.target.value})}}
+              />
+            </FormItem>
+            <h5 style={{color:'#e33'}}>{this.state.error || ''}</h5>
             <Button type="primary" htmlType="submit">注册</Button>
           </Form>
           <h5 style={{marginTop: '20px'}}>已有帐号？去<a href={'/login'}>登录</a></h5>
@@ -110,7 +135,7 @@ function mapStateToProps(store){
 }
 function mapDispatchToProps(dispatch){
   return {
-    login: (userid) => {dispatch({type:'LOG_IN', userid:userid})}
+    login: (userid,userdata) => {dispatch({type:'LOG_IN', userid: userid, userdata: userdata})}
   }
 }
 

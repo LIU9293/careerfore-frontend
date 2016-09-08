@@ -1,0 +1,44 @@
+.collect {
+  background: url(http://imageservice.pine-soft.com/209879E1C9FD4335881312F432EC6407.jpg);
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+  display: inline-block;
+}
+.collect:focus{
+  background-position: -right;
+}
+
+@-webkit-keyframes collectBlast {
+  0% {
+    background-position: left;
+  }
+  100% {
+    background-position: -right;
+  }
+}
+
+@keyframes collectBlast {
+  0% {
+    background-position: left;
+  }
+  100% {
+    background-position: right;
+  }
+}
+
+.collectAnimation {
+  display: inline-block;
+  -webkit-animation-name: collectBlast;
+  animation-name: collectBlast;
+  -webkit-animation-duration: .8s;
+  animation-duration: .8s;
+  -webkit-animation-iteration-count: 1;
+  animation-iteration-count: 1;
+  -webkit-animation-timing-function: steps(49);
+  animation-timing-function: steps(49);
+  background-position: right;
+}

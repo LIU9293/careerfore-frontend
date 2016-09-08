@@ -1,10 +1,11 @@
-import { getData, getDataBase64, postImage, uploadImageToQiniu, searchFound, area } from './basis';
+import { getData, getDataBase64, postImage, uploadImageToQiniu, searchFound, area ,returnReqString} from './basis';
 import { getPlaygroundList, getPlaygroundPost, getActivityCarousel, getActivityComment,
-  getActivitySignUp, getSignUpResult, getUserActivities , PostActivityComment , DeleteActivityComment } from './activity';
+  getActivitySignUp, getSignUpResult, getUserActivities,addActivityComment,deleteActivityComment } from './activity';
 import { getCarousel, getDiscoverList, getDiscoverPost, postDiscoverArticle, getDiscoverPostComment,
   getDiscoverFilterList, getMyDiscoverFilterList, updateMyDiscoverFilterList, clickLove, addComment,
   AddCTR, Collect, PostsChannel, essenceArticle, getPostsByChannel,deleteComment } from './discover';
-import { sendSMS, userRegister, userLogin, getUserInfo, getUserArticles, getUserCollection, postUserAvatar } from './user';
+import { sendSMS, userRegister, userLogin, getUserInfo, getUserArticles,
+  getUserCollection, postUserAvatar, updateUserNickName ,SetUserDes} from './user';
 import { secretaryMessage, activityMessage, unreadMessage, unreadMessageContent } from './message';
 module.exports = {
   getData, //抓数据基础接口，输入(FunctionRouteName,QueryObjectName,callback)
@@ -15,8 +16,6 @@ module.exports = {
   getPlaygroundList, //获取活动列表，输入(AreaID, pageCurrent, pageSize, callback)
   getPlaygroundPost, //获取活动详情，输入(id, userid, callback)
   getActivityComment,//获取活动评论列表，输入（eventid，userid，pageNum，callback）
-  PostActivityComment,//发表评论接口，输入(userid,activityid,fatheruserid,firsuserid,comment,callback)
-  DeleteActivityComment,//删除评论，输入(userid,commentid,callback)
   getCarousel, //获取发现轮播图，参数只有一个callback
   getSignUpResult,//获取活动报名结果，输入(userID,ActivityID,callback)
   getActivitySignUp,//获取活动报名，输入(userID,ActivityID,callback)
@@ -49,5 +48,9 @@ module.exports = {
   essenceArticle, //精华
   getPostsByChannel, //根据类别筛选文章
   area, //省市区三级查询, 没有输入参数直接callback
-
+  updateUserNickName, //更改用户昵称
+  addActivityComment, //添加活动评论
+  deleteActivityComment, //删除活动评论
+  SetUserDes, //修改个性签名
+  returnReqString,//支付宝sign
 }

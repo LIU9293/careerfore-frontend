@@ -84,7 +84,8 @@ export const getDiscoverPostComment = (userid,postsId,pageNum,callback) => {
   let queryObj = {
     UserID: userid,
     PostsId: postsId,
-    PageNum: pageNum
+    PageNum: pageNum,
+    PageSize: 10
   };
   getData('ZQ.APP.Found.CommentInfo', queryObj, (err, data) => {
     if(err){
@@ -190,7 +191,7 @@ export const addComment = (UserID,PostsID,ObjectFatherID,Comment,ObjectID,callba
   })
 }
 
-
+//删除评论
 export const deleteComment = (CommentID,UserID,callback)=>{
   let queryObj = {
     CommentID: CommentID,
@@ -269,10 +270,10 @@ export const PostsChannel = (userid,callback)=>{
 }
 
 //精华
-export const essenceArticle = (pageCurrent, pageCount, callback) => {
+export const essenceArticle = (pageNumber, perPageNumber, callback) => {
   let queryObj = {
-    PageCurrent: pageCurrent,
-    PageCount: pageCount,
+    PageNumber: pageNumber,
+    PerPageNumber: perPageNumber,
   };
   getData("ZQ.APP.Found.NicePostList",queryObj,(err,data)=>{
     if(err){
@@ -288,11 +289,11 @@ export const essenceArticle = (pageCurrent, pageCount, callback) => {
   })
 }
 
-export const getPostsByChannel = (channels, pageCurrent, pageCount, callback ) => {
+export const getPostsByChannel = (channels, pageNumber, perPageNumber, callback ) => {
   let queryObj = {
     ChannelId: channels,
-    PageCurrent: pageCurrent,
-    PageCount: pageCount,
+    PageNumber: pageNumber,
+    PerPageNumber: perPageNumber,
   };
   getData("ZQ.APP.Found.ByChannelGetPostList",queryObj,(err,data) => {
     if(err){

@@ -4,6 +4,8 @@ import DiscoverList from './discoverList';
 import SimpEditor from './PostArticle';
 import EssenceBox from './essenceBox';
 import Topics from '../common/topics';
+import style from './index.css';
+import { BackTop } from 'antd';
 
 const styles = {
   wapper:{
@@ -24,13 +26,27 @@ const styles = {
   },
   CarouselWapper: {
     width: '100%',
-    backgroundColor: '#3f3f3f',
-
+    backgroundColor: 'tranparent',
+    overflow: 'hidden'
+  },
+  upScroll:{
+    height: '40px',
+    width: '40px',
+    lineHeight: '40px',
+    borderRadius: 4,
+    backgroundColor: '#57c5f7',
+    color: '#fff',
+    textAlign: 'center',
+    fontSize: '20px',
   }
 }
 
-
 class Discover extends Component{
+
+  constructor(props){
+    super(props);
+  }
+
   render(){
     return(
       <div>
@@ -41,13 +57,18 @@ class Discover extends Component{
           <div style={styles.main}>
             <DiscoverList NumPerPage={6} />
           </div>
-          <div style={styles.side}>
+          <div style={styles.side} >
             <div style={{marginBottom: '30px'}}>
               <Topics />
             </div>
-            <EssenceBox />
+            <div id="sideFix">
+              <EssenceBox />
+            </div>
           </div>
         </div>
+        <BackTop style={{ bottom: 100 }}>
+          <div className="upScroll">UP</div>
+        </BackTop>
       </div>
     )
   }

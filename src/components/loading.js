@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 const styles = {
   wapper: {
-    position: 'absolute',
+    position: 'fixed',
     backgroundColor: '#fff',
     height: '100%',
     width: '100%',

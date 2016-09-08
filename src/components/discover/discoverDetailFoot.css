@@ -43,7 +43,10 @@
   font-size: 16px;
   padding-left: 55px;
 }
-hr {
+
+.commentContent > hr,
+.detailFoot > hr,
+.allComment > hr {
   margin-bottom: 5px;
   padding: 0;
   border: 0;
@@ -51,6 +54,7 @@ hr {
   height: 1px;
   margin-top: 6px;
 }
+
 .spanLove{
   font-size: 16px;
   float: right;
@@ -60,11 +64,11 @@ hr {
   font-size: 14px;
 }
 .single_sec{
-  width: 80%;
+  width: 94%;
   /*border: 1px dashed #f0f0f0;*/
   border: 1px dashed lightgray;
   border-left: 3px solid lightgray;
-  margin-left: 20%;
+  margin-left: 6%;
   padding: 16px 0 16px 10px;
   border-right: none;
 }
@@ -73,8 +77,9 @@ hr {
 }
 .spanLove_sec{
   font-size: 10px;
-  float: right;
+  /*float: right;*/
   cursor: pointer;
+  font-size: 14px;
 }
 .commentBox_sec > img{
   display: inline;
@@ -100,5 +105,13 @@ hr {
   color: #999;
 }
 #deleteOrReply:hover{
+  color:#333;
+}
+#addNewComment{
+  cursor: pointer;
+  color: #999;
+  float: right;
+}
+#addNewComment:hover{
   color:#333;
 }

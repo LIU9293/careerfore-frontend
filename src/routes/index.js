@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Router, Route, IndexRoute, Link } from 'react-router';
+import { Router, Route, IndexRoute } from 'react-router';
 import APP from '../components/APP';
 import NotFound from '../components/404/NotFound';
 
@@ -7,31 +7,28 @@ import NotFound from '../components/404/NotFound';
 import Activity from '../components/activity/';
 import ActivityDetail from '../components/activity/activityDetail';
 import Discover from '../components/discover/';
-import NewArticle from '../components/discover/newArticle';
 import DiscoverDetail from '../components/discover/discoverDetail';
 import Login from '../components/profile/login';
 import Register from '../components/profile/register';
 import MyHome from '../components/profile/home';
 import Simditor from '../components/discover/PostArticle';
-import Draft from '../components/common/draft';
 import SubmitPosts from '../components/discover/SubmitPost';
 import Search from '../components/common/searchPage';
 import Essence from '../components/discover/essence';
 import DiscoverTopicList from '../components/discover/discoverTopicList';
 import ActivityListByCity from '../components/activity/activityListByCity';
-
+import Notify from '../components/activity/notifyAliPay';
+import UserCenter from '../components/profile/homePage';
 
 const Routes = ({ history }) =>
   <Router history={history}>
     <Route path="/" component={APP}>
       <IndexRoute component={Discover} />
       <Route path="/activity" component={Activity} />
-      <Route path="/new" component={Simditor} />
-      <Route path="/draft" component={Draft} />
+      <Route path="/new" component={SubmitPosts} />
       <Route path="/activity/:activityID" component={ActivityDetail} />
       <Route path="/activity/city/:cityID" component={ActivityListByCity} />
       <Route path="/discover" component={Discover} />
-      <Route path="/discover/new" component={NewArticle} />
       <Route path="/discover/:discoverID" component={DiscoverDetail} />
       <Route path="/discover/topic/:id" component={DiscoverTopicList} />
       <Route path="/login" component={Login} />
@@ -40,6 +37,8 @@ const Routes = ({ history }) =>
       <Route path="/submitpost" component = {SubmitPosts} />
       <Route path="/search" component={Search} />
       <Route path="/a" component={Essence} />
+      <Route path="/alipay/create_direct_pay_by_user/return_url" component = {Notify}/>
+      <Route path="/user/:userid" component = {UserCenter} />
     </Route>
     <Route path="*" component={NotFound} />
   </Router>;

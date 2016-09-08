@@ -26,18 +26,18 @@ class SecondReply extends Component {
     let reply2;
     let delete2;
     if(item2.UserID !== this.props.userinfo.userid){
-      reply2 = (<span type="primary" style={{marginRight:'1%'}} id="deleteOrReply"
+      reply2 = (<span type="primary" style={{marginRight:'1%'}} id="deleteOrReply" title = "点击回复评论"
       onClick = {this.back.bind(this,item2.UserID,firstObj,item2.UserNickName,item2.UserNickName,item2.UserID)}>回复</span>);
     }
     else
     {
-      delete2 = (<span type="primary" id="deleteOrReply" style={{marginRight:'1%'}} onClick = {this.deletecallback.bind(this,item2.ID,2)}>删除</span>)
+      delete2 = (<span type="primary" id="deleteOrReply" style={{marginRight:'1%'}} title = "点击删除评论"
+      onClick = {this.deletecallback.bind(this,item2.ID,2)}>删除</span>)
     }
-    let rep = "@" + "<label className='spanintro_sec'>{date2}</label>";
     return(
       <div className="single_sec" >
         <div className="commentBox_sec" style = {{fontSize:'14px'}}>
-          <label className="spanintro_sec" onClick={()=>{browserHistory.push(`/my/${item2.UserID}`);}}>&nbsp;{item2.UserNickName}&nbsp;</label> :
+          <label className="spanintro_sec" onClick={()=>{browserHistory.push(`/user/${item2.UserID}`);}}>&nbsp;{item2.UserNickName}&nbsp;</label> :&nbsp;
           <label className="spanintro_sec">{"@"}</label>
           <label className="spanintro_sec">{item2.fatherName}</label>&nbsp;
           {item2.Content}

@@ -1,9 +1,3 @@
-*{
-    box-sizing: border-box;
-}
-*:before, *:after {
-    box-sizing: border-box;
-}
 button, a {
     -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
@@ -23,22 +17,14 @@ a {
     padding: 0;
     transition: all ease 150ms;
 }
-.box-content{
-  height: 180px;
-  background-size: cover;
-  background-position: center;
-  transition: all ease .4s;
-}
 
 .title{
-  text-transform: initial;
-  word-wrap: break-word;
   font-size: 28px;
   line-height: 32px;
-  overflow: hidden;
   text-align: center;
-  display: inline-block;
-  margin-top: 20px;
+  display: block;
+  margin-top: 35px;
+  margin-bottom: 10px;
   color: #000;
   width: 100%;
 }
@@ -67,7 +53,7 @@ a {
   height: 46px;
   line-height: 46px;
   font-size: 2.4rem;
-  margin: 10px;
+  margin: 15px;
 }
 .introduction{
   display: block;
@@ -77,24 +63,13 @@ a {
 }
 .introduction > span{
   font-size: 16px;
-  color: #000;
+  color: #999;
 }
-.pageContent{
-  margin-left: 0;
-  margin-top: 20px;
-  padding-bottom: 1px;
-  word-wrap: break-word;
-  overflow: hidden;
-  line-height: 1.6em;
-  font-size: 16px;
-}
-.pageContent > p > img{
-  width: 100%
-}
+
 
 .like {
     position: relative;
-    height: 20px;
+    height: 100px;
     font-family: "PingFang SC", "Microsoft JhengHei";
     color: #4b4c4c;
     border-bottom: 1px solid #cacdd2;
@@ -121,7 +96,7 @@ i, cite, em, var, address, dfn {
 .right{
   margin-left: 3%;
   float: left;
-  width: 80%;
+  width: 85%;
 }
 .border{
   padding: 7px 14px;
@@ -136,18 +111,9 @@ textarea{
   outline: none;
   border: none;
   font-size: 16px;
+  resize: none;
 }
 
-.pageContent{
-  line-height: 30px;
-  font-size: 17px;
-  max-width: 750px;
-  margin:auto;
-}
-.pageContent > p{
-  margin-top: 15px;
-  margin-bottom: 15px;
-}
 
 .detailFoot{
   max-width: 750px;

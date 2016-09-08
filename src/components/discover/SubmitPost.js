@@ -2,20 +2,25 @@ import React,{Component} from 'react';
 import ReactDom from "react-dom";
 import SimpEditor from './PostArticle';
 import { connect } from 'react-redux';
-import { Upload, message, Button, Icon} from 'antd';
+import { Upload, message, Button, Icon,Select} from 'antd';
 import style from './SubmitPost.css';
-import { PostsChannel,uploadImageToQiniu,postDiscoverArticle } from '../../vendor/connection';
+import { PostsChannel,uploadImageToQiniu,postDiscoverArticle ,postImage} from '../../vendor/connection';
 import { browserHistory } from 'react-router';
 import Cookies from 'js-cookie';
+import Options from '../common/showSelectOptions';
 
 class SubmitPosts extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      previewImage:null,
       channelSelect:null,
+      limitLength:60,
+      coverFlag:true,
+      bgcover:""
     }
+    this.maxLength = 60;
     this.handleFile = this.handleFile.bind(this);
+    this.deleteCover = this.deleteCover.bind(this);
   }
 
 componentDidMount(){
@@ -31,29 +36,54 @@ componentDidMount(){
         }
         tmpList.push(obj);
       })
-      this.setState({channelSelect:tmpList})
+      this.setState({
+        channelSelect : tmpList,
+      })
     }
   })
 }
 
-handleFile(e) {
-    var reader = new FileReader();
-    var file = e.target.files[0];
-    console.log(file);
-    reader.readAsDataURL(file);
-    reader.onload = function(img){
-        uploadImageToQiniu(img.currentTarget.result.split(',')[1],(err,data)=>{
-          console.log(err,data)
-          if(err){
-            console.log(err);
-          }else {
-            console.log(data);
-            document.getElementById('previewDiv').style.display = "block";
-            document.getElementById('close').style.display = "block";
-            document.getElementById('previewimg').src = data;
-          }
+deleteCover(){
+  this.setState({
+    coverFlag : true,
+    bgcover : ""
+  })
+}
+
+handleFile(e){
+  var reader = new FileReader();
+  var file = e.target.files[0];
+  reader.readAsDataURL(file);
+  reader.onload = (img)=>{
+    postImage(img.currentTarget.result, (err,data)=>{
+      if(err){
+        console.log(err);
+      } else {
+        this.setState({
+          coverFlag : false,
+          bgcover : 'url('+data.ImgName+')'
         })
-    }
+      }
+    })
+  };
+
+
+        // uploadImageToQiniu(img.currentTarget.result.split(',')[1],(err,data)=>{
+        //   console.log(err,data)
+        //   if(err){
+        //     console.log(err);
+        //   }else {
+        //     console.log(data);
+        //     document.getElementById('previewDiv').style.display = "block";
+        //     document.getElementById('close').style.display = "block";
+        //     document.getElementById('previewimg').src = data;
+        //   }
+        // })
+
+  }
+
+  showToggle(){
+    this.props.TOGGLE_SELECTOPTION();
   }
 
   //发帖
@@ -62,29 +92,31 @@ handleFile(e) {
       browserHistory.push(`/login`);
     }else {
       let uid = this.props.userinfo.userid;
-      console.log(this.props.editor[uid])
-      if(document.getElementById('txtinput').value.replace(" ","")==="")
+      if(this.refs.txtinput.value.replace(" ","")==="")
       {
-        alert("请输入标题");return;
+        message.error('请输入标题');return;
       }
-      if(document.getElementById('previewimg').src === "")
-      {
-        alert("没有封面图");return;
-      }
-      console.log(this.props.editor[uid])
+      // if(this.state.bgcover === "")
+      // {
+      //   alert("没有封面图");return;
+      // }
       if(this.props.editor[uid]=== ""){
-        alert("没有内容");return;
+        message.error('请输入内容');return;
       }
-      if(document.getElementById('channel').value === "-1" || document.getElementById('channel').value === null){
-        alert("请选择频道");return;
+      if(this.props.selects.selectid === "-1"){
+        message.error('请选择频道');return;
       }
+      let txt = this.refs.txtinput.value;
+      let cover = this.state.bgcover === "" ? "" :this.state.bgcover.replace("url(","").replace(")","").replace("'","");
+      let channel = this.props.selects.selectid;
+      this.props.startLoading();
       postDiscoverArticle(
-        uid, document.getElementById('txtinput').value,
-        document.getElementById('previewimg').src, document.getElementById('channel').value,
-        this.props.editor[uid], 1, "", "",
+        uid,txt,cover,channel,this.props.editor[uid],1,"","",
         (err,data)=>{
+          this.props.stopLoading();
         if(err){console.log(err)}else {
           alert("发帖成功");
+          browserHistory.push('/discover/'+data.PostsId);
           Cookies.set("commentContent","");
           this.props.UPDATE(this.props.userinfo.userid,"");
         }
@@ -92,59 +124,112 @@ handleFile(e) {
     }
   }
 
+  //文本框获取焦点
+  txtFocus(){
+    console.log("get focus");
+    // if(this.refs.txtInput.value === "请输入标题"){
+    //
+    // }
+  }
+  txtBlur(){
+    console.log("lost focus");
+  }
+  txtChanged(e){
+    //剩余可输入的字数
+    // let limitLength ＝ this.maxLength - e.target.value.length;
+    this.setState({
+      limitLength: this.maxLength - e.target.value.length
+    })
+  }
+
   render(){
-    let channelView;
-    if(this.state.channelSelect){
-      let options =[];
-      let holder = "请选择频道";
-      options.push(<option value = {-1}>{holder}</option>);
-      this.state.channelSelect.map((item,index) =>{
-          options.push(<option value = {item.value}>{item.key}</option>)
-      })
-      channelView = <select id = "channel" className = "form-control">{options}</select>
-    }
     return(
       <div className = "SubmitPost">
-          <div className="submittitle">
-            <label className = "titlediv">帖子标题</label>
-              <input id="txtinput" type="text" maxLength = "60" className="posttitle" placeholder = "请输入标题"/>
+      <div className="submittitle" style = {{borderBottom:'1px solid lightgray',paddingBottom:'5px',width:'100%',overflow:'hidden'}}>
+        <div style = {{float:'left',width:'100%'}}>
+          <Icon type="bars" style = {{fontSize:'15px'}}/>
+          <span style = {styles.spanstyle} onClick = {this.showToggle.bind(this)}>{this.props.selects.selectvalue}</span>
+            <div className = "posttitleDiv">
+            <input type="text" maxLength = {this.maxLength} className="posttitle" placeholder = "请输入标题" ref = "txtinput"
+            onFocus = {this.txtFocus.bind(this)} onBlur = {this.txtBlur.bind(this)} onChange ={this.txtChanged.bind(this)}/>
+              <span className = "titleAlert">还能输入{this.state.limitLength}字</span>
+            </div>
+        </div>
+
+        <div className = "fixstyle">
+             <Options />
+        </div>
+      </div>
+      <div className="submittitle" ref = "cover">
+        {
+          this.state.coverFlag
+          ?
+          <div className = "uploadcoverDiv" >
+              <input ref="in" type="file" className = "inputButtons" accept="image/*" onChange={this.handleFile} />
           </div>
-          <div className="submittitle" >
-              <label className = "titlediv">&nbsp;&nbsp;&nbsp;封面图</label>
-              <a className="inputWapperS"><label>上传封面图</label>
-                <input ref="in" type="file" className = "inputButton" accept="image/*" onChange={this.handleFile} />
-              </a>
-              <div className="preview" style={{display:'none'}} id = "previewDiv">
-                <img id = "previewimg" src = {this.state.previewImage} className="previewImage" />
-                <Icon id = "close" type="delete" style = {{color:'red',display:'none'}} />
-              </div>
+          :
+          <div className = "showcoverDiv" style = {{backgroundImage:this.state.bgcover}}>
+              <Icon type="cross" title = "点击删除封面图" style = {styles.CloseBtn} onClick = {this.deleteCover}/>
           </div>
-          <div className = "submittitle" >
-            <label className = "titlediv"> 选择频道</label>
-              {channelView}
-          </div>
+        }
+      </div>
           <div className = "submittitle">
             <SimpEditor />
           </div>
           <div className = "submittitle" style = {{textAlign:'right'}}>
+            {/* <Button type="ghost" style = {{color:'#2db7f5',marginRight:'10px'}}>预览</Button>*/}
             <Button type="primary" onClick = {this.SubmitPost.bind(this)}>发帖</Button>
           </div>
       </div>
     )
   }
 }
+// <Button type="ghost" style = {{color:'#2db7f5'}}>保存草稿</Button>
+/*
+<div className = "uploadcoverDiv">
+    <input ref="in" type="file" className = "inputButtons" accept="image/*" onChange={this.handleFile} />
+</div>
+*/
 
+/*
+<div className = "uploadcoverDiv">
+    <Icon type="cross" title = "点击删除封面图" style = {styles.CloseBtn} onClick = {this.deleteCover.bind(this)}/>
+</div>
+*/
 function mapStateToProps(store){
   return {
     userinfo: store.user,
-    editor: store.editorOperate
+    editor: store.editorOperate,
+    selects:store.selectoption,
   }
 }
 
 function mapDispatchToProps(dispatch){
   return {
     UPDATE: (userid,editorcomment) => {dispatch({type:'UPDATE_EDITOR', userid:userid, editorcomment:editorcomment})},
+    TOGGLE_SELECTOPTION: ()=>{dispatch({type:'TOGGLE_SELECTOPTION'})},
+    startLoading: () => {dispatch({type:'START_LOADING'})},
+    stopLoading: () => {dispatch({type:'STOP_LOADING'})},
   }
 }
+
+const styles = {
+  spanstyle:{
+    fontSize: '15px',
+    marginLeft: '10px',
+    color: '#999',
+    cursor: 'pointer',
+  },CloseBtn:{
+    fontSize: '30px',
+    cursor: 'pointer',
+    background: 'rgba(0,0,0,.5)',
+    color: '#fff',
+    padding: '10px',
+  }
+}
+
+const error = function () {
+  message.error('这是一条报错提示');
+};
 
 module.exports = connect(mapStateToProps,mapDispatchToProps)(SubmitPosts)
