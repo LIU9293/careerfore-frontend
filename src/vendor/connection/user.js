@@ -111,6 +111,22 @@ export const getUserCollection = (userid, callback) =>{
   })
 }
 
+export const getUserActivity = (userid,callback) => {
+  let queryObj = {
+    UserId: userid,
+    UserHeadImg: useravatar
+  };
+  getData('ZQ.APP.Mime.UserActivity', queryObj, (err, data) => {
+    if(err){callback(err)} else {
+      if (data.ResultCode === 1){
+        callback(null, data);
+      } else {
+        callback(data.ResultMessage);
+      }
+    }
+  })
+}
+
 //更新我的头像
 export const postUserAvatar = (userid, useravatar, callback) =>{
   let queryObj = {
