@@ -63,8 +63,8 @@ export const postDiscoverArticle = (userid, title, cover, category, HTMLcontent,
     PostType: type,
     PostFrontCoverSrc: coverSRC,
     PostsId: postid,
+    Type : 2
   }
-  console.log(queryObj);
   getData('ZQ.APP.Found.Posts', queryObj, (err, data) => {
     if(err){
       callback(err);

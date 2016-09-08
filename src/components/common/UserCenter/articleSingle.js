@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Icon} from 'antd';
 import S from 'string';
 
@@ -16,18 +15,23 @@ const styles = {
     fontSize: '20px',
     margin: '8px 0',
   },singleMiddle:{
-    height: '230px',
+    overflow :'hidden',
   },singleBg:{
-    width: '50%',
-    height: '100%',
+    // width: '50%',
+    width: '100%',
+    height: '230px',
     backgroundPosition: 'center center',
     backgroundSize: 'cover',
+    // float:'left',
   },singleArticle:{
-    width: '50%',
+    // width: '50%',
+    width: '100%',
     padding: '0 1%',
-    margin: '-230px 0 0 50%',
     color: '#333',
-    fontSize: '13px',
+    // fontSize: '13px',
+    fontSize: '15px',
+    marginTop : '15px',
+    // float:'left',
   },goDetail:{
     cursor:'pointer',
     color:'#2db7f5',
@@ -52,15 +56,13 @@ class Single extends Component {
     let bg = 'url(' + singleData.ZPT_COVER + ')';
     return(
       <div style = {styles.singleFather}>
-        <div style = {styles.newArticle}>发布了新文章<span style = {styles.time}>{singleData.ArticleReleaseToNow}</span></div>
+        <div style = {styles.newArticle} >发布了新文章<span style = {styles.time}>{singleData.ArticleReleaseToNow}</span></div>
         <div style = {styles.singleTitle}>{singleData.ZPT_TITLE}</div>
         <div style = {styles.singleMiddle}>
-          <div style={{backgroundImage:bg,width: '50%',height: '100%',backgroundPosition: 'center center',backgroundSize: 'cover'}}>
+          <div style={{...styles.singleBg, backgroundImage:bg,height: singleData.ZPT_COVER === "http://imageservice.pine-soft.com/" ?'0':'230px'}}>
           </div>
           <div style = {styles.singleArticle} dangerouslySetInnerHTML = {{__html : content || ''}}>
           </div>
-          {/*<div style = {styles.singleArticle} >评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论<span>查看详情</span>
-          </div>*/}
         </div>
         <div style = {styles.singleBottom} >
           <span><Icon type="heart" style = {{color:'red'}}/> (2)</span>&nbsp;&nbsp;·&nbsp;&nbsp;
@@ -72,19 +74,4 @@ class Single extends Component {
   }
 }
 
-function mapStateToProps(store){
-  return {
-    userinfo: store.user,
-    dianzan:store.dianzan,
-  }
-}
-
-function mapDispatchToProps(dispatch){
-  return {
-    zan :(objid)=>{dispatch({
-      type:"LIKE_TOGGLE",
-      objid:objid
-    })}
-  }
-}
-module.exports = connect(mapStateToProps,mapDispatchToProps)(Single)
+module.exports = Single
