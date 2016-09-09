@@ -56,7 +56,7 @@ class DiscoverTopicList extends Component{
 
 
   loadData(id, index){
-    getPostsByChannel(id + ';', index, 10, (err,data) => {
+    getPostsByChannel(id + ';', index, 10, 0, (err,data) => {
       if(err){
         console.log(err);
         this.setState({
@@ -64,7 +64,7 @@ class DiscoverTopicList extends Component{
         });
         this.props.stopLoading();
       } else {
-        console.log(data)
+        console.log(data);
         let discoverListData = data.PostsList.map((item,ii)=>{
           return {
             commentNum: item.CommentNum,
@@ -72,7 +72,7 @@ class DiscoverTopicList extends Component{
             category: item.ZctName,
             description: item.Content.length > 72 ? item.Content.substring(0,72)+'...' : item.Content,
             nickName: item.NickName,
-            cover: item.PictureUrl,
+            cover: item.PictureUrl || '',
             title: item.Title,
             time: millseconds2DateDiff(item.CreatDate),
             viewNum: 0,
@@ -81,6 +81,8 @@ class DiscoverTopicList extends Component{
             top: item.IsTop == "置顶" ? 1 : 0,
             recommand: item.IsRecommend == "推荐" ? 1 : 0,
             id: item.PostsID,
+            type: item.Type,
+            content: item.Content,
           }
         });
         this.props.updateDiscoverListData(this.props.discoverListData.concat(discoverListData));

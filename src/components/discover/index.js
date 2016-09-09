@@ -50,9 +50,9 @@ class Discover extends Component{
   render(){
     return(
       <div>
-        <div style={styles.CarouselWapper}>
+        {/*<div style={styles.CarouselWapper}>
           <DiscoverCarousel />
-        </div>
+        </div>*/}
         <div style={styles.wapper}>
           <div style={styles.main}>
             <DiscoverList NumPerPage={6} />

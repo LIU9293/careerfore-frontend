@@ -58,7 +58,7 @@ const styles = {
   },
   bgFilter:{
     backgroundColor: '#000',
-    opacity: '0.7',
+    opacity: '0.5',
     position: 'absolute',
     zIndex: '1',
     height: '600px',

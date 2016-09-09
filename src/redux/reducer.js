@@ -248,6 +248,8 @@ function search( state = {key: '', page: 0, haveMore: false }, action ){
 //   recommand: Int, 是否推荐，同上
 //   id: 帖子ID
 //   commentNum: 评论数
+//   type: 文章类别 1长文 2链接
+//   content: 内容
 // }
 
 function discoverListData( state = {data: []}, action ){
@@ -302,7 +304,40 @@ function loading ( state = false, action){
   }
 }
 
+/*
+secretaryMessage.data:
+ZTMT_CONTENT:    "测试文章，请点赞，请收藏，请回复"
+ZTMT_ID:         "f78f1ab68a2145e7a95581befff7573e"  unique ID of the message
+ZTMT_OBJECTID:   "84e655c8fa51454aab5c688195538011"  article id or activity id
+ZTMT_SENDTIME:   "2016-09-08 16:34"
+ZTMT_TITLE:      "Lock收藏了您的文章，快去查看啦~"
+ZTMT_TYPE:        "帖子"
+*/
+function secretaryMessage ( state = {data: [], UnreadMessages: 0}, action ){
+  switch (action.type) {
+    case 'UPDATE_SECRETARY_MESSAGE':
+      return{
+        ...state,
+        UnreadMessages: action.data.length,
+        data: action.data,
+      }
 
+    case 'CLEAR_SECRETARY_MESSAGE':
+      return{
+        ...state,
+        UnreadMessages: 0,
+        data: [],
+      }
+    case 'READ_A_MESSAGE':
+      return{
+        ...state,
+        UnreadMessages: state.UnreadMessages - 1,
+        data: state.data.filter(i => i.ZTMT_ID !== action.id)
+      }
+    default:
+      return state
+  }
+}
 
 export default combineReducers({
   user,
@@ -322,4 +357,5 @@ export default combineReducers({
   availableCities,
   collect,
   selectoption,
+  secretaryMessage,
 })

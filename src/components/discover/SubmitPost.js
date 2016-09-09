@@ -111,7 +111,7 @@ handleFile(e){
       let channel = this.props.selects.selectid;
       this.props.startLoading();
       postDiscoverArticle(
-        uid,txt,cover,channel,this.props.editor[uid],1,"","",
+        uid,txt,cover,channel,this.props.editor[uid],1,"","",1,
         (err,data)=>{
           this.props.stopLoading();
         if(err){console.log(err)}else {
