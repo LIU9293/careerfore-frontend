@@ -64,7 +64,7 @@ class ActivitySingle extends Component {
           <div style={ styles.infoArea } >
             <div style={ styles.infoBox }>
               <Icon type="environment-o" style={{fontSize: '20px'}}/>
-              <span style={{marginLeft:'20px'}}>{ id2name(item.cityID) }</span>
+              <span style={{marginLeft:'20px'}}>{ id2name(item.City) }</span>
             </div>
             <div style={ styles.infoBox }>
               <Icon type="team" style={{fontSize: '20px'}}/>

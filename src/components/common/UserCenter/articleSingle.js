@@ -65,9 +65,8 @@ class Single extends Component {
           </div>
         </div>
         <div style = {styles.singleBottom} >
-          <span><Icon type="heart" style = {{color:'red'}}/> (2)</span>&nbsp;&nbsp;·&nbsp;&nbsp;
-          <span><Icon type="star" style = {{color:'rgb(226,192,141)'}}/> (2)</span>&nbsp;&nbsp;·&nbsp;&nbsp;
-          <span>收藏 (2)</span>
+          <span><Icon type="star-o" /> ({singleData.CollentCount})</span>&nbsp;&nbsp;·&nbsp;&nbsp;
+          <span><Icon type="message" /> ({singleData.CommentCount})</span>
         </div>
       </div>
     )

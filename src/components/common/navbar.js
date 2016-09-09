@@ -137,7 +137,7 @@ class Navbar extends Component{
             <Menu.Item key="/activity" style={styles.menuItem}>
               活动
             </Menu.Item>
-            <Menu.Item key="/profile"  style={{...styles.menuItem, float:'right',}}>
+            <Menu.Item key={"/user/"+this.props.user.userid}  style={{...styles.menuItem, float:'right',}}>
               <div className="menuProfileArea">
                 <a>
                   <img src={this.props.user.userdata.avatar} className="menuProfileAvatar" />

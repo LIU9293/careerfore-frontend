@@ -5,6 +5,7 @@ import { postDiscoverArticle, uploadImageToQiniu } from '../../vendor/connection
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import Options from '../common/showSelectOptions';
+import style from './SubmitPost.css';
 
 const FormItem = Form.Item;
 
@@ -58,7 +59,7 @@ class NewLinkArticle extends Component{
         <div className="form-container">
           <Form onSubmit={this.handleSubmit}>
             <FormItem label="类别">
-              <span onClick = {this.showToggle}>{this.props.selects.selectvalue}</span><Options />
+              <span onClick = {this.showToggle}>{this.props.selects.selectvalue}</span>
             </FormItem>
             <FormItem label="标题">
               <Input placeholder="请输入链接标题"
@@ -73,6 +74,9 @@ class NewLinkArticle extends Component{
             <h5 style={{color:'#e33', marginBottom: '20px'}}>{this.state.err || ''}</h5>
             <Button type="primary" htmlType="submit">提交</Button>
           </Form>
+          <div className = "fixstyle">
+               <Options />
+          </div>
         </div>
       </div>
     );

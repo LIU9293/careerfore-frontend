@@ -176,6 +176,15 @@ class ArticleList extends Component{
               <a target="_blank" href={link} style={{color:'#5d5d5d'}}>
                 <h1 style={styles.title}>{item.title}</h1>
               </a>
+              <div style={{...styles.iconArea, fontSize: '18px', color:'#999'}}>
+                <div style={{display:'inline-block', float:'left'}}>
+                  { item.essence == 0 ? null : essence }
+                </div>
+                <div style={{display:'inline-block', float:'right'}}>
+                  <Icon type="heart" />
+                  <span>       {item.likeNum}</span>
+                </div>
+              </div>
             </div>
           </div>
         )
