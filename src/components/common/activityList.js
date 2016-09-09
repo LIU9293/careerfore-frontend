@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import { Icon } from 'antd';
-import { area } from '../../vendor/connection';
-import { id2name } from '../../vendor/helper/cityid';
+import {id2name} from '../../vendor/helper/cityid';
 
 const styles = {
   container: {

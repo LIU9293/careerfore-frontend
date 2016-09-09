@@ -2,8 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import UserInfo from '../common/UserCenter/userInfo';
 import ArticleList from '../common/UserCenter/articleList';
-import { getUserArticles,getUserInfo } from '../../vendor/connection';
+import { getUserArticles,getUserInfo ,getUserCollection,getUserActivities} from '../../vendor/connection';
 import { Row, Col, Icon, Button, Carousel, Collapse, Calendar, BackTop, Spin, Tooltip, message ,Tabs} from 'antd';
+import s from './homePage.css';
+import ActivityList from '../common/activityList';
+import CollectionList from '../common/UserCenter/collectionList';
+import ArticleLists from '../common/UserCenter/activityList'
 
 const styles = {
   father:{
@@ -47,13 +51,18 @@ class HomePage extends Component {
     super(props);
     this.state = {
       otherUserData:null,
-      articleData:null
+      articleData:[],
+      activityData:[],
+      collectData:[],
     }
+    this.loadArticle = this.loadArticle.bind(this);
+    this.loadActivity = this.loadActivity.bind(this);
+    this.loadCollection = this.loadCollection.bind(this);
   }
 
   componentDidMount(){
     let uid = this.props.params.userid;
-    if(uid === null || uid === undefined){
+    if(uid === null || uid === undefined || uid === ""){
       alert("页面缺少必要参数");
       window.history.go(-1);
     }else {
@@ -63,23 +72,77 @@ class HomePage extends Component {
         if(err){
           message.warn(err);
         }else {
-          this.otherUserData = data;
-          getUserArticles(uid,(err,data2)=>{
-            if(err){
-              message.warn(err);
-            }else {
-              this.setState({
-                otherUserData:data,
-                articleData:data2.UserArticleList
-              })
-            }
+          this.setState({
+            otherUserData:data,
           })
+          this.loadArticle(uid);
         }
       })
     }
   }
+  //加载发表的文章
+  loadArticle(uid){
+    getUserArticles(uid,(err,data)=>{
+      if(err){
+        message.warn(err);
+      }else {
+        console.log(data)
+        this.setState({
+          articleData:data.UserArticleList
+        })
+      }
+    })
+  }
+
+  //加载活动的列表
+  loadActivity(uid){
+    getUserActivities(uid,(err,data)=>{
+      if(err){
+        message.warn(err);
+      }else {
+        console.log(data)
+        this.setState({
+          activityData:data.UserActivityList
+        })
+      }
+    })
+  }
+
+  //加载收藏的列表
+  loadCollection(uid){
+      getUserCollection(uid,(err,data)=>{
+        if(err){
+          message.warn(err);
+        }else {
+          console.log(data)
+          this.setState({
+            collectData:data.UserCollectList
+          })
+        }
+      })
+  }
+
+  ///tab改变时出发这个事件
   tabsChanges(key){
-    console.log(key)
+    switch (key) {
+      case "1"://加载发表的文章
+        if(this.state.otherUserData.length === 0){
+          this.loadArticle(this.props.params.userid)
+        }
+        break;
+      case "2"://加载活动的列表
+          if(this.state.activityData.length === 0){
+            this.loadActivity(this.props.params.userid)
+          }
+          break;
+      case "3"://加载收藏的列表
+          if(this.state.collectData.length === 0){
+            this.loadCollection(this.props.params.userid)
+          }
+        break;
+      default:
+
+    }
   }
 
   render(){
@@ -92,15 +155,18 @@ class HomePage extends Component {
           <div style ={styles.container}>
             <div style = {styles.Main}>
               <UserInfo userinfo = {this.state.otherUserData}/>
-              <Tabs defaultActiveKey="1" onChange={this.tabsChanges.bind(this)} style = {{marginTop:'15px'}}>
-                <TabPane tab="他的文章" key="1">
-                  <ArticleList articleList = {this.state.articleData}/>
-                </TabPane>
-                <TabPane tab="他的活动" key="2">选项卡二内容</TabPane>
-                <TabPane tab="他的收藏" key="3">选项卡三内容</TabPane>
-              </Tabs>
+                <Tabs defaultActiveKey="1" onChange={this.tabsChanges.bind(this)} style = {{marginTop:'15px',boxShadow:'rgba(0, 0, 0, 0.2) 0px 1px 5px 0px',background: '#fff'}}>
+                  <TabPane tab="他的文章" key="1">
+                    <ArticleList articleList = {this.state.articleData}/>
+                  </TabPane>
+                  <TabPane tab="他的活动" key="2">
+                    <ArticleLists articleLists = {this.state.activityData}/>
+                  </TabPane>
+                  <TabPane tab="他的收藏" key="3">
+                    <CollectionList collectionData = {this.state.collectData}/>
+                  </TabPane>
+                </Tabs>
             </div>
-
             <div style = {styles.silder}>
             </div>
           </div>
@@ -117,11 +183,17 @@ class HomePage extends Component {
 }
 
 
-function mapDispatchToProps(dispatch){
+function mapStateToProps(store){
   return{
-    updateDiscoverListData: (data) => {dispatch({type:'UPDATE_DISCOVER_LIST_DATA',data: data })},
-    startLoading: () => {dispatch({type:'START_LOADING'})},
-    stopLoading: () => {dispatch({type:'STOP_LOADING'})},
+    activityListData: store.activityListData.data ,
+    user: store.user ,
   }
 }
-module.exports = connect(mapDispatchToProps)(HomePage)
+function mapDispatchToProps(dispatch){
+  return{
+    updateActivityListData: (data) => {dispatch({type:'UPDATE_ACTIVITY_LIST_DATA',data: data })} ,
+    startLoading: () => {dispatch({type:'START_LOADING'})} ,
+    stopLoading: () => {dispatch({type:'STOP_LOADING'})} ,
+  }
+}
+module.exports = connect(mapStateToProps,mapDispatchToProps)(HomePage)

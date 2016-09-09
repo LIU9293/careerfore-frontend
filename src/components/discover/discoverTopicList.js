@@ -64,6 +64,7 @@ class DiscoverTopicList extends Component{
         });
         this.props.stopLoading();
       } else {
+        console.log(data)
         let discoverListData = data.PostsList.map((item,ii)=>{
           return {
             commentNum: item.CommentNum,
