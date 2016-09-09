@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { getDiscoverPost,addComment,AddCTR,Collect } from '../../vendor/connection/index';
-import { Row, Col ,Button,message} from 'antd';
+import { Row, Col ,Button,message,BackTop } from 'antd';
 import Cookies from 'js-cookie';
 import { connect } from 'react-redux';
 import style from './discoverDetail.css';
@@ -9,6 +9,19 @@ import DiscoverDetailFoot from './discoverDetailFoot';
 import SimpEditor from './PostArticle';
 import Zan from '../common/zan';
 import Collection from '../common/collect';
+
+const styles = {
+  upScroll:{
+    height: '40px',
+    width: '40px',
+    lineHeight: '40px',
+    borderRadius: 4,
+    backgroundColor: '#57c5f7',
+    color: '#fff',
+    textAlign: 'center',
+    fontSize: '20px',
+  }
+}
 
 class DiscoverDetail extends Component{
   constructor(props){
@@ -23,9 +36,6 @@ class DiscoverDetail extends Component{
     this.addReadNum = this.addReadNum.bind(this);
   }
 
-  componentWillMount(){
-    this.props.startLoading();
-  }
 
   componentDidMount(){
     this.loadData();
@@ -124,6 +134,9 @@ class DiscoverDetail extends Component{
         return(
           <div>
             {con}
+            <BackTop style={{ bottom: 100 }}>
+              <div className="upScroll">UP</div>
+            </BackTop>
           </div>
         )
       }

@@ -1,26 +1,35 @@
 import React , { Component } from 'react';
 import { getActivityComment } from '../../vendor/connection';
 import { Row, Col, Icon } from 'antd';
-import styles from './activity.css';
+import { connect } from 'react-redux';
+import styles from '../discover/discoverDetailFoot.css';
 import {millseconds2DateDiff} from '../../vendor/helper/timeTransfer';
 import Zan from '../common/zan';
 import Replys from '../common/Reply';
-import { connect } from 'react-redux';
+
+
+
+const css = {
+  divbox:{
+    cursor:'pointer',
+    textAlign:'center',
+  }
+}
+
 
 class ActivityComment extends Component{
-
   constructor(props){
     super(props);
     this.state = {
       data: null,
       loadContent:"点击加载更多评论",
     }
+
     this.commentNum = 0;
     this.canFresh = true;
     this.pageIndex = 1;
     this.loadComment = this.loadComment.bind(this);
   }
-
   componentDidMount(){
     this.loadComment();
   }
@@ -35,7 +44,6 @@ class ActivityComment extends Component{
           if(err){
             console.log(err);
           }else {
-            console.log(data);
             if(data.CommentList.length >= 0){
               this.setState({loadContent:"点击加载更多评论"});
               if(this.pageIndex === 1){
@@ -65,14 +73,17 @@ class ActivityComment extends Component{
     return(
       <div className="comment">
         <Replys commentNum = {this.commentNum} postid = {this.props.activityid} sourceType = {"activity"}/>
-        <div style={{textAlign:'center'}}>
+        <div style={css.divbox}>
           <span onClick={this.loadComment}>{this.state.loadContent}</span>
         </div>
       </div>
-
     )
   }
-}
+  }
+
+  function clickTest(){
+  console.log("clickTest")
+  }
 
 
 function mapStateToProps(store){

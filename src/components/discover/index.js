@@ -5,6 +5,7 @@ import SimpEditor from './PostArticle';
 import EssenceBox from './essenceBox';
 import Topics from '../common/topics';
 import style from './index.css';
+import { BackTop } from 'antd';
 
 const styles = {
   wapper:{
@@ -27,6 +28,16 @@ const styles = {
     width: '100%',
     backgroundColor: 'tranparent',
     overflow: 'hidden'
+  },
+  upScroll:{
+    height: '40px',
+    width: '40px',
+    lineHeight: '40px',
+    borderRadius: 4,
+    backgroundColor: '#57c5f7',
+    color: '#fff',
+    textAlign: 'center',
+    fontSize: '20px',
   }
 }
 
@@ -55,6 +66,9 @@ class Discover extends Component{
             </div>
           </div>
         </div>
+        <BackTop style={{ bottom: 100 }}>
+          <div className="upScroll">UP</div>
+        </BackTop>
       </div>
     )
   }

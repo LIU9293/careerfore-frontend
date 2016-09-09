@@ -77,6 +77,7 @@ export const getActivityComment = (eventid, userid, pageNum, callback) => {
   })
 }
 
+
 //添加活动评论
 export const addActivityComment = (UserID,ActivityID,FatherUserID,FirsUserID,Comment,callback)=>{
   let queryObj={
@@ -100,6 +101,7 @@ export const addActivityComment = (UserID,ActivityID,FatherUserID,FirsUserID,Com
 }
 
 //删除活动评论
+
 export const deleteActivityComment =(userid, commentid, callback) => {
   let queryObj = {
     UserID:userid,

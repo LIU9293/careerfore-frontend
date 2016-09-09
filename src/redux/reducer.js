@@ -216,7 +216,6 @@ function availableCities( state = {}, action){
 function search( state = {key: '', page: 0, haveMore: false }, action ){
   switch (action.type) {
     case 'UPDATE_SEARCH_KEY':
-      console.log(action)
       return {
         ...state,
         key: action.key
