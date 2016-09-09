@@ -19,6 +19,7 @@ import DiscoverTopicList from '../components/discover/discoverTopicList';
 import ActivityListByCity from '../components/activity/activityListByCity';
 import Notify from '../components/activity/notifyAliPay';
 import UserCenter from '../components/profile/homePage';
+import NewLinkArticle from '../components/discover/newLinkArticle';
 
 const Routes = ({ history }) =>
   <Router history={history}>
@@ -39,6 +40,7 @@ const Routes = ({ history }) =>
       <Route path="/a" component={Essence} />
       <Route path="/alipay/create_direct_pay_by_user/return_url" component = {Notify}/>
       <Route path="/user/:userid" component = {UserCenter} />
+      <Route path="/newlink" component = {NewLinkArticle} />
     </Route>
     <Route path="*" component={NotFound} />
   </Router>;

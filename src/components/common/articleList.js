@@ -80,7 +80,7 @@ class ArticleList extends Component{
                       </div>
 
     let articles = data.map((item, ii)=>{
-      if(item.cover !== ''){
+      if(item.cover !== '' && item.type == 1){
         return(
           <div style={styles.box} key={ii}>
             <div style={styles.header}>
@@ -118,7 +118,7 @@ class ArticleList extends Component{
             </div>
           </div>
         )
-      } else {
+      } else if(item.cover == '' && item.type == 1) {
         return(
           <div style={{...styles.box, height:'240px'}} key={ii}>
             <div style={styles.header}>
@@ -150,6 +150,32 @@ class ArticleList extends Component{
                   <span>       {item.likeNum}</span>
                 </div>
               </div>
+            </div>
+          </div>
+        )
+      } else {
+        let link = JSON.parse(item.content).link;
+        return(
+          <div style={{...styles.box, height:'180px'}} key={ii}>
+            <div style={styles.header}>
+              <div style={{...styles.headerBlock, float: 'left'}}>
+                <img style={styles.avatar} src={item.avatar || 'http://img.careerfore.com/bear.jpg'} />
+              </div>
+              <div style={{...styles.headerBlock, float: 'left', marginLeft: '12px'}}>
+                <div style={styles.author}>{item.nickName}</div>
+                <div style={styles.category}>
+                  <img src={`http://img.careerfore.com/${item.category}@2x.png`} style={{height:'20px',marginRight:'5px'}} />
+                  <span style={{position:'absolute'}}>{item.category}</span>
+                </div>
+              </div>
+              <div style={{...styles.headerBlock, float: 'right', fontSize:'18px', marginTop:'10px'}}>
+                {item.time}
+              </div>
+            </div>
+            <div style={styles.footer}>
+              <a target="_blank" href={link} style={{color:'#5d5d5d'}}>
+                <h1 style={styles.title}>{item.title}</h1>
+              </a>
             </div>
           </div>
         )

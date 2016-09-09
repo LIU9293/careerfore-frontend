@@ -48,17 +48,18 @@ class DiscoverList extends Component{
   }
 
   loadData(index){
-    getDiscoverList(this.props.user.userid || '', index, this.props.NumPerPage, (err,data) => {
+    getDiscoverList(this.props.user.userid || '', index, this.props.NumPerPage, 0, (err,data) => {
       if(err){
         console.log(err);
       } else {
+        console.log(data);
         let discoverListData = data.PostsList.map((item,ii)=>{
           return {
             avatar: item.HeadUrl,
             category: item.ZctName,
             description: item.Content.length > 72 ? item.Content.substring(0,72)+'...' : item.Content,
             nickName: item.NickName == '管理员' ? '职前小仙女' : item.NickName,
-            cover: item.PictureUrl,
+            cover: item.PictureUrl || '',
             title: item.Title,
             time: millseconds2DateDiff(item.CreatDate),
             viewNum: 0,
@@ -67,6 +68,8 @@ class DiscoverList extends Component{
             top: item.IsTop,
             recommand: item.IsRecommend,
             id: item.PostsID,
+            type: item.Type,
+            content: item.Content,
           }
         });
         if(data.PostsList.length < this.props.NumPerPage){

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { PostsChannel} from '../../vendor/connection';
+import { PostsChannel } from '../../vendor/connection';
 import styles from './showSelectOptions.css';
 import { connect } from 'react-redux';
 
@@ -16,7 +16,6 @@ class Options extends Component {
   }
 
   componentDidMount(){
-    console.log(this.props.userinfo.userid)
     PostsChannel(this.props.userinfo.userid,(err,data)=>{
       if(err){
         console.log(err);
@@ -74,7 +73,6 @@ function mapStateToProps(store){
 function mapDispatchToProps(dispatch){
   return {
     UPDATE_SELECTOPTION: (selectid,selectvalue,display)=>{dispatch({type:'UPDATE_SELECTOPTION',selectid:selectid,selectvalue:selectvalue,display:display})},
-
   }
 }
 
