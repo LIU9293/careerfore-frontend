@@ -8,6 +8,8 @@ import s from './homePage.css';
 import ActivityList from '../common/activityList';
 import CollectionList from '../common/UserCenter/collectionList';
 import ArticleLists from '../common/UserCenter/activityList'
+import Setting from './include/setting';
+import Message from './include/message';
 
 const styles = {
   father:{
@@ -146,7 +148,7 @@ class HomePage extends Component {
   }
 
   render(){
-    if(this.state.otherUserData){
+    if(this.state.otherUserData && this.props.params.userid !== this.props.user.userid){
       return(
         <div style = {styles.father}>
           <div style = {styles.showPhoto}>
@@ -175,7 +177,40 @@ class HomePage extends Component {
           </BackTop>
         </div>
       )
-    }else {
+    }else if(this.state.otherUserData && this.props.params.userid === this.props.user.userid){
+      return(
+        <div style = {styles.father}>
+          <div style = {styles.showPhoto}>
+            {/*<img src = "http://imageservice.pine-soft.com/BEEB0A3FCF0747FD938D42FDAC3D48BB.jpg" />*/}
+          </div>
+          <div style ={styles.container}>
+            <div style = {styles.Main}>
+              <UserInfo userinfo = {this.state.otherUserData}/>
+                <Tabs defaultActiveKey="1" onChange={this.tabsChanges.bind(this)} style = {{marginTop:'15px',boxShadow:'rgba(0, 0, 0, 0.2) 0px 1px 5px 0px',background: '#fff'}}>
+                  <TabPane tab="我的文章" key="1">
+                    <ArticleList articleList = {this.state.articleData}/>
+                  </TabPane>
+                  <TabPane tab="我的活动" key="2">
+                    <ArticleLists articleLists = {this.state.activityData}/>
+                  </TabPane>
+                  <TabPane tab="我的收藏" key="3">
+                    <CollectionList collectionData = {this.state.collectData}/>
+                  </TabPane>
+                  <TabPane tab="设置" key="4">
+                    <Setting />
+                  </TabPane>
+                  <TabPane tab="消息" key="5">
+                    <Message />
+                  </TabPane>
+                </Tabs>
+            </div>
+            <div style = {styles.silder}>
+            </div>
+          </div>
+        </div>
+      )
+    }
+    else {
       return(<div />)
     }
 
