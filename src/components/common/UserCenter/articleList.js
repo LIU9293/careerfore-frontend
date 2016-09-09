@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Single from './articleSingle';
 import { connect } from 'react-redux';
+import { BackTop } from 'antd';
+
 
 
 class ArticleList extends Component {

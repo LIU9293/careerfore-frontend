@@ -65,6 +65,7 @@ class Replys extends Component {
   }
 
   getClickComment(fatherid,objid,username,fatherName,uid){
+    console.log(fatherid,objid,username,fatherName,uid);
     if(this.props.user.userid === undefined || this.props.user.userid === null){
       browserHistory.push(`/login`);
     }else {
@@ -73,7 +74,8 @@ class Replys extends Component {
       }else {
         let reply = "回复:" + username;
         this.props.UPDATE_QUEPARAM(reply,fatherid,objid,fatherName);
-        window.scrollBy(0,this.refs.commentarea.offsetTop);
+        window.scrollBy(0,this.refs.commentarea.clientHeight);
+        console.log(this.refs.commentarea.clientHeight);
       }
     }
   }
@@ -85,18 +87,8 @@ class Replys extends Component {
       this.props.DELETE_SECOND_COMMENT(this.props.postid,commentid);
     }
     if(this.props.sourceType === "activity"){
-      console.log("activity")
       if(commentid.split('.').length === 1){
         deleteActivityComment(this.props.user.userid,commentid,(err,data)=>{
-          if(err){console.log(err)}
-          else {
-            console.log(data)
-          }
-        })
-      }
-    }else {
-      if(commentid.split('.').length === 1){
-        deleteComment(commentid,this.props.user.userid,(err,data)=>{
           if(err){console.log(err)}
           else {
             console.log(data)
@@ -215,7 +207,6 @@ class Replys extends Component {
             }
           })
         }
-
       }
     }
   }

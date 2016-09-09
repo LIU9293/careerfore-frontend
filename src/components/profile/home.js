@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Cookies from 'js-cookie';
-import {  Button, Menu, Icon, Row, Col } from 'antd';
+import {  Button, Menu, Icon, Row, Col , BackTop } from 'antd';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { getUserInfo, activityMessage, unreadMessage, unreadMessageContent } from '../../vendor/connection';
@@ -10,6 +10,19 @@ import Article from './include/article';
 import Activity from './include/activity';
 import Setting from './include/setting';
 import Collect from './include/collect';
+
+const styles = {
+  upScroll:{
+    height: '40px',
+    width: '40px',
+    lineHeight: '40px',
+    borderRadius: 4,
+    backgroundColor: '#57c5f7',
+    color: '#fff',
+    textAlign: 'center',
+    fontSize: '20px',
+  }
+}
 
 class Home extends Component{
 
@@ -74,6 +87,9 @@ class Home extends Component{
             {this.state.current}
           </Col>
         </Row>
+        <BackTop style={{ bottom: 100 }}>
+          <div className="upScroll">UP</div>
+        </BackTop>
       </div>
     )
   }

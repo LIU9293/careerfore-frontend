@@ -32,7 +32,16 @@ const styles = {
     marginLeft:'20px',
     display: 'inline-block',
     position: 'absolute',
-  }
+  } ,upScroll:{
+      height: '40px',
+      width: '40px',
+      lineHeight: '40px',
+      borderRadius: 4,
+      backgroundColor: '#57c5f7',
+      color: '#fff',
+      textAlign: 'center',
+      fontSize: '20px',
+    }
 }
 
 const TabPane = Tabs.TabPane;
@@ -161,6 +170,9 @@ class HomePage extends Component {
             <div style = {styles.silder}>
             </div>
           </div>
+          <BackTop style={{ bottom: 100 }}>
+            <div className="upScroll">UP</div>
+          </BackTop>
         </div>
       )
     }else {

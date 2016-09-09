@@ -6,7 +6,7 @@ import { browserHistory } from 'react-router';
 import styles from './activity.css';
 import ActivityComment from './activityComment';
 import ActivityMapView from './mapview';
-import ActivityCarousels from './ActivityCarousel';
+
 
 class ActivityPost extends Component{
 
@@ -20,8 +20,8 @@ class ActivityPost extends Component{
     this.joinActivity = this.joinActivity.bind(this);
   }
 
-
   componentDidMount(){
+
     getPlaygroundPost(this.props.params.activityID, '',(err,data)=>{
       if(err){
         console.log(err)
@@ -40,7 +40,7 @@ class ActivityPost extends Component{
         let LikeCount=data.Activity.ActivityLikeCount;
         let IsAudit = data.Activity.IsAudit;
 
-        
+        document.head.innerHTML+="<script type=\"text/javascript\">window._bd_share_config = {common : {bdText : 'dsadadhk',bdDesc : 'dksfksfjsnkvnskjvnsknvdks',bdUrl : 'http://4.bp.blogspot.com/-gKMIOgeaEBY/UWHsOA382oI/AAAAAAAABpI/5GdyRTAeKII/s1600/share_core_square.jpg',bdPic : 'http://4.bp.blogspot.com/-gKMIOgeaEBY/UWHsOA382oI/AAAAAAAABpI/5GdyRTAeKII/s1600/share_core_square.jpg'}}</script>"
         this.setState({
           activityData:{
             image: image,
@@ -61,7 +61,9 @@ class ActivityPost extends Component{
       };
     })
   }
-
+  bodyclick(){
+    this.props.UPDATE_QUEPARAM("","","","");
+  }
   joinActivity(){
     if(!this.props.userinfo.login){
       browserHistory.push('/login');
@@ -122,7 +124,7 @@ class ActivityPost extends Component{
               </div>
               <div className="detail">
                 <Col xs={16} sm={16} md={16} lg={16} >
-                <div className="Pagecol">
+                <div className="Pagecol" onClick={this.bodyclick.bind(this)}>
                   <h1>{this.state.activityData.title || ''}</h1>
                   <p><Icon type="clock-circle-o" /><span>{this.state.activityData.StartDate || ''} - {this.state.activityData.EndDate || ''}</span></p>
                   <p><Icon type="team" /><span>{this.state.activityData.PeopleNum || '0'}人(限{this.state.activityData.CheckPeopleNum || ''}人报名)</span></p>
@@ -133,27 +135,24 @@ class ActivityPost extends Component{
                   <Tooltip title="如需申请退款请于活动开始前24小时外申请。申请方式：登陆careerfore官网—发送电子邮件给我们审核并给予退款。【careerfore】将统一收取原票价的10%作为退票手续费，请知悉。">
                     <span style={{paddingLeft:'50px'}}><Icon type="exclamation-circle-o" />&nbsp;&nbsp;缴费说明</span>
                   </Tooltip>
-                  <Button type="ghost" size="large"><Icon type="share-alt" />我要分享</Button>
-                  <Button type="ghost" size="large"><Icon type="heart-o" />喜欢{this.state.activityData.LikeCount}</Button>
                   <Button type="primary" size="large"
                     disabled={this.props.joinedActivity[this.props.params.activityID] || this.props.closedActivity[this.props.params.activityID] || false } onClick={this.joinActivity} >
                     {this.props.joinedActivity[this.props.params.activityID] || this.props.closedActivity[this.props.params.activityID] || '我要报名'}
                   </Button>
+                  <div className="bdsharebuttonbox" data-tag="share_1" style={{float:'right'}}>
+                      <a className="bds_weixin" data-cmd="weixin"></a>
+                      <a className="bds_tsina" data-cmd="tsina"></a>
+                      <a className="bds_tqq" data-cmd="tqq"></a>
+                      <a className="bds_qzone" data-cmd="qzone"></a>
+                      <a className="bds_linkedin" data-cmd="linkedin"></a>
+                      <a className="bds_renren" data-cmd="renren"></a>
+                      <a className="bds_tieba" data-cmd="tieba"></a>
                   </div>
-                  <div id="redessociales">
-                         <div className="bdsharebuttonbox" data-tag="share_1">
-                             <a className="smedia bds_weixin" data-cmd="weixin"></a>
-                             <a className="smedia bds_tsina" data-cmd="tsina"></a>
-                             <a className="smedia bds_tqq" data-cmd="tqq"></a>
-                             <a className="smedia bds_qzone" data-cmd="qzone"></a>
-                             <a className="smedia bds_linkedin" data-cmd="linkedin"></a>
-                             <a className="smedia bds_renren" data-cmd="renren"></a>
-                             <a className="smedia bds_tieba" data-cmd="tieba"></a>
-                         </div>
-                     </div>
-
+                  <span style={{float:'right'}}><Icon type="share-alt" />分享至</span>
+                  {/*<Button type="ghost" size="large"><Icon type="heart-o" />喜欢&nbsp;({this.state.activityData.LikeCount})</Button>*/}
                   </div>
-                  <div className="contentDt" style={{paddingRight:'10px'}}>
+                  </div>
+                  <div className="contentDt" style={{paddingRight:'10px'}} onClick={this.bodyclick.bind(this)}>
                       <Collapse defaultActiveKey={['1']} onChange={callback}>
                           <Panel header="活动详情" key="1">
                             <div className="FontLg" dangerouslySetInnerHTML={{__html: this.state.activityData.content || ''}}/>
@@ -170,9 +169,9 @@ class ActivityPost extends Component{
                          沙龙讲座与交流，参访顶尖券商企业，实地考察体验优质高等职业生涯。
                       </p>
                   </div>
-                  <div className="carousle">
+                  {/*<div className="carousle">
                     <ActivityCarousels arerid={this.props.areaID} />
-                  </div>
+                  </div>*/}
                   <div className="Map">
                   <h2>活动地点</h2><hr/>
                   <p>{this.state.activityData.Address}</p>
@@ -214,7 +213,8 @@ function mapStateToProps(store){
 }
 function mapDispatchToProps(dispatch){
   return {
-    baoming: (id) => {dispatch({type:'JOIN_ACTIVITY', id: id})}
+    baoming: (id) => {dispatch({type:'JOIN_ACTIVITY', id: id})},
+    UPDATE_QUEPARAM:(userName,objFatherid,objid,fatherName)=>{dispatch({type:'UPDATE_QUEPARAM',userName:userName,objFatherid:objFatherid,objid:objid,fatherName:fatherName})},
   }
 }
 

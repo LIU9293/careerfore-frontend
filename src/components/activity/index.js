@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
-import { Row, Col ,Icon} from 'antd';
+import { Row, Col ,Icon ,BackTop } from 'antd';
 import ActivityCarousels from './ActivityCarousel';
 import List from './list';
 import AvailableCitiesBox from './availableCitiesBox';
@@ -26,6 +26,16 @@ const styles = {
   CarouselWapper: {
     width: '100%',
     backgroundColor: '#3f3f3f',
+  },
+  upScroll:{
+    height: '40px',
+    width: '40px',
+    lineHeight: '40px',
+    borderRadius: 4,
+    backgroundColor: '#57c5f7',
+    color: '#fff',
+    textAlign: 'center',
+    fontSize: '20px',
   }
 }
 class Activity extends Component{
@@ -43,6 +53,9 @@ class Activity extends Component{
             <AvailableCitiesBox />
           </div>
         </div>
+        <BackTop style={{ bottom: 100 }}>
+          <div className="upScroll">UP</div>
+        </BackTop>
       </div>
     )
   }
