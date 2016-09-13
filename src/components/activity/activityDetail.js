@@ -127,14 +127,10 @@ class ActivityPost extends Component{
                 <div className="Pagecol" onClick={this.bodyclick.bind(this)}>
                   <h1>{this.state.activityData.title || ''}</h1>
                   <p><Icon type="clock-circle-o" /><span>{this.state.activityData.StartDate || ''} - {this.state.activityData.EndDate || ''}</span></p>
-                  <p><Icon type="team" /><span>{this.state.activityData.PeopleNum || '0'}人(限{this.state.activityData.CheckPeopleNum || ''}人报名)</span></p>
+                  <p><Icon type="team" /><span>{this.state.activityData.PeopleNum || '0'}人</span></p>
                   <p><Icon type="environment-o" /><span>{this.state.activityData.Address}</span></p>
                   <p><Icon type="pay-circle-o" /><span>{Fee}</span></p>
-                  <p><Icon type="tags-o" /><span style={{fontSize:'15px'}}>Careerfore活动俱乐部承办</span><Icon style={{marginLeft:'10px'}} type="phone" /><span style={{fontSize:'15px'}}>025-6667974 (详情咨询)</span></p>
                   <div className="button">
-                  <Tooltip title="如需申请退款请于活动开始前24小时外申请。申请方式：登陆careerfore官网—发送电子邮件给我们审核并给予退款。【careerfore】将统一收取原票价的10%作为退票手续费，请知悉。">
-                    <span style={{paddingLeft:'50px'}}><Icon type="exclamation-circle-o" />&nbsp;&nbsp;缴费说明</span>
-                  </Tooltip>
                   <Button type="primary" size="large"
                     disabled={this.props.joinedActivity[this.props.params.activityID] || this.props.closedActivity[this.props.params.activityID] || false } onClick={this.joinActivity} >
                     {this.props.joinedActivity[this.props.params.activityID] || this.props.closedActivity[this.props.params.activityID] || '我要报名'}
@@ -148,7 +144,6 @@ class ActivityPost extends Component{
                       <a className="bds_renren" data-cmd="renren"></a>
                       <a className="bds_tieba" data-cmd="tieba"></a>
                   </div>
-                  <span style={{float:'right'}}><Icon type="share-alt" />分享至</span>
                   {/*<Button type="ghost" size="large"><Icon type="heart-o" />喜欢&nbsp;({this.state.activityData.LikeCount})</Button>*/}
                   </div>
                   </div>
