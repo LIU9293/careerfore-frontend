@@ -2,6 +2,7 @@ import React , { Component } from 'react';
 import { connect } from 'react-redux';
 import { Icon } from 'antd';
 import { browserHistory } from 'react-router';
+import {base64decode} from '../../vendor/connection/basis'
 
 const styles = {
   box: {

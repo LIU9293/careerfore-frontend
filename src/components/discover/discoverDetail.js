@@ -129,7 +129,6 @@ class DiscoverDetail extends Component{
                 </div>
                 <DiscoverDetailFoot ref = "discoverDetailFoot" postid={this.props.params.discoverID} callback={this.getClickComment}/>
             </div>
-
           </div>
         )
         return(

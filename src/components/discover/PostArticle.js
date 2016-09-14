@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import Simditor from 'simditor-custom-img';
 import style from './PostArticle.css'
 import $ from 'jquery';
-import { uploadImageToQiniu } from '../../vendor/connection';
+import { uploadImageToQiniu,postImage } from '../../vendor/connection';
 import { connect } from 'react-redux';
 import Cookies from 'js-cookie';
 
@@ -23,12 +23,11 @@ class SimpEditor extends Component {
       },
       uploadImage: (base64,callback) => {
         this.props.startLoading();
-        uploadImageToQiniu(base64.split(',')[1],(err,data)=>{
-            this.props.stopLoading();
-          if(err){
-            callback(err);
-          } else {
-            callback(null,data);
+        postImage(base64,(err,data)=>{
+          this.props.stopLoading();
+          if(err){callback(err)}
+          else {
+            callback(null,data.ImgName + '@1000w_1e_1c_50q');
             setTimeout(()=>{
               let commentContent = this.editor.getValue();
               Cookies.set('commentContent', commentContent, { expires: 7 });

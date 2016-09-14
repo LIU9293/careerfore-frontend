@@ -56,6 +56,12 @@
   background-size: cover;
   background-image: url(http://imageservice.pine-soft.com/FC48B4E80ABD407BB7BE5560210836C4.jpg);
 }
+.uploadcoverDivs{
+  height: 300px;
+  background-size: cover;
+  background-image: url(http://imageservice.pine-soft.com/6E3422FA5D674D57B77DBAA962402599.jpg);
+}
+
 .showcoverDiv{
   height: 300px;
   background-size: contain;
@@ -73,7 +79,7 @@
 
 .fixstyle{
   position: absolute;
-  top: 120px;
+  top: 150px;
   z-index: 99;
   margin-left: 20px;
 }

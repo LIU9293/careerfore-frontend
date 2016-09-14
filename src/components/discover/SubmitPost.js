@@ -66,20 +66,6 @@ handleFile(e){
       }
     })
   };
-
-
-        // uploadImageToQiniu(img.currentTarget.result.split(',')[1],(err,data)=>{
-        //   console.log(err,data)
-        //   if(err){
-        //     console.log(err);
-        //   }else {
-        //     console.log(data);
-        //     document.getElementById('previewDiv').style.display = "block";
-        //     document.getElementById('close').style.display = "block";
-        //     document.getElementById('previewimg').src = data;
-        //   }
-        // })
-
   }
 
   showToggle(){
@@ -146,6 +132,7 @@ handleFile(e){
     return(
       <div className = "SubmitPost">
       <div className="submittitle" style = {{borderBottom:'1px solid lightgray',paddingBottom:'5px',width:'100%',overflow:'hidden'}}>
+        <div style = {{color:'#333',fontSize:'20px',paddingBottom: '10px'}}>发布新文章</div>
         <div style = {{float:'left',width:'100%'}}>
           <Icon type="bars" style = {{fontSize:'15px'}}/>
           <span style = {styles.spanstyle} onClick = {this.showToggle.bind(this)}>{this.props.selects.selectvalue}</span>
