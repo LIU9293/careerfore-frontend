@@ -9,6 +9,7 @@ import DiscoverDetailFoot from './discoverDetailFoot';
 import SimpEditor from './PostArticle';
 import Zan from '../common/zan';
 import Collection from '../common/collect';
+import { betterText } from '../../vendor/helper/betterText';
 
 const styles = {
   upScroll:{
@@ -113,7 +114,7 @@ class DiscoverDetail extends Component{
                           <span>{name}&nbsp;&nbsp;·&nbsp;&nbsp; {info.ChannelName}&nbsp;&nbsp;·&nbsp;&nbsp;{time}</span>
                       </div>
                   </div>
-                  <div onClick = {this.chooseFid.bind(this,info.PostID)} id="content" className="pageContent" dangerouslySetInnerHTML = {{__html : info.Content || ''}}>
+                  <div onClick = {this.chooseFid.bind(this,info.PostID)} id="content" className="pageContent" dangerouslySetInnerHTML = {{__html : betterText(info.Content) || ''}}>
                   </div>
                 </div>
                 <div id="like" className="like" style = {{maxWidth:'750px',margin:'0 auto',paddingBottom:'30px',marginTop: '30px'}}>
