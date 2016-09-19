@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Menu, Icon, Badge, Button } from 'antd';
+import { Menu, Icon, Badge, Button,Dropdown, } from 'antd';
 import { browserHistory } from 'react-router';
 import { secretaryMessage } from '../../vendor/connection';
 import Search from './searchInput';
+import style from './showSelectOptions.css';
 
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
@@ -30,8 +31,14 @@ const styles = {
   newsBoxNoMessage: {
     lineHeight: '260px',
     textAlign: 'center',
-  }
+  },
+  logo:{
+    paddingTop: '20px',
+    paddingBottom: '10px',
+    position:'absolute',
+  },
 };
+
 
 class Navbar extends Component{
 
@@ -131,8 +138,11 @@ class Navbar extends Component{
       return(
         <div className="navbar-container">
           <Menu mode="horizontal" className="navbar" onClick={this.handleClick.bind(this)}>
-            <Menu.Item key="/" style={styles.menuItem}>
-              主页
+            <div style={styles.logo}>
+            <a href="http://www.careerfore.com"><img  src="http://img.careerfore.com/logo%E5%89%AF%E6%9C%AC.png" style={{width:'160px',}} /></a>
+            </div>
+            <Menu.Item key="/" style={styles.menuItem} className="menuFound">
+              发现
             </Menu.Item>
             <Menu.Item key="/activity" style={styles.menuItem}>
               活动
@@ -144,6 +154,10 @@ class Navbar extends Component{
                 </a>
               </div>
             </Menu.Item>
+            {/*<SubMenu title={<span>发帖</span>} style={{...styles.menuItem, float:'right',}}>
+                <Menu.Item key="/new">发布新文章</Menu.Item>
+                <Menu.Item key="/newlink">发布新外链</Menu.Item>
+            </SubMenu>*/}
             <Menu.Item key="/message" style={{...styles.menuItem, float:'right',borderBottom: 'none'}} >
               <div onClick={(e) => {this.setState({showMessage: !this.state.showMessage})}} >
               {
@@ -183,8 +197,11 @@ class Navbar extends Component{
       return(
         <div className="navbar-container">
           <Menu mode="horizontal" className="navbar" onClick={this.handleClick.bind(this)}>
-            <Menu.Item key="/" style={styles.menuItem}>
-              主页
+            <div style={styles.logo}>
+            <a href="http://www.careerfore.com"><img  src="http://img.careerfore.com/logo%E5%89%AF%E6%9C%AC.png" style={{width:'160px',}} /></a>
+            </div>
+            <Menu.Item key="/" style={styles.menuItem} className="menuFound">
+              发现
             </Menu.Item>
             <Menu.Item key="/activity" style={styles.menuItem}>
               活动

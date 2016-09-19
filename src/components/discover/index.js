@@ -66,7 +66,7 @@ class Discover extends Component{
             </div>
           </div>
         </div>
-        <BackTop style={{ bottom: 100 }}>
+        <BackTop style={{ bottom: 230 }}>
           <div className="upScroll">UP</div>
         </BackTop>
       </div>

@@ -31,6 +31,7 @@ const styles = {
     paddingTop: '20px',
     fontSize: '14px',
     position: 'absolute',
+    overflow: 'scroll',
   },
   infoArea: {
     marginTop: '15px',

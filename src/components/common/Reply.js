@@ -74,7 +74,6 @@ class Replys extends Component {
         let reply = "回复:" + username;
         this.props.UPDATE_QUEPARAM(reply,fatherid,objid,fatherName);
         window.scrollBy(0,this.refs.commentarea.clientHeight);
-        console.log(this.refs.commentarea.clientHeight);
       }
     }
   }
@@ -313,7 +312,7 @@ class Replys extends Component {
     return(
       <div className = "detailFoot">
           <div className="allComment">
-            <span>{this.props.commentNum}条评论</span>
+            <span>全部评论 ( {this.props.commentNum} )</span>
             <span id = "addNewComment" ref = "addNewComment" onClick = {this.addNewComment.bind(this)}>添加新评论</span>
             <hr />
           </div>

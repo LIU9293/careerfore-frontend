@@ -74,7 +74,7 @@ class Login extends Component{
       <div className="wapper">
         <div className="form-container">
           <Form onSubmit={this.handleSubmit}>
-            <FormItem label="账户">
+            <FormItem label="用户名">
               <Input placeholder="请输入账户名"
                 onChange={(e)=>{this.setState({username: e.target.value})}}
               />
@@ -90,7 +90,7 @@ class Login extends Component{
               </Checkbox>
             </FormItem>
             <h5 style={{color:'#e33', marginBottom: '20px'}}>{this.state.error || ''}</h5>
-            <Button type="primary" htmlType="submit">登录</Button>
+            <Button type="primary" htmlType="submit" style={{width: '100%'}}>登录</Button>
           </Form>
           <h5 style={{marginTop: '20px'}}>还没有帐号？去<a onClick={e => browserHistory.push('/register')}>注册</a></h5>
         </div>
