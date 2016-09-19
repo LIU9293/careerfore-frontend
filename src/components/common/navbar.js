@@ -16,7 +16,7 @@ const styles = {
     height: '280px',
     width: '260px',
     position: 'absolute',
-    overflow: 'scroll',
+    overflow: 'auto',
     zIndex: '99999',
     backgroundColor: '#fff',
     border: '1px solid #ddd',
@@ -137,7 +137,7 @@ class Navbar extends Component{
             <Menu.Item key="/activity" style={styles.menuItem}>
               活动
             </Menu.Item>
-            <Menu.Item key={"/user/"+this.props.user.userid}  style={{...styles.menuItem, float:'right',}}>
+            <Menu.Item key={"/user/"+this.props.user.userid}  style={{...styles.menuItem, float:'right'}}>
               <div className="menuProfileArea">
                 <a>
                   <img src={this.props.user.userdata.avatar} className="menuProfileAvatar" />
@@ -162,6 +162,7 @@ class Navbar extends Component{
             <Menu.Item key="/newlink" style={{...styles.menuItem, float:'right'}}>
               发布新链接
             </Menu.Item>
+
           </Menu>
           <div style={{maxWidth: '1000px', position: 'relative', margin: 'auto'}}>
             <div style={{...styles.newsBox, display: this.state.showMessage ? 'block' : 'none' }} id="newsBox" >

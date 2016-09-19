@@ -21,7 +21,7 @@ class Replys extends Component {
     this.MinCount = 2;
     this.getClickComment = this.getClickComment.bind(this);
     this.addComments = this.addComments.bind(this);
-    this.deleteComment = this.deleteComment.bind(this);
+    this.deleteComments = this.deleteComments.bind(this);
     this.getParamByObjid = this.getParamByObjid.bind(this);
   }
 
@@ -65,7 +65,6 @@ class Replys extends Component {
   }
 
   getClickComment(fatherid,objid,username,fatherName,uid){
-    console.log(fatherid,objid,username,fatherName,uid);
     if(this.props.user.userid === undefined || this.props.user.userid === null){
       browserHistory.push(`/login`);
     }else {
@@ -80,7 +79,7 @@ class Replys extends Component {
     }
   }
 
-  deleteComment(commentid,level){
+  deleteComments(commentid,level){
     if(level === 1){
       this.props.DELETE_TOP_COMMENT(this.props.postid,commentid);
     }else {
@@ -95,6 +94,13 @@ class Replys extends Component {
           }
         })
       }
+    }else {
+      deleteComment(commentid,this.props.user.userid,(err,data)=>{
+        if(err){console.log(err)}
+        else {
+          console.log(data)
+        }
+      })
     }
   }
 
@@ -266,7 +272,7 @@ class Replys extends Component {
     if(this.props.commentLists[this.props.postid]){
         let commengList = this.props.commentLists[this.props.postid];
         commengList.map((item,index)=>{
-          let first = <FirstReply key = {index} item = {item} callback = {this.getClickComment} deletecallback = {this.deleteComment}/>;
+          let first = <FirstReply key = {index} item = {item} callback = {this.getClickComment} deletecallback = {this.deleteComments}/>;
           comment.push({...first,key:Math.random()});
           //load second comment
           var secondCommentCount = item.ChildList.length;
@@ -274,13 +280,13 @@ class Replys extends Component {
               let param = this.getParamByObjid(item.ID);
               if(param === undefined || param === null || param.showmore === true){//需要显示加载更多
                   for (var i = 0; i < this.MinCount; i++) {
-                    let second = <SecondReply item2 = {item.ChildList[i]} firstObjid = {item.ID} callback = {this.getClickComment} deletecallback = {this.deleteComment}/>;
+                    let second = <SecondReply item2 = {item.ChildList[i]} firstObjid = {item.ID} callback = {this.getClickComment} deletecallback = {this.deleteComments}/>;
                     comment.push({...second,key:Math.random()});
                   }
               }
               else {
                 item.ChildList.map((item2,index2)=>{
-                  let second = <SecondReply key = {index2} item2 = {item2} firstObjid = {item.ID} callback = {this.getClickComment} deletecallback = {this.deleteComment}/>;
+                  let second = <SecondReply key = {index2} item2 = {item2} firstObjid = {item.ID} callback = {this.getClickComment} deletecallback = {this.deleteComments}/>;
                   comment.push({...second,key:Math.random()});
                 })
               }
@@ -294,7 +300,7 @@ class Replys extends Component {
           }
           else {
             item.ChildList.map((item2,index2)=>{
-            let second = <SecondReply key = {index2} item2 = {item2} firstObjid = {item.ID} callback = {this.getClickComment} deletecallback = {this.deleteComment}/>;
+            let second = <SecondReply key = {index2} item2 = {item2} firstObjid = {item.ID} callback = {this.getClickComment} deletecallback = {this.deleteComments}/>;
             comment.push({...second,key:Math.random()});
             })
           }
