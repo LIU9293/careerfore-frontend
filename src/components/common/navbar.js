@@ -139,7 +139,7 @@ class Navbar extends Component{
         <div className="navbar-container">
           <Menu mode="horizontal" className="navbar" onClick={this.handleClick.bind(this)}>
             <div style={styles.logo}>
-            <a href="http://www.careerfore.com"><img  src="http://img.careerfore.com/logo%E5%89%AF%E6%9C%AC.png" style={{width:'160px',}} /></a>
+            <a href="/"><img  src="http://img.careerfore.com/logo%E5%89%AF%E6%9C%AC.png" style={{width:'160px',}} /></a>
             </div>
             <Menu.Item key="/" style={styles.menuItem} className="menuFound">
               发现
@@ -198,7 +198,7 @@ class Navbar extends Component{
         <div className="navbar-container">
           <Menu mode="horizontal" className="navbar" onClick={this.handleClick.bind(this)}>
             <div style={styles.logo}>
-            <a href="http://www.careerfore.com"><img  src="http://img.careerfore.com/logo%E5%89%AF%E6%9C%AC.png" style={{width:'160px',}} /></a>
+            <a href="/"><img  src="http://img.careerfore.com/logo%E5%89%AF%E6%9C%AC.png" style={{width:'160px',}} /></a>
             </div>
             <Menu.Item key="/" style={styles.menuItem} className="menuFound">
               发现
