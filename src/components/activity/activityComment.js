@@ -52,7 +52,6 @@ class ActivityComment extends Component{
                   this.props.commentOperate(this.props.activityid,this.state.data);
                 });
               } else {
-                this.commentNum += data.CommentNum;
                 this.setState({
                   data:this.state.data.concat(data.CommentList)
                 },()=>{

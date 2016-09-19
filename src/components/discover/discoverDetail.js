@@ -134,7 +134,7 @@ class DiscoverDetail extends Component{
         return(
           <div>
             {con}
-            <BackTop style={{ bottom: 100 }}>
+            <BackTop style={{ bottom: 230 }}>
               <div className="upScroll">UP</div>
             </BackTop>
           </div>

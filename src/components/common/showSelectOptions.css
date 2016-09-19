@@ -17,3 +17,9 @@
 #fatherDiv > .singleDiv:hover{
   color: #2db7f5;
 }
+.navbar{
+  position:relative;
+}
+.menuFound{
+  margin-left: 200px;
+}

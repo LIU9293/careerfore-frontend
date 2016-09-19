@@ -45,7 +45,6 @@ class DiscoverDetailFoot extends Component {
                   this.props.commentOperate(this.props.postid,this.state.data);
                 });
               } else {
-                this.commentNum += data.CommentNum;
                 this.setState({
                   data:this.state.data.concat(data.CommentList)
                 },()=>{
@@ -66,7 +65,7 @@ class DiscoverDetailFoot extends Component {
     return(
       <div>
         <Replys commentNum = {this.commentNum} postid = {this.props.postid}/>
-        <div style={{textAlign:'center'}}>
+        <div style={{textAlign:'center',cursor:'pointer'}}>
           <span onClick={this.loadComment}>{this.state.loadContent}</span>
         </div>
       </div>

@@ -7,6 +7,7 @@ import { millseconds2DateDiff } from '../../vendor/helper/timeTransfer';
 const styles = {
   btn:{
     width: '100%',
+    display:'inline-block',
     boxShadow: 'rgb(188, 188, 188) 0px 1px 6px',
     padding: '5px',
     backgroundColor: '#fff',
@@ -98,9 +99,9 @@ class DiscoverList extends Component{
       <div>
         <ArticleList />
         <div style={{textAlign:'center'}}>
-        <button style={styles.btn} type="ghost" onClick={this.loadMore} disabled={!this.state.haveMore} >
+        <span style={styles.btn} type="ghost" onClick={this.loadMore} disabled={!this.state.haveMore} >
           {this.state.haveMore ? '点击加载更多...' : '没有更多了...'}
-        </button>
+        </span>
         </div>
       </div>
     )

@@ -172,7 +172,7 @@ class HomePage extends Component {
             <div style = {styles.silder}>
             </div>
           </div>
-          <BackTop style={{ bottom: 100 }}>
+          <BackTop style={{ bottom: 230 }}>
             <div className="upScroll">UP</div>
           </BackTop>
         </div>
@@ -207,6 +207,9 @@ class HomePage extends Component {
             <div style = {styles.silder}>
             </div>
           </div>
+          <BackTop style={{ bottom: 230 }}>
+            <div className="upScroll">UP</div>
+          </BackTop>
         </div>
       )
     }

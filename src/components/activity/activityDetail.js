@@ -7,6 +7,17 @@ import styles from './activity.css';
 import ActivityComment from './activityComment';
 import ActivityMapView from './mapview';
 
+const Stycom ={
+  comments:{
+    margin: '20px 15px 0px 0px',
+    padding: '15px',
+    position: 'relative',
+    boxShadow: '0 1px 7px #bcbcbc',
+    borderRadius: '4px',
+    backgroundColor: '#ffffff',
+    padding: '8px',
+  }
+}
 
 class ActivityPost extends Component{
 
@@ -157,10 +168,11 @@ class ActivityPost extends Component{
                           <Panel header="活动详情" key="1">
                             <div className="FontLg" dangerouslySetInnerHTML={{__html: this.state.activityData.content || ''}}/>
                           </Panel>
-                        </Collapse>
-                        <ActivityComment activityid={this.props.params.activityID} />
+                      </Collapse>
                   </div>
-
+                  <div style={Stycom.comments}>
+                  <ActivityComment  activityid={this.props.params.activityID} />
+                  </div>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8}>
                   <div className="contentDt2">
@@ -189,7 +201,7 @@ class ActivityPost extends Component{
           </Row>
 
 
-          <BackTop style={{ bottom: 100 }}>
+          <BackTop style={{ bottom: 230 }}>
             <div className="upScroll">UP</div>
           </BackTop>
         </div>

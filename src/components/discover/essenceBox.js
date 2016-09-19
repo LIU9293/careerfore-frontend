@@ -30,7 +30,7 @@ const styles = {
     fontSize: '24px',
     color: '#666',
     height: '100px',
-  }
+  },
 }
 
 class EssenceBox extends Component{
