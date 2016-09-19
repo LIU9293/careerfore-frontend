@@ -40,8 +40,8 @@ class Login extends Component{
           } else {
             Cookies.set('UserID', UserID);
           }
-          console.log('已将用户ID存入cookie, cookie是：');
-          console.log(Cookies.get('UserID'));
+          // console.log('已将用户ID存入cookie, cookie是：');
+          // console.log(Cookies.get('UserID'));
           getUserInfo(UserID, (err,data) => {
             if(err){
               console.log(err);
@@ -95,7 +95,7 @@ class Login extends Component{
           <h5 style={{marginTop: '20px'}}>还没有帐号？去<a onClick={e => browserHistory.push('/register')}>注册</a></h5>
         </div>
       </div>
-    );
+    )
   }
 }
 

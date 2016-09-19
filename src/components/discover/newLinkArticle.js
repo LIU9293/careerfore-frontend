@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { Form, Input, Button ,Icon,message} from 'antd';
 import Cookies from 'js-cookie';
 import { postDiscoverArticle, uploadImageToQiniu,postImage} from '../../vendor/connection';
-import {base64encode} from '../../vendor/connection/basis';
+import {base64encode,base64decode} from '../../vendor/connection/basis';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import Options from '../common/showSelectOptions';
 import style from './SubmitPost.css';
 import SimpEditor from './PostArticle';
+import {getHolderByChannelId} from '../../vendor/helper/commonHelper';
 
 const FormItem = Form.Item;
 
@@ -73,8 +74,7 @@ class NewLinkArticle extends Component{
       message.warn("请输入链接");
       return;
     }
-    var reg=/^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/;   //网址正则
-    if(!reg.test(outline)){
+    if(!IsURL(outline)){//网址正则
       message.warn("输入的链接地址不合法");
       return;
     }
@@ -83,13 +83,8 @@ class NewLinkArticle extends Component{
       message.warn("请选择频道");
       return;
     }
-    let channelName = this.props.selects.selectvalue; //获取选择的频道名称
-    var holderImg = {}; //如果用户没有选择上传图片,则根据选择的频道 找出配图  holderImg是待选的配图
-    holderImg[""]= "";
-    let cover = this.state.bgcover === "" ? "" :this.state.bgcover.replace("url(","").replace(")","").replace("'","");//封面图
-    console.log(this.props.editor[this.props.user.userid])
-
-    let con = this.props.editor[this.props.user.userid];
+    let cover = this.state.bgcover === "" ? getHolderByChannelId(channelid) :this.state.bgcover.replace("url(","").replace(")","").replace("'","");//封面图
+    let con = this.refs.textArea.value;
     if(con === "" || con === undefined){
       message.warn('请输入内容');return;
     }
@@ -97,13 +92,14 @@ class NewLinkArticle extends Component{
       link: outline, //连接
       vendor: "", //来源
       image: cover, //封面图
-      intro: base64encode(con)
+      intro: con //用户的推荐语
     }
-    // console.log(content);
+    console.log(content);
     // return;
-    postDiscoverArticle(this.props.user.userid, title, cover, channelid, JSON.stringify(content), 1, '', '', 2, (err,data)=> {
+    postDiscoverArticle(this.props.user.userid, title, cover, channelid, JSON.stringify(content), 1, '', '', 3, (err,data)=> {
       if(err){ console.log(err) } else {
         message.success("发表成功");
+        browserHistory.push('/discover/'+data.PostsId);
       }
     })
   }
@@ -161,7 +157,11 @@ class NewLinkArticle extends Component{
 
         <div className = "submittitle">
           <div style = {{color:'#666',fontSize:'20px',paddingBottom: '10px'}}>输入您的推荐词</div>
-          <SimpEditor />
+          <div style = {{ padding: '7px 14px',border: '1px solid #eee', borderRadius: '5px', textAlign: 'center', background: '#fff'}}>
+            <textarea style = {{width: '100%',height: '150px',outline: 'none',border: 'none',fontSize: '16px',resize: 'none'}} ref = "textArea" placeholder = "输入您的心得"></textarea>
+          </div>
+          {/*<Input ref = "inputs" type="textarea" placeholder="输入您的心得" rows={6} />
+          <SimpEditor />*/}
         </div>
         <div className = "submittitle" style = {{textAlign:'right'}}>
           <Button type="primary" onClick = {this.SubmitPost.bind(this)}>发帖</Button>
@@ -188,6 +188,25 @@ const styles = {
   }
 }
 
+function IsURL(str_url){
+        var strRegex = "^((https|http|ftp|rtsp|mms)?://)"
+        + "?(([0-9a-z_!~*'().&=+$%-]+: )?[0-9a-z_!~*'().&=+$%-]+@)?" //ftp的user@
+        + "(([0-9]{1,3}\.){3}[0-9]{1,3}" // IP形式的URL- 199.194.52.184
+        + "|" // 允许IP和DOMAIN（域名）
+        + "([0-9a-z_!~*'()-]+\.)*" // 域名- www.
+        + "([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]\." // 二级域名
+        + "[a-z]{2,6})" // first level domain- .com or .museum
+        + "(:[0-9]{1,4})?" // 端口- :80
+        + "((/?)|" // a slash isn't required if there is no file name
+        + "(/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+/?)$";
+        var re=new RegExp(strRegex);
+        //re.test()
+        if (re.test(str_url)){
+            return (true);
+        }else{
+            return (false);
+        }
+}
 
 function mapStateToProps(store){
   return {

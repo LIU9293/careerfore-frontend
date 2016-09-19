@@ -98,13 +98,34 @@ class DiscoverDetail extends Component{
           <div component="topic/deleted/message" className="alert alert-warning">此主题已被删除。只有拥有主题管理权限的用户可以查看。</div>
         )
       }else {
+        let cont ;
+        if(info.Type === 1){//长文
+          cont = <div onClick = {this.chooseFid.bind(this,info.PostID)} id="content" className="pageContent" dangerouslySetInnerHTML = {{__html : betterText(info.Content) || ''}}>
+                   </div>;
+        }else if(info.Type === 2){//短文
+          cont = <div onClick = {this.chooseFid.bind(this,info.PostID)} id="content" className="pageContent" dangerouslySetInnerHTML = {{__html : betterText(info.Content) || ''}}>
+                 </div>;
+        }else if(info.Type === 3){//外链
+          var dict = JSON.parse(info.Content);
+          var co = dict.intro === undefined ? "" : <div style = {{padding: '3px 10px', borderLeft: '3px solid #999'}}>{dict.intro}</div>
+          cont = <div id="content" className="pageContent">
+                    {co}
+                    <div style = {{textAlign: 'center',marginTop: '50px'}}>
+                      <a target = "_blank" href = {dict.link}>
+                        <span style = {{padding: '10px 30px',background: '#2db7f5',color: '#fff',fontSize: '27px'}}>阅读原文</span>
+                      </a>
+                    </div>
+                  </div>
+        }
         let bg = 'url(' + info.PostsFrontCover + ')';
         let time = millseconds2DateDiff(info.PostsDate);
         let name = info.UserName === "管理员"?"小C" :info.UserName;
         let fl = "left";
         let con = (
           <div>
-            <div className="box-content" style={{backgroundImage:bg}}></div>
+            <div class="box-content" style={{backgroundImage:bg,maxWidth: '960px',margin: '180px auto',height: '300px',filter: 'blur(15px)',backgroundPosition: 'center center', backgroundRepeat: 'no-repeat', backgroundSize: 'cover'}}></div>
+            <div class="box-content" style={{backgroundImage:bg,maxWidth: '1000px',height: '450px',position: 'relative',margin: '0 auto',marginTop: '-650px',zIndex: '999',backgroundPosition: 'center center', backgroundRepeat: 'no-repeat', backgroundSize: 'cover'}}></div>
+            {/*<div className="box-content" style={{backgroundImage:bg}}></div>*/}
             <div className="content" style={{maxWidth:'1000px',margin:'auto'}}>
                 <h1 className="title">{info.PostsTitle}</h1>
                 <div className="postcontent">
@@ -114,8 +135,7 @@ class DiscoverDetail extends Component{
                           <span>{name}&nbsp;&nbsp;·&nbsp;&nbsp; {info.ChannelName}&nbsp;&nbsp;·&nbsp;&nbsp;{time}</span>
                       </div>
                   </div>
-                  <div onClick = {this.chooseFid.bind(this,info.PostID)} id="content" className="pageContent" dangerouslySetInnerHTML = {{__html : betterText(info.Content) || ''}}>
-                  </div>
+                  {cont}
                 </div>
                 <div id="like" className="like" style = {{maxWidth:'750px',margin:'0 auto',paddingBottom:'30px',marginTop: '30px'}}>
                   <div >
@@ -140,7 +160,8 @@ class DiscoverDetail extends Component{
           </div>
         )
       }
-    }else {
+    }
+    else {
       return(
         <div>
           <h1 style={{textAlign: 'center'}}>loading...</h1>

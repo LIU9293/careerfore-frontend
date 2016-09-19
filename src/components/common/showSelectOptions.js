@@ -20,6 +20,7 @@ class Options extends Component {
       if(err){
         console.log(err);
       }else {
+        console.log(data)
         var tmpList;
         tmpList = data.channel.map((item,index)=>{
           var obj ={

@@ -154,10 +154,21 @@ class ArticleList extends Component{
             </div>
           </div>
         )
-      } else {
-        let link = JSON.parse(item.content).link;
+      } else if(item.type == 3){//外链
+        let dict = JSON.parse(item.content);
+        let link = dict.link;
+        let userSay ;
+        if( dict.intro !== undefined ){
+          userSay = <div style = {{color: 'rgb(153, 153, 153)',fontSize: '16px', marginBottom: '10px'}}>{dict.intro.length > 70 ? dict.intro.substring(0,70)+"..." : dict.intro}</div>
+        }
+        /*
+        link: outline, //连接
+        vendor: "", //来源
+        image: cover, //封面图
+        intro: con
+        */
         return(
-          <div style={{...styles.box, height:'180px'}} key={ii}>
+          <div style={{...styles.box, paddingBottom:'20px',height:""}} key={ii}>
             <div style={styles.header}>
               <div style={{...styles.headerBlock, float: 'left'}}>
                 <img style={styles.avatar} src={item.avatar || 'http://img.careerfore.com/bear.jpg'} />
@@ -173,9 +184,13 @@ class ArticleList extends Component{
                 {item.time}
               </div>
             </div>
+            <a onClick={e => browserHistory.push('/discover/'+item.id)} >
+              <div style={{...styles.middle, backgroundImage: 'url(' + dict.image + ')'}} />
+            </a>
             <div style={styles.footer}>
-              <a target="_blank" href={link} style={{color:'#5d5d5d'}}>
+              <a onClick={e => browserHistory.push('/discover/'+item.id)} style={{color:'#5d5d5d'}}>
                 <h1 style={styles.title}>{item.title}</h1>
+                {userSay}
               </a>
               <div style={{...styles.iconArea, fontSize: '18px', color:'#999'}}>
                 <div style={{display:'inline-block', float:'left'}}>
