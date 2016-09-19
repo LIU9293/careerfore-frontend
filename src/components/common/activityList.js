@@ -59,7 +59,6 @@ class ActivityList extends Component{
             <a onClick={e => browserHistory.push('/activity/'+item.id)}>
               <h2 style={{marginBottom: '10px'}}>{ item.title }</h2>
             </a>
-            <p>{ item.content }</p>
             <div style={ styles.infoArea } >
               <div style={ styles.infoBox }>
                 <Icon type="environment-o" style={{fontSize: '20px'}}/>

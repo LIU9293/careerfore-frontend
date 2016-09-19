@@ -84,6 +84,7 @@ class DiscoverTopicList extends Component{
             type: item.Type,
             content: item.Content,
           }
+
         });
         this.props.updateDiscoverListData(this.props.discoverListData.concat(discoverListData));
         if(data.PostsList.length < 10){

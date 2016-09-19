@@ -7,6 +7,7 @@ const path = require('path');
 const glob = require('glob');
 
 module.exports = function (webpackConfig) {
+  //webpackConfig.devtool = 'cheap-module-source-map';
   webpackConfig.babel.plugins.push('transform-runtime');
   webpackConfig.babel.plugins.push(['antd', {
     style: 'css',  // if true, use less

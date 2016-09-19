@@ -50,7 +50,13 @@ class Single extends Component {
 
   render(){
     let singleData = this.props.singleData;
-    var content = S(singleData.ZPT_CONTENT).decodeHTMLEntities().stripTags().s,
+    var content;
+    if(singleData.Type === 1 || singleData.Type === 2){//长文或短文
+      content = S(singleData.ZPT_CONTENT).decodeHTMLEntities().stripTags().s
+    }else if(singleData.Type === 3){//外链
+      content = JSON.parse(singleData.ZPT_CONTENT).intro
+    }
+    // var content = S(singleData.ZPT_CONTENT).decodeHTMLEntities().stripTags().s
     content = content.length >180?(content.substring(0,180)+"..."):content;
     content += "&nbsp;&nbsp;<a target = '_blank' href = '/discover/"+singleData.ZCT_ID+"'>查看详情</a>"
     let bg = 'url(' + singleData.ZPT_COVER + ')';

@@ -65,7 +65,6 @@ class Replys extends Component {
   }
 
   getClickComment(fatherid,objid,username,fatherName,uid){
-    console.log(fatherid,objid,username,fatherName,uid);
     if(this.props.user.userid === undefined || this.props.user.userid === null){
       browserHistory.push(`/login`);
     }else {

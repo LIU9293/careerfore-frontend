@@ -23,6 +23,10 @@ export const betterText = (htmlString) => {
   htmlString=htmlString.replace(/<a.*?>/gi, "");
   htmlString=htmlString.replace(/<\/a>/gi, "");
 
+  // -- remove <font> tags
+  htmlString=htmlString.replace(/<font.*?>/gi, "");
+  htmlString=htmlString.replace(/<\/font>/gi, "");
+
   // -- remove strong tag \ em tag
   htmlString=htmlString.replace(/<strong.*?>/gi, "");
   htmlString=htmlString.replace(/<\/strong>/gi, "");
@@ -50,56 +54,7 @@ export const betterText = (htmlString) => {
   htmlString=htmlString.replace(/&lt;/gi,'<');
   htmlString=htmlString.replace(/&gt;/gi,'>');
 
-  const HTML = `
-  <!DOCTYPE html>
-  <html>
-    <head>
-      <meta charset="utf-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-    </head>
-    <body>
-      <style type="text/css">
-        html, body{
-          overflow: hidden;
-          width:100%;
-          background-color: #fff;
-          padding:0;margin:0;
-          box-sizing: border-box;
-        }
-        .content > img{
-          width:calc( 100% + 40px );
-          margin: 20px -20px 20px -20px;
-        }
-        .content > p > img{
-          width:calc( 100% + 40px );
-          margin: 20px -20px 20px -20px;
-        }
-        .content{
-          font-size:18px;
-          line-height: 30px;
-          color: #4b4c4c;
-          display:block;
-          padding:0 20px 0 20px;
-          margin:20px 0 20px 0;
-          text-align: left;
-          font-family: "PingFang SC", "Microsoft JhengHei";
-          zoom:1
-        }
-      </style>
-       <div class='content'>
-        ${htmlString}
-       </div>
-       <script>
-          window.onload = function(){
-            var height = document.body.clientHeight;
-            window.location.hash = '#' + height;
-          }
-       </script>
-      </body>
-    </html>
-  `;
-
-  return HTML;
+  return htmlString;
 }
 
 

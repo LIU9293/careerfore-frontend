@@ -65,7 +65,7 @@ class Search extends Component{
     this.props.updateSearchKey(key);
     searchFound(key, 1, 10, (err,data)=>{
       if(err){console.log(err)} else {
-        console.log(data);
+        console.log('search success:',data);
         if(data.SearchFoundList){
           let discoverData =  data.SearchFoundList.map((item, ii)=>{
             let des = S(item.Content).decodeHTMLEntities().stripTags().s;
@@ -87,6 +87,7 @@ class Search extends Component{
                 top: 0,
                 recommand: 0,
                 id: item.ID,
+                type: 1,
               }
             )
           });
