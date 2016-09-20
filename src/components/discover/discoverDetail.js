@@ -107,7 +107,11 @@ class DiscoverDetail extends Component{
                  </div>;
         }else if(info.Type === 3){//外链
           var dict = JSON.parse(info.Content);
-          var co = dict.intro === undefined ? "" : <div style = {{padding: '3px 10px', borderLeft: '3px solid #999'}}>{dict.intro}</div>
+          let introArr = dict.intro.split('\n')
+          var arr = introArr.map((item,index)=>{
+            return <p key = {index}>{item}</p>
+          })
+          var co = dict.intro === undefined ? "" : <div style = {{padding: '3px 10px', borderLeft: '3px solid #999'}}>{arr}</div>
           cont = <div id="content" className="pageContent">
                     {co}
                     <div style = {{textAlign: 'center',marginTop: '50px'}}>

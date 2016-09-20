@@ -172,7 +172,7 @@ class ActivityPost extends Component{
                 <Col xs={8} sm={8} md={8} lg={8}>
                   <div className="contentDt2">
                       <h2>活动主办方介绍</h2><hr/>
-                      <p>careerfor更懂大学生职业规划的平台，旗下活动俱乐部，专门为大学生举办线下关于职业规划的
+                      <p>careerfore更懂大学生职业规划的平台，旗下活动俱乐部，专门为大学生举办线下关于职业规划的
                          沙龙讲座与交流，参访顶尖券商企业，实地考察体验优质高等职业生涯。
                       </p>
                   </div>
