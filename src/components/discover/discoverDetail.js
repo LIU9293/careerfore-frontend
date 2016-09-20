@@ -109,7 +109,7 @@ class DiscoverDetail extends Component{
           var dict = JSON.parse(info.Content);
           let introArr = dict.intro.split('\n')
           var arr = introArr.map((item,index)=>{
-            return <p key = {index}>&nbsp;&nbsp;&nbsp;&nbsp;{item}</p>
+            return <p key = {index}>{item}</p>
           })
           var co = dict.intro === undefined ? "" : <div style = {{padding: '3px 10px', borderLeft: '3px solid #999'}}>{arr}</div>
           cont = <div id="content" className="pageContent">
