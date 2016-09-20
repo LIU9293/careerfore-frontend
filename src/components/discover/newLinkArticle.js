@@ -64,6 +64,9 @@ class NewLinkArticle extends Component{
     }
 
   SubmitPost(){
+    // console.log(this.refs.textArea.value)
+    // // alert(this.refs.textArea.value)
+    // return;
     let title = this.refs.txtinput.value;
     if(title.replace(" ","")===""){
       message.warn("请输入链接标题");
@@ -94,8 +97,6 @@ class NewLinkArticle extends Component{
       image: cover, //封面图
       intro: con //用户的推荐语
     }
-    console.log(content);
-    // return;
     postDiscoverArticle(this.props.user.userid, title, cover, channelid, JSON.stringify(content), 1, '', '', 3, (err,data)=> {
       if(err){ console.log(err) } else {
         message.success("发表成功");
@@ -118,6 +119,10 @@ class NewLinkArticle extends Component{
     })
   }
 
+  // keyPress(e){
+  //   var keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;
+  //   console.log(keyCode)
+  // }
 
   render() {
     return (
@@ -158,7 +163,8 @@ class NewLinkArticle extends Component{
         <div className = "submittitle">
           <div style = {{color:'#666',fontSize:'20px',paddingBottom: '10px'}}>输入您的推荐词</div>
           <div style = {{ padding: '7px 14px',border: '1px solid #eee', borderRadius: '5px', textAlign: 'center', background: '#fff'}}>
-            <textarea style = {{width: '100%',height: '150px',outline: 'none',border: 'none',fontSize: '16px',resize: 'none'}} ref = "textArea" placeholder = "输入您的心得"></textarea>
+            <textarea style = {{width: '100%',height: '150px',outline: 'none',border: 'none',fontSize: '16px',resize: 'none'}} ref = "textArea"
+            placeholder = "输入您的心得"></textarea>
           </div>
           {/*<Input ref = "inputs" type="textarea" placeholder="输入您的心得" rows={6} />
           <SimpEditor />*/}
