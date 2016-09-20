@@ -64,9 +64,6 @@ class NewLinkArticle extends Component{
     }
 
   SubmitPost(){
-    // console.log(this.refs.textArea.value)
-    // // alert(this.refs.textArea.value)
-    // return;
     let title = this.refs.txtinput.value;
     if(title.replace(" ","")===""){
       message.warn("请输入链接标题");
@@ -204,7 +201,7 @@ function IsURL(str_url){
         + "[a-z]{2,6})" // first level domain- .com or .museum
         + "(:[0-9]{1,4})?" // 端口- :80
         + "((/?)|" // a slash isn't required if there is no file name
-        + "(/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+/?)$";
+        + "(/[0-9a-zA-Z_!~*'().;?:@&=+$,%#-]+)+/?)$";
         var re=new RegExp(strRegex);
         //re.test()
         if (re.test(str_url)){
