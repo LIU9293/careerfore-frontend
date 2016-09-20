@@ -106,7 +106,8 @@ class DiscoverDetail extends Component{
           cont = <div onClick = {this.chooseFid.bind(this,info.PostID)} id="content" className="pageContent" dangerouslySetInnerHTML = {{__html : betterText(info.Content) || ''}}>
                  </div>;
         }else if(info.Type === 3){//外链
-          var dict = JSON.parse(info.Content);
+          console.log(info.Content.replace('<p>',"").replace('</p>',""))
+          var dict = JSON.parse(info.Content.replace('<p>',"").replace('</p>',""));
           let introArr = dict.intro.split('\n')
           var arr = introArr.map((item,index)=>{
             return <p key = {index}>{item}</p>
