@@ -40,8 +40,6 @@ class Login extends Component{
           } else {
             Cookies.set('UserID', UserID);
           }
-          // console.log('已将用户ID存入cookie, cookie是：');
-          // console.log(Cookies.get('UserID'));
           getUserInfo(UserID, (err,data) => {
             if(err){
               console.log(err);
