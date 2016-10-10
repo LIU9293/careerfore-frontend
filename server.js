@@ -63,7 +63,7 @@ app.post('/wechat_receive_server',function (req,res) {
                       <FromUserName><![CDATA[${touser}]]></FromUserName>
                       <CreateTime>${timpspan}</CreateTime>
                       <MsgType><![CDATA[text]]></MsgType>
-                      <Content><![CDATA[已经收到了， 爱你 。比心]]></Content>
+                      <Content><![CDATA[已经收到了， 爱你 。比心😀]]></Content>
                       </xml>`)
       } else {
         var name = arr[0]
