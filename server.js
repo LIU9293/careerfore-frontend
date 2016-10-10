@@ -61,14 +61,13 @@ app.post('/wechat_receive_server',function (req,res) {
       } else {
         var name = arr[0]
         var tel = arr[1]
-        var uri = "http://127.0.0.1:9092/wechat_activity_sign/"+urlencode(name)+"/"+tel;
+        var uri = "http://www.careerfore.com:9092/wechat_activity_sign/"+urlencode(name)+"/"+tel;
         request(uri,function(err,data,body) {
           var msg = []
           if(err){
             msg.push("请求失败,稍后再试")
           }else {
-            console.log("line 60 ==> " , body)
-            body = JSON.stringify(body)
+            body = JSON.parse(body)
             if(body.data.length > 0){
               var tmpStr = "";
               for(var i = 0;i< body.data.length ; i++){
