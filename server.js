@@ -1,7 +1,7 @@
 const express = require('express')
 const path = require('path')
 const port = process.env.PORT || 8989
-const app = express
+const app = express()
 
 var bodyParser = require('body-parser');
 var crypto = require('crypto')
