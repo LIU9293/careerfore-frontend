@@ -8,6 +8,7 @@ var crypto = require('crypto')
 var request = require('request');
 var XMLJS = require('xml2js');
 var middlewares = require('express-middlewares-js');
+var urlencode = require('urlencode');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -21,6 +22,7 @@ app.get('/about', function (request, response){
 
 app.get('/recruitment', function (request, response){
   response.sendFile(path.resolve(__dirname, 'dist', 'Recruitment.html'))
+})
 
 // get 验证服务器的有效性(与微信服务器进行通信)
 app.get('/wechat_receive_server',function(req,res) {
@@ -59,7 +61,7 @@ app.post('/wechat_receive_server',function (req,res) {
       } else {
         var name = arr[0]
         var tel = arr[1]
-        var uri = "http://127.0.0.1:9092/wechat_activity_sign/"+name+"/"+tel;
+        var uri = "http://127.0.0.1:9092/wechat_activity_sign/"+urlencode(name)+"/"+tel;
         request(uri,function(err,data,body) {
           var msg = []
           if(err){
