@@ -59,7 +59,7 @@ app.post('/wechat_receive_server',function (req,res) {
       } else {
         var name = arr[0]
         var tel = arr[1]
-        var uri = "http://www.127.1.1.0.com:9092/wechat_activity_sign/"+name+"/"+tel;
+        var uri = "http://127.0.0.1:9092/wechat_activity_sign/"+name+"/"+tel;
         request(uri,function(err,data,body) {
           var msg = []
           if(err){
