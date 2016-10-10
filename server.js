@@ -21,6 +21,7 @@ app.get('/about', function (request, response){
 
 app.get('/recruitment', function (request, response){
   response.sendFile(path.resolve(__dirname, 'dist', 'Recruitment.html'))
+})
 
 // get 验证服务器的有效性(与微信服务器进行通信)
 app.get('/wechat_receive_server',function(req,res) {
