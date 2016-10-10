@@ -57,7 +57,14 @@ app.post('/wechat_receive_server',function (req,res) {
       var content = item.Content
       var arr = content[0].split("+")
       if(arr.length !== 2){
-        res.send("")
+        var timpspan = Date.parse(new Date())
+        res.send(`<xml>
+                      <ToUserName><![CDATA[${fromuser}]]></ToUserName>
+                      <FromUserName><![CDATA[${touser}]]></FromUserName>
+                      <CreateTime>${timpspan}</CreateTime>
+                      <MsgType><![CDATA[text]]></MsgType>
+                      <Content><![CDATA[已经收到了， 爱你 。比心]]></Content>
+                      </xml>`)
       } else {
         var name = arr[0]
         var tel = arr[1]
